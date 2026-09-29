@@ -16,18 +16,14 @@
   --red:#ff3b30;
   --green:#34d399;
   --yellow:#fbbf24;
-  --orange:#fb923c;
   --blue:#60a5fa;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
-  background:
-    radial-gradient(circle at 15% 0,#172033 0,#070a0f 38%);
+  background:radial-gradient(circle at 15% 0,#172033 0,#070a0f 38%);
   color:var(--text);
   font:14px/1.45 Arial,Helvetica,sans-serif;
 }
@@ -52,13 +48,8 @@ h1{
   letter-spacing:-1.4px;
 }
 
-.red{
-  color:var(--red);
-}
-
-.muted{
-  color:var(--muted);
-}
+.red{color:var(--red)}
+.muted{color:var(--muted)}
 
 .badge{
   padding:9px 13px;
@@ -82,17 +73,9 @@ h1{
   box-shadow:0 12px 35px rgba(0,0,0,.22);
 }
 
-.full{
-  grid-column:span 12;
-}
-
-.half{
-  grid-column:span 6;
-}
-
-.third{
-  grid-column:span 4;
-}
+.full{grid-column:span 12}
+.half{grid-column:span 6}
+.third{grid-column:span 4}
 
 .section-title{
   display:flex;
@@ -214,6 +197,27 @@ select{
   background:#0b1119;
 }
 
+.signalgrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.signal{
+  background:#0b1119;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:12px;
+}
+
+.signal b{
+  display:block;
+  font-size:16px;
+  margin-bottom:4px;
+}
+
+.signal small{color:var(--muted)}
+
 .news-buttons{
   display:flex;
   flex-wrap:wrap;
@@ -235,37 +239,13 @@ select{
   background:#1d304a;
 }
 
-.signalgrid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-
-.signal{
-  background:#0b1119;
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:12px;
-}
-
-.signal b{
-  display:block;
-  font-size:16px;
-  margin-bottom:4px;
-}
-
-.signal small{
-  color:var(--muted);
-}
-
 table{
   width:100%;
   border-collapse:collapse;
   min-width:980px;
 }
 
-th,
-td{
+th,td{
   padding:10px 8px;
   border-bottom:1px solid var(--line);
   text-align:left;
@@ -283,60 +263,18 @@ th{
   color:var(--muted);
 }
 
-.legend{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.legend span{
-  font-size:12px;
-}
-
-.dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  display:inline-block;
-  margin-right:6px;
-}
-
 @media(max-width:1150px){
-  .heatgrid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .half,
-  .third{
-    grid-column:span 12;
-  }
-
-  .kpis{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .signalgrid{
-    grid-template-columns:repeat(2,1fr);
-  }
+  .heatgrid{grid-template-columns:repeat(3,1fr)}
+  .half,.third{grid-column:span 12}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .signalgrid{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:650px){
-  .heatgrid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .kpis,
-  .signalgrid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .wrap{
-    padding:12px;
-  }
-
-  .chartframe{
-    height:500px;
-  }
+  .heatgrid{grid-template-columns:repeat(2,1fr)}
+  .kpis,.signalgrid{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding:12px}
+  .chartframe{height:500px}
 }
 </style>
 </head>
@@ -346,13 +284,11 @@ th{
 <div class="wrap">
 
   <div class="top">
-
     <div>
       <h1>
         <span class="red">1440TIME™</span>
         AI Industrial Revolution Radar
       </h1>
-
       <p class="muted">
         Find the bottlenecks • Follow the money • Confirm with price, volume and momentum
       </p>
@@ -361,411 +297,208 @@ th{
     <div class="badge">
       Think Outside the Clock™
     </div>
-
   </div>
 
   <div class="grid">
 
-    <!-- HEAT MAP -->
-
     <section class="card full">
 
       <div class="section-title">
-
         <div>
           <h2>🔥 AI Money-Flow Heat Map</h2>
-          <div class="muted">
-            Sector research-priority framework
-          </div>
+          <div class="muted">Sector research-priority framework</div>
         </div>
-
-        <div class="legend">
-
-          <span>
-            <i class="dot" style="background:#ef4444"></i>
-            Hot 80–100
-          </span>
-
-          <span>
-            <i class="dot" style="background:#fbbf24"></i>
-            Heating 60–79
-          </span>
-
-        </div>
-
       </div>
 
       <div class="heatgrid">
 
         <div class="heatbox active" data-sector="Networking">
-
           <b>Networking & Optics</b>
-
-          <div class="score">
-            90
-          </div>
-
-          <div class="bar">
-            <div class="fill" style="width:90%"></div>
-          </div>
-
-          <small>
-            AVGO • ANET • MRVL
-          </small>
-
+          <div class="score">90</div>
+          <div class="bar"><div class="fill" style="width:90%"></div></div>
+          <small>AVGO • ANET • MRVL</small>
         </div>
-
 
         <div class="heatbox" data-sector="Power">
-
           <b>Power & Grid</b>
-
-          <div class="score">
-            88
-          </div>
-
-          <div class="bar">
-            <div class="fill" style="width:88%"></div>
-          </div>
-
-          <small>
-            GEV • ETN • CEG • VST • BE
-          </small>
-
+          <div class="score">88</div>
+          <div class="bar"><div class="fill" style="width:88%"></div></div>
+          <small>GEV • ETN • CEG • VST • BE</small>
         </div>
-
 
         <div class="heatbox" data-sector="Cyber">
-
           <b>AI Cybersecurity</b>
-
-          <div class="score">
-            86
-          </div>
-
-          <div class="bar">
-            <div class="fill" style="width:86%"></div>
-          </div>
-
-          <small>
-            PANW • CRWD • VRNS • TENB • QLYS • RDWR
-          </small>
-
+          <div class="score">86</div>
+          <div class="bar"><div class="fill" style="width:86%"></div></div>
+          <small>PANW • CRWD • VRNS • TENB • QLYS • RDWR</small>
         </div>
-
 
         <div class="heatbox" data-sector="Memory">
-
           <b>HBM / Memory</b>
-
-          <div class="score">
-            84
-          </div>
-
-          <div class="bar">
-            <div class="fill" style="width:84%"></div>
-          </div>
-
-          <small>
-            MU
-          </small>
-
+          <div class="score">84</div>
+          <div class="bar"><div class="fill" style="width:84%"></div></div>
+          <small>MU</small>
         </div>
-
 
         <div class="heatbox" data-sector="Cooling">
-
           <b>Cooling / Data Center</b>
-
-          <div class="score">
-            79
-          </div>
-
-          <div class="bar">
-            <div class="fill" style="width:79%"></div>
-          </div>
-
-          <small>
-            VRT • ETN
-          </small>
-
+          <div class="score">79</div>
+          <div class="bar"><div class="fill" style="width:79%"></div></div>
+          <small>VRT • ETN</small>
         </div>
-
 
         <div class="heatbox" data-sector="Agents">
-
           <b>Agentic AI</b>
-
-          <div class="score">
-            76
-          </div>
-
-          <div class="bar">
-            <div class="fill" style="width:76%"></div>
-          </div>
-
-          <small>
-            MSFT • NOW • CRM
-          </small>
-
+          <div class="score">76</div>
+          <div class="bar"><div class="fill" style="width:76%"></div></div>
+          <small>MSFT • NOW • CRM</small>
         </div>
 
-
         <div class="heatbox" data-sector="Robotics">
-
           <b>Physical AI</b>
-
-          <div class="score">
-            72
-          </div>
-
-          <div class="bar">
-            <div class="fill" style="width:72%"></div>
-          </div>
-
-          <small>
-            NVDA • ABB • TER • SYM
-          </small>
-
+          <div class="score">72</div>
+          <div class="bar"><div class="fill" style="width:72%"></div></div>
+          <small>NVDA • ABB • TER • SYM</small>
         </div>
 
       </div>
 
       <p class="note">
-        Current heat numbers are our 1440TIME research-priority framework.
-        The next API version can calculate the score automatically from market data.
+        Current heat numbers are the 1440TIME research-priority framework.
+        Future versions can calculate them automatically from price momentum,
+        relative volume, RSI, MACD, moving averages and sector strength.
       </p>
 
     </section>
 
-
-    <!-- STOCK SELECTOR -->
-
     <section class="card full">
 
       <div class="section-title">
-
         <div>
-
-          <h2>
-            📡 Live AI Stock Radar
-          </h2>
-
-          <div class="muted">
-            Pick a sector, then select a stock.
-          </div>
-
+          <h2>📡 Live AI Stock Radar</h2>
+          <div class="muted">Pick a sector, then select a stock.</div>
         </div>
 
         <select id="sectorSelect"></select>
-
       </div>
 
-
-      <div
-        class="stockbar"
-        id="stockbar">
-      </div>
-
+      <div class="stockbar" id="stockbar"></div>
 
       <div class="kpis">
 
         <div class="kpi">
           <small>Selected</small>
-          <b id="selTicker">
-            ANET
-          </b>
+          <b id="selTicker">ANET</b>
         </div>
 
         <div class="kpi">
           <small>Theme</small>
-          <b id="selTheme">
-            Networking
-          </b>
+          <b id="selTheme">Networking</b>
         </div>
 
         <div class="kpi">
           <small>Signal #1</small>
-          <b>
-            Relative Volume
-          </b>
+          <b>Relative Volume</b>
         </div>
 
         <div class="kpi">
           <small>Signal #2</small>
-          <b>
-            20 / 50 / 200 DMA
-          </b>
+          <b>20 / 50 / 200 DMA</b>
         </div>
 
         <div class="kpi">
           <small>Signal #3</small>
-          <b>
-            RSI + MACD
-          </b>
+          <b>RSI + MACD</b>
         </div>
 
         <div class="kpi">
           <small>Confirmation</small>
-          <b>
-            Price + Volume
-          </b>
+          <b>Price + Volume</b>
         </div>
 
       </div>
 
     </section>
 
-
-    <!-- LIVE CHART -->
-
     <section class="card half">
 
       <div class="section-title">
-
-        <h2 id="chartTitle">
-          ANET — Live Chart
-        </h2>
-
-        <span class="muted">
-          TradingView
-        </span>
-
+        <h2 id="chartTitle">ANET — Live Chart</h2>
+        <span class="muted">TradingView</span>
       </div>
 
       <iframe
         id="mainChart"
         class="chartframe"
-        allowtransparency="true"
-        scrolling="no">
+        allow="fullscreen"
+        referrerpolicy="origin">
       </iframe>
 
     </section>
 
-
-    <!-- TECHNICAL CHART -->
-
     <section class="card half">
 
       <div class="section-title">
-
-        <h2 id="techTitle">
-          ANET — Technical Chart
-        </h2>
-
-        <span class="muted">
-          RSI • MACD • Moving averages
-        </span>
-
+        <h2 id="techTitle">ANET — Technical Chart</h2>
+        <span class="muted">RSI • MACD • Moving Averages</span>
       </div>
 
       <iframe
         id="technicalChart"
         class="chartframe"
-        allowtransparency="true"
-        scrolling="no">
+        allow="fullscreen"
+        referrerpolicy="origin">
       </iframe>
 
     </section>
 
-
-    <!-- SIGNALS -->
-
     <section class="card full">
 
-      <div class="section-title">
-
-        <div>
-
-          <h2>
-            🎯 What We Are Watching
-          </h2>
-
-          <div class="muted">
-            The highest-value technical confirmation signals.
-          </div>
-
-        </div>
-
-      </div>
-
+      <h2>🎯 What We Are Watching</h2>
 
       <div class="signalgrid">
 
         <div class="signal">
-
-          <b>
-            Relative Volume
-          </b>
-
+          <b>Relative Volume</b>
           <small>
-            Above 1.5× normal volume tells us unusual attention may be entering the stock.
+            Above 1.5× normal volume can indicate unusual trader or institutional attention.
           </small>
-
         </div>
 
-
         <div class="signal">
-
-          <b>
-            Moving Averages
-          </b>
-
+          <b>Moving Averages</b>
           <small>
-            Price above the 20, 50 and 200-day averages supports a strong trend structure.
+            Price above the 20, 50 and 200-day averages supports a stronger trend structure.
           </small>
-
         </div>
 
-
         <div class="signal">
-
-          <b>
-            RSI
-          </b>
-
+          <b>RSI</b>
           <small>
-            50–70 and rising often represents healthy momentum without extreme extension.
+            50–70 and rising can represent healthy momentum without extreme extension.
           </small>
-
         </div>
 
-
         <div class="signal">
-
-          <b>
-            MACD
-          </b>
-
+          <b>MACD</b>
           <small>
-            A bullish crossover with an expanding histogram can identify acceleration.
+            A bullish crossover and expanding histogram can signal accelerating momentum.
           </small>
-
         </div>
 
       </div>
 
     </section>
 
-
-    <!-- NEWS -->
-
     <section class="card full">
 
       <div class="section-title">
-
         <div>
-
-          <h2 id="newsTitle">
-            ANET — News & Catalysts
-          </h2>
-
+          <h2 id="newsTitle">ANET — News & Catalysts</h2>
           <div class="muted">
-            Open the fastest live research sources for the selected company.
+            Fast research links for the currently selected company.
           </div>
-
         </div>
-
       </div>
 
       <div class="news-buttons">
@@ -773,28 +506,32 @@ th{
         <a
           id="googleNews"
           class="newslink"
-          target="_blank">
+          target="_blank"
+          rel="noopener noreferrer">
           📰 Google News
         </a>
 
         <a
           id="yahooNews"
           class="newslink"
-          target="_blank">
+          target="_blank"
+          rel="noopener noreferrer">
           💵 Yahoo Finance
         </a>
 
         <a
           id="tradingViewLink"
           class="newslink"
-          target="_blank">
+          target="_blank"
+          rel="noopener noreferrer">
           📈 TradingView
         </a>
 
         <a
           id="secLink"
           class="newslink"
-          target="_blank">
+          target="_blank"
+          rel="noopener noreferrer">
           📑 SEC Search
         </a>
 
@@ -802,189 +539,70 @@ th{
 
     </section>
 
+    <section class="card full" style="overflow:auto">
 
-    <!-- TECHNICAL MATRIX -->
-
-    <section
-      class="card full"
-      style="overflow:auto">
-
-      <h2>
-        🧭 1440TIME Technical Decision Matrix
-      </h2>
+      <h2>🧭 1440TIME Technical Decision Matrix</h2>
 
       <table>
 
         <thead>
-
           <tr>
-
-            <th>
-              Signal
-            </th>
-
-            <th>
-              What we want
-            </th>
-
-            <th>
-              Why
-            </th>
-
-            <th>
-              Heat Engine Weight
-            </th>
-
+            <th>Signal</th>
+            <th>What we want</th>
+            <th>Why it matters</th>
+            <th>Heat Engine Weight</th>
           </tr>
-
         </thead>
 
         <tbody>
 
           <tr>
-
-            <td>
-              <b>Relative Volume</b>
-            </td>
-
-            <td>
-              &gt;1.5× normal
-            </td>
-
-            <td>
-              Unusual institutional / trader attention
-            </td>
-
-            <td>
-              25%
-            </td>
-
+            <td><b>Relative Volume</b></td>
+            <td>&gt;1.5× normal</td>
+            <td>Unusual activity</td>
+            <td>25%</td>
           </tr>
 
-
           <tr>
-
-            <td>
-              <b>Price Momentum</b>
-            </td>
-
-            <td>
-              Strong 1D + 5D + 1M
-            </td>
-
-            <td>
-              Shows money is actually moving into the stock
-            </td>
-
-            <td>
-              20%
-            </td>
-
+            <td><b>Price Momentum</b></td>
+            <td>Strong 1D + 5D + 1M</td>
+            <td>Confirms money flow</td>
+            <td>20%</td>
           </tr>
 
-
           <tr>
-
-            <td>
-              <b>20 / 50 / 200 DMA</b>
-            </td>
-
-            <td>
-              Price above all three
-            </td>
-
-            <td>
-              Confirms trend structure
-            </td>
-
-            <td>
-              20%
-            </td>
-
+            <td><b>20 / 50 / 200 DMA</b></td>
+            <td>Price above all three</td>
+            <td>Confirms trend structure</td>
+            <td>20%</td>
           </tr>
 
-
           <tr>
-
-            <td>
-              <b>RSI</b>
-            </td>
-
-            <td>
-              50–70 and rising
-            </td>
-
-            <td>
-              Healthy momentum
-            </td>
-
-            <td>
-              10%
-            </td>
-
+            <td><b>RSI</b></td>
+            <td>50–70 and rising</td>
+            <td>Healthy momentum</td>
+            <td>10%</td>
           </tr>
 
-
           <tr>
-
-            <td>
-              <b>MACD</b>
-            </td>
-
-            <td>
-              Bullish cross
-            </td>
-
-            <td>
-              Detects acceleration
-            </td>
-
-            <td>
-              10%
-            </td>
-
+            <td><b>MACD</b></td>
+            <td>Bullish cross</td>
+            <td>Detects acceleration</td>
+            <td>10%</td>
           </tr>
 
-
           <tr>
-
-            <td>
-              <b>Sector Relative Strength</b>
-            </td>
-
-            <td>
-              Sector beats QQQ / SPY
-            </td>
-
-            <td>
-              Confirms theme-level money flow
-            </td>
-
-            <td>
-              10%
-            </td>
-
+            <td><b>Sector Relative Strength</b></td>
+            <td>Sector beats QQQ / SPY</td>
+            <td>Confirms theme-wide strength</td>
+            <td>10%</td>
           </tr>
 
-
           <tr>
-
-            <td>
-              <b>Catalyst</b>
-            </td>
-
-            <td>
-              Orders / backlog / guidance / customer wins
-            </td>
-
-            <td>
-              Gives technical momentum a fundamental reason
-            </td>
-
-            <td>
-              5%
-            </td>
-
+            <td><b>Catalyst</b></td>
+            <td>Orders / guidance / wins</td>
+            <td>Supports persistence</td>
+            <td>5%</td>
           </tr>
 
         </tbody>
@@ -993,104 +611,44 @@ th{
 
     </section>
 
-
     <section class="card third">
-
-      <h2>
-        🔥 Hot Setup
-      </h2>
-
+      <h2>🔥 Hot Setup</h2>
       <p>
         Price + volume + trend + momentum + sector strength confirm together.
       </p>
-
     </section>
 
-
     <section class="card third">
-
-      <h2>
-        ⚡ Heating Up
-      </h2>
-
+      <h2>⚡ Heating Up</h2>
       <p>
-        Leading indicators improve but full confirmation has not arrived.
+        Leading indicators improve but confirmation is incomplete.
       </p>
-
     </section>
 
-
     <section class="card third">
-
-      <h2>
-        🧊 Cooling Off
-      </h2>
-
+      <h2>🧊 Cooling Off</h2>
       <p>
-        Volume weakens, support breaks or sector relative strength deteriorates.
+        Volume weakens, trend support breaks or sector strength deteriorates.
       </p>
-
     </section>
 
   </div>
 
 </div>
 
-
 <script>
 
 const sectors = {
-
-  Networking:[
-    "AVGO",
-    "ANET",
-    "MRVL"
-  ],
-
-  Power:[
-    "GEV",
-    "ETN",
-    "CEG",
-    "VST",
-    "BE"
-  ],
-
-  Cyber:[
-    "PANW",
-    "CRWD",
-    "VRNS",
-    "TENB",
-    "QLYS",
-    "RDWR"
-  ],
-
-  Memory:[
-    "MU"
-  ],
-
-  Cooling:[
-    "VRT",
-    "ETN"
-  ],
-
-  Agents:[
-    "MSFT",
-    "NOW",
-    "CRM"
-  ],
-
-  Robotics:[
-    "NVDA",
-    "ABB",
-    "TER",
-    "SYM"
-  ]
-
+  Networking:["AVGO","ANET","MRVL"],
+  Power:["GEV","ETN","CEG","VST","BE"],
+  Cyber:["PANW","CRWD","VRNS","TENB","QLYS","RDWR"],
+  Memory:["MU"],
+  Cooling:["VRT","ETN"],
+  Agents:["MSFT","NOW","CRM"],
+  Robotics:["NVDA","ABB","TER","SYM"]
 };
 
-
 const exchange = {
-
   AVGO:"NASDAQ",
   ANET:"NYSE",
   MRVL:"NASDAQ",
@@ -1109,7 +667,6 @@ const exchange = {
   RDWR:"NASDAQ",
 
   MU:"NASDAQ",
-
   VRT:"NYSE",
 
   MSFT:"NASDAQ",
@@ -1120,398 +677,232 @@ const exchange = {
   ABB:"NYSE",
   TER:"NASDAQ",
   SYM:"NASDAQ"
-
 };
 
-
-let currentSector =
-"Networking";
-
-let selected =
-"ANET";
-
+let currentSector = "Networking";
+let selected = "ANET";
 
 const sectorSelect =
-document.getElementById(
-  "sectorSelect"
-);
+document.getElementById("sectorSelect");
 
+Object.keys(sectors).forEach(sector => {
 
-Object.keys(sectors)
-.forEach(
+  const option =
+  document.createElement("option");
 
-  sector => {
+  option.value = sector;
+  option.textContent = sector;
 
-    const option =
-    document.createElement(
-      "option"
-    );
+  sectorSelect.appendChild(option);
 
-    option.value =
-    sector;
+});
 
-    option.textContent =
-    sector;
+sectorSelect.value = currentSector;
 
-    sectorSelect.appendChild(
-      option
-    );
-
-  }
-
-);
-
-
-sectorSelect.value =
-currentSector;
-
-
-function tvSymbol(
-  ticker
-){
-
-  return
-  exchange[ticker]
-  + ":"
-  + ticker;
-
+function tvSymbol(ticker){
+  return (exchange[ticker] || "NASDAQ") + ":" + ticker;
 }
 
-
-function chartURL(
-  ticker,
-  technical
-){
+function buildChartUrl(ticker, technicalMode){
 
   const symbol =
-  encodeURIComponent(
-    tvSymbol(ticker)
-  );
+  encodeURIComponent(tvSymbol(ticker));
 
-  let studies = "";
+  let url =
+  "https://s.tradingview.com/widgetembed/" +
+  "?symbol=" + symbol +
+  "&interval=D" +
+  "&theme=dark" +
+  "&style=1" +
+  "&timezone=America%2FNew_York" +
+  "&locale=en" +
+  "&withdateranges=1" +
+  "&allow_symbol_change=1" +
+  "&saveimage=1" +
+  "&details=1" +
+  "&calendar=0";
 
-  if(technical){
+  if(technicalMode){
 
-    studies =
+    const studies = [
+      "RSI@tv-basicstudies",
+      "MACD@tv-basicstudies",
+      "MASimple@tv-basicstudies"
+    ];
+
+    url +=
+    "&studies=" +
     encodeURIComponent(
-      JSON.stringify([
-        "RSI@tv-basicstudies",
-        "MACD@tv-basicstudies",
-        "MASimple@tv-basicstudies"
-      ])
+      JSON.stringify(studies)
     );
 
   }
 
-
-  return (
-    "https://s.tradingview.com/widgetembed/" +
-    "?frameElementId=tradingview_chart" +
-    "&symbol=" + symbol +
-    "&interval=D" +
-    "&hidesidetoolbar=0" +
-    "&symboledit=1" +
-    "&saveimage=1" +
-    "&toolbarbg=111722" +
-    "&theme=dark" +
-    "&style=1" +
-    "&timezone=America%2FNew_York" +
-    "&withdateranges=1" +
-    "&hideideas=1" +
-    "&studies=" + studies +
-    "&locale=en"
-  );
-
+  return url;
 }
-
 
 function updateCharts(){
 
   document
-  .getElementById(
-    "selTicker"
-  )
+  .getElementById("selTicker")
+  .textContent = selected;
+
+  document
+  .getElementById("selTheme")
+  .textContent = currentSector;
+
+  document
+  .getElementById("chartTitle")
   .textContent =
-  selected;
-
+  selected + " — Live Chart";
 
   document
-  .getElementById(
-    "selTheme"
-  )
+  .getElementById("techTitle")
   .textContent =
-  currentSector;
-
+  selected + " — Technical Chart";
 
   document
-  .getElementById(
-    "chartTitle"
-  )
+  .getElementById("newsTitle")
   .textContent =
-  selected +
-  " — Live Chart";
+  selected + " — News & Catalysts";
 
+  const mainChart =
+  document.getElementById("mainChart");
 
-  document
-  .getElementById(
-    "techTitle"
-  )
-  .textContent =
-  selected +
-  " — Technical Chart";
+  const technicalChart =
+  document.getElementById("technicalChart");
 
+  mainChart.src =
+  buildChartUrl(selected,false);
 
-  document
-  .getElementById(
-    "newsTitle"
-  )
-  .textContent =
-  selected +
-  " — News & Catalysts";
-
+  technicalChart.src =
+  buildChartUrl(selected,true);
 
   document
-  .getElementById(
-    "mainChart"
-  )
-  .src =
-  chartURL(
-    selected,
-    false
-  );
-
-
-  document
-  .getElementById(
-    "technicalChart"
-  )
-  .src =
-  chartURL(
-    selected,
-    true
-  );
-
-
-  document
-  .getElementById(
-    "googleNews"
-  )
+  .getElementById("googleNews")
   .href =
-  "https://www.google.com/search?q="
-  +
+  "https://www.google.com/search?q=" +
   encodeURIComponent(
-    selected +
-    " stock latest news"
-  )
-  +
+    selected + " stock latest news"
+  ) +
   "&tbm=nws";
 
-
   document
-  .getElementById(
-    "yahooNews"
-  )
+  .getElementById("yahooNews")
   .href =
-  "https://finance.yahoo.com/quote/"
-  +
-  selected
-  +
+  "https://finance.yahoo.com/quote/" +
+  selected +
   "/news/";
 
-
   document
-  .getElementById(
-    "tradingViewLink"
-  )
+  .getElementById("tradingViewLink")
   .href =
-  "https://www.tradingview.com/symbols/"
-  +
-  exchange[selected]
-  +
-  "-"
-  +
-  selected
-  +
+  "https://www.tradingview.com/symbols/" +
+  exchange[selected] +
+  "-" +
+  selected +
   "/";
 
-
   document
-  .getElementById(
-    "secLink"
-  )
+  .getElementById("secLink")
   .href =
-  "https://www.sec.gov/edgar/search/#/q="
-  +
-  selected;
-
+  "https://www.sec.gov/edgar/search/#/q=" +
+  encodeURIComponent(selected);
 }
-
 
 function renderStocks(){
 
   const stockbar =
-  document.getElementById(
-    "stockbar"
-  );
+  document.getElementById("stockbar");
 
+  stockbar.innerHTML = "";
 
-  stockbar.innerHTML =
-  "";
+  sectors[currentSector]
+  .forEach(ticker => {
 
+    const button =
+    document.createElement("button");
 
-  sectors[
-    currentSector
-  ]
-  .forEach(
+    button.className =
+    "stockbtn" +
+    (
+      ticker === selected
+      ? " active"
+      : ""
+    );
 
-    ticker => {
+    button.textContent = ticker;
 
-      const button =
-      document.createElement(
-        "button"
-      );
+    button.addEventListener(
+      "click",
+      () => {
 
+        selected = ticker;
 
-      button.className =
-      "stockbtn"
-      +
-      (
-        ticker === selected
-        ?
-        " active"
-        :
-        ""
-      );
+        renderStocks();
 
+        updateCharts();
 
-      button.textContent =
-      ticker;
+      }
+    );
 
+    stockbar.appendChild(button);
 
-      button.addEventListener(
-
-        "click",
-
-        () => {
-
-          selected =
-          ticker;
-
-
-          renderStocks();
-
-
-          updateCharts();
-
-        }
-
-      );
-
-
-      stockbar.appendChild(
-        button
-      );
-
-    }
-
-  );
-
+  });
 }
 
-
-sectorSelect
-.addEventListener(
-
+sectorSelect.addEventListener(
   "change",
-
   () => {
 
     currentSector =
     sectorSelect.value;
 
-
     selected =
-    sectors[
-      currentSector
-    ][0];
-
+    sectors[currentSector][0];
 
     renderStocks();
-
 
     updateCharts();
 
   }
-
 );
-
 
 document
-.querySelectorAll(
-  ".heatbox"
-)
-.forEach(
+.querySelectorAll(".heatbox")
+.forEach(box => {
 
-  box => {
+  box.addEventListener(
+    "click",
+    () => {
 
-    box.addEventListener(
+      document
+      .querySelectorAll(".heatbox")
+      .forEach(item => {
+        item.classList.remove("active");
+      });
 
-      "click",
+      box.classList.add("active");
 
-      () => {
+      currentSector =
+      box.dataset.sector;
 
-        document
-        .querySelectorAll(
-          ".heatbox"
-        )
-        .forEach(
+      sectorSelect.value =
+      currentSector;
 
-          item => {
+      selected =
+      sectors[currentSector][0];
 
-            item.classList.remove(
-              "active"
-            );
+      renderStocks();
 
-          }
+      updateCharts();
 
-        );
+    }
+  );
 
-
-        box.classList.add(
-          "active"
-        );
-
-
-        currentSector =
-        box.dataset.sector;
-
-
-        sectorSelect.value =
-        currentSector;
-
-
-        selected =
-        sectors[
-          currentSector
-        ][0];
-
-
-        renderStocks();
-
-
-        updateCharts();
-
-      }
-
-    );
-
-  }
-
-);
-
+});
 
 renderStocks();
-
 updateCharts();
 
 </script>
