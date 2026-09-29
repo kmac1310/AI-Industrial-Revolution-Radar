@@ -1,210 +1,874 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>1440TIME AI Industrial Revolution Radar</title>
+<title>1440TIME AI Industrial Revolution Radar v2</title>
+
 <style>
-body{margin:0;background:#080b10;color:#f5f7fb;font:14px Arial,Helvetica,sans-serif}
-.wrap{max-width:1400px;margin:auto;padding:24px}
-h1{font-size:42px;margin:0}.red{color:#ff3b30}.muted{color:#96a0af}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:20px}
-.card{background:#121821;border:1px solid #263142;border-radius:18px;padding:16px}
-.hero{grid-column:span 12}.sector{grid-column:span 4}.full{grid-column:span 12}.half{grid-column:span 6}
-.bar{height:8px;background:#25303d;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#5aa9ff,#46d39a)}
-.row{display:grid;grid-template-columns:95px 1fr 34px;gap:8px;align-items:center;margin:8px 0}
-.tag{display:inline-block;padding:4px 8px;background:#1a2431;border:1px solid #2a394b;border-radius:99px;margin:3px}
-.hot{color:#ff7b7b;font-weight:bold}.high{color:#65dca8;font-weight:bold}.early{color:#ffd166;font-weight:bold}
-table{width:100%;border-collapse:collapse}th,td{padding:10px 7px;border-bottom:1px solid #27303b;text-align:left}
-input,textarea{background:#0b1118;color:white;border:1px solid #2a3442;border-radius:8px;padding:8px;width:100%;box-sizing:border-box}
-textarea{min-height:120px}
-@media(max-width:950px){.sector,.half{grid-column:span 12}}
+:root{
+  --bg:#070a0f;
+  --panel:#111722;
+  --line:#243041;
+  --text:#f5f7fb;
+  --muted:#92a0b4;
+  --red:#ff3b30;
+  --green:#34d399;
+  --yellow:#fbbf24;
+  --blue:#60a5fa;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#070a0f;
+  color:var(--text);
+  font:14px Arial, sans-serif;
+}
+
+.wrap{
+  max-width:1600px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{
+  font-size:42px;
+  margin:0;
+}
+
+.red{
+  color:var(--red);
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:14px;
+  margin-top:16px;
+}
+
+.card{
+  background:#111722;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+}
+
+.full{
+  grid-column:span 12;
+}
+
+.half{
+  grid-column:span 6;
+}
+
+.third{
+  grid-column:span 4;
+}
+
+.heatgrid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+}
+
+.heatbox{
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:13px;
+  background:#0b1119;
+  cursor:pointer;
+}
+
+.heatbox.active{
+  outline:2px solid var(--blue);
+}
+
+.score{
+  font-size:28px;
+  font-weight:900;
+}
+
+.bar{
+  height:8px;
+  background:#222c39;
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  background:linear-gradient(90deg,#fbbf24,#ef4444);
+}
+
+.stockbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.stockbtn{
+  border:1px solid var(--line);
+  background:#0b121b;
+  color:white;
+  border-radius:10px;
+  padding:9px 12px;
+  cursor:pointer;
+}
+
+.stockbtn.active{
+  background:#1b2a3e;
+  border-color:#4f6d91;
+}
+
+.tvwrap{
+  height:560px;
+}
+
+.tvsmall{
+  height:420px;
+}
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+
+.kpi{
+  background:#0b1119;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:980px;
+}
+
+th,td{
+  padding:10px 8px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+}
+
+th{
+  color:#9fb0c7;
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+@media(max-width:1100px){
+  .heatgrid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .half,
+  .third{
+    grid-column:span 12;
+  }
+
+  .kpis{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:650px){
+  .heatgrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .kpis{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
-<h1><span class="red">1440TIME™</span> AI Industrial Revolution Radar</h1>
-<p class="muted">Think Outside the Clock™ — Track the bottlenecks before they become the headlines.</p>
+
+<h1>
+  <span class="red">1440TIME™</span>
+  AI Industrial Revolution Radar
+</h1>
+
+<p class="muted">
+  Find the bottlenecks • Follow the money • Confirm with price, volume and momentum
+</p>
 
 <div class="grid">
-<div class="card hero">
-<h2>The Core Thesis</h2>
-<p>AI growth is shifting from “who makes the model?” to “what must the world buy so AI can operate at scale?”</p>
-<p><b>Hunting rule:</b> scarcity + mandatory spending + accelerating demand + manageable valuation.</p>
+
+<section class="card full">
+
+<h2>🔥 AI Money-Flow Heat Map</h2>
+
+<div class="heatgrid">
+
+<div class="heatbox active" data-sector="Networking">
+  <b>Networking & Optics</b>
+  <div class="score">90</div>
+  <div class="bar">
+    <div class="fill" style="width:90%"></div>
+  </div>
+  <small>AVGO • ANET • MRVL</small>
 </div>
 
-<div class="card sector">
-<h2>1. Agentic AI</h2>
-<p class="muted">AI moves from answering → acting</p>
-<div class="row"><span>Demand</span><div class="bar"><div class="fill" style="width:96%"></div></div><b>96</b></div>
-<div class="row"><span>12-mo speed</span><div class="bar"><div class="fill" style="width:98%"></div></div><b>98</b></div>
-<span class="tag">MSFT</span><span class="tag">NOW</span><span class="tag">CRM</span>
-<p><b>Hidden-gem hunt:</b> orchestration, observability, machine identity, payments, governance</p>
-<p class="hot">HEAT: VERY HIGH</p>
+<div class="heatbox" data-sector="Power">
+  <b>Power & Grid</b>
+  <div class="score">88</div>
+  <div class="bar">
+    <div class="fill" style="width:88%"></div>
+  </div>
+  <small>GEV • ETN • CEG • VST • BE</small>
 </div>
 
-<div class="card sector">
-<h2>2. AI Cybersecurity</h2>
-<p class="muted">Protect agents, identities, APIs and data</p>
-<div class="row"><span>Mandatory</span><div class="bar"><div class="fill" style="width:98%"></div></div><b>98</b></div>
-<div class="row"><span>12-mo speed</span><div class="bar"><div class="fill" style="width:91%"></div></div><b>91</b></div>
-<span class="tag">VRNS</span><span class="tag">TENB</span><span class="tag">QLYS</span><span class="tag">RDWR</span>
-<p><b>Watch:</b> data permissions, agent traffic, exposure management, machine identity</p>
-<p class="hot">HEAT: VERY HIGH</p>
+<div class="heatbox" data-sector="Cyber">
+  <b>AI Cybersecurity</b>
+  <div class="score">86</div>
+  <div class="bar">
+    <div class="fill" style="width:86%"></div>
+  </div>
+  <small>PANW • CRWD • VRNS • TENB • QLYS • RDWR</small>
 </div>
 
-<div class="card sector">
-<h2>3. Power & Grid</h2>
-<p class="muted">AI cannot run without electricity</p>
-<div class="row"><span>Scarcity</span><div class="bar"><div class="fill" style="width:97%"></div></div><b>97</b></div>
-<div class="row"><span>12-mo speed</span><div class="bar"><div class="fill" style="width:88%"></div></div><b>88</b></div>
-<span class="tag">GEV</span><span class="tag">ETN</span><span class="tag">CEG</span><span class="tag">VST</span><span class="tag">BE</span>
-<p><b>Hidden-gem hunt:</b> transformers, switchgear, turbines, microgrids, backup power</p>
-<p class="hot">HEAT: VERY HIGH</p>
+<div class="heatbox" data-sector="Memory">
+  <b>HBM / Memory</b>
+  <div class="score">84</div>
+  <div class="bar">
+    <div class="fill" style="width:84%"></div>
+  </div>
+  <small>MU</small>
 </div>
 
-<div class="card sector">
-<h2>4. Cooling & Data Centers</h2>
-<p class="muted">AI rack density rewrites infrastructure</p>
-<div class="row"><span>Demand</span><div class="bar"><div class="fill" style="width:92%"></div></div><b>92</b></div>
-<div class="row"><span>12-mo speed</span><div class="bar"><div class="fill" style="width:89%"></div></div><b>89</b></div>
-<span class="tag">VRT</span><span class="tag">ETN</span>
-<p><b>Hidden-gem hunt:</b> liquid cooling, pumps, heat exchangers, DC power</p>
-<p class="high">HEAT: HIGH</p>
+<div class="heatbox" data-sector="Cooling">
+  <b>Cooling / Data Center</b>
+  <div class="score">79</div>
+  <div class="bar">
+    <div class="fill" style="width:79%"></div>
+  </div>
+  <small>VRT • ETN</small>
 </div>
 
-<div class="card sector">
-<h2>5. HBM & AI Memory</h2>
-<p class="muted">Compute is useless if memory bandwidth chokes</p>
-<div class="row"><span>Demand</span><div class="bar"><div class="fill" style="width:95%"></div></div><b>95</b></div>
-<div class="row"><span>12-mo speed</span><div class="bar"><div class="fill" style="width:93%"></div></div><b>93</b></div>
-<span class="tag">MU</span><span class="tag">SK hynix</span><span class="tag">Samsung</span>
-<p><b>Hidden-gem hunt:</b> HBM packaging, test, substrates, memory equipment</p>
-<p class="hot">HEAT: VERY HIGH</p>
+<div class="heatbox" data-sector="Agents">
+  <b>Agentic AI</b>
+  <div class="score">76</div>
+  <div class="bar">
+    <div class="fill" style="width:76%"></div>
+  </div>
+  <small>MSFT • NOW • CRM</small>
 </div>
 
-<div class="card sector">
-<h2>6. Networking & Optics</h2>
-<p class="muted">Connect massive AI clusters as one machine</p>
-<div class="row"><span>Demand</span><div class="bar"><div class="fill" style="width:97%"></div></div><b>97</b></div>
-<div class="row"><span>12-mo speed</span><div class="bar"><div class="fill" style="width:95%"></div></div><b>95</b></div>
-<span class="tag">AVGO</span><span class="tag">ANET</span><span class="tag">MRVL</span>
-<p><b>Hidden-gem hunt:</b> optics, photonics, DSPs, connectivity, co-packaged optics</p>
-<p class="hot">HEAT: VERY HIGH</p>
-</div>
-
-<div class="card sector">
-<h2>7. Physical AI / Robotics</h2>
-<p class="muted">AI leaves the screen and becomes labor</p>
-<div class="row"><span>Demand</span><div class="bar"><div class="fill" style="width:88%"></div></div><b>88</b></div>
-<div class="row"><span>12-mo speed</span><div class="bar"><div class="fill" style="width:86%"></div></div><b>86</b></div>
-<span class="tag">NVDA</span><span class="tag">ABB</span><span class="tag">TER</span><span class="tag">SYM</span>
-<p><b>Hidden-gem hunt:</b> actuators, sensors, machine vision, robot hands, autonomy</p>
-<p class="early">HEAT: EARLY / ACCELERATING</p>
-</div>
-
-<div class="card full">
-<h2>Hidden-Gem Research Board</h2>
-<table>
-<tr>
-<th>Ticker</th>
-<th>Theme</th>
-<th>Why it matters</th>
-<th>Wizard score</th>
-<th>Next catalyst / note</th>
-</tr>
-
-<tr>
-<td><b>VRNS</b></td>
-<td>AI Data Security</td>
-<td>Controls what AI can access</td>
-<td><input data-k="vrns" value="86"></td>
-<td><input data-k="vrnsn" value="Watch AI-security wins and valuation"></td>
-</tr>
-
-<tr>
-<td><b>RDWR</b></td>
-<td>API / Agent Security</td>
-<td>Protects AI-era traffic</td>
-<td><input data-k="rdwr" value="84"></td>
-<td><input data-k="rdwrn" value="Watch cloud ARR and agentic AI demand"></td>
-</tr>
-
-<tr>
-<td><b>TENB</b></td>
-<td>Exposure Management</td>
-<td>Finds vulnerabilities across attack surface</td>
-<td><input data-k="tenb" value="78"></td>
-<td><input data-k="tenbn" value="Watch short interest, convert, ARR"></td>
-</tr>
-
-<tr>
-<td><b>QLYS</b></td>
-<td>Risk / Exposure</td>
-<td>Profitable AI-security expansion</td>
-<td><input data-k="qlys" value="82"></td>
-<td><input data-k="qlysn" value="Watch margins and AI adoption"></td>
-</tr>
-
-<tr>
-<td><b>MU</b></td>
-<td>HBM Memory</td>
-<td>Direct HBM exposure</td>
-<td><input data-k="mu" value="88"></td>
-<td><input data-k="mun" value="Deep dive HBM4 pricing and supply"></td>
-</tr>
-
-<tr>
-<td><b>VRT</b></td>
-<td>Cooling / Power</td>
-<td>AI rack density makes this mandatory</td>
-<td><input data-k="vrt" value="89"></td>
-<td><input data-k="vrtn" value="Deep dive backlog and liquid cooling mix"></td>
-</tr>
-
-<tr>
-<td><b>ANET</b></td>
-<td>AI Networking</td>
-<td>Network fabric for AI clusters</td>
-<td><input data-k="anet" value="90"></td>
-<td><input data-k="anetn" value="Watch AI Ethernet growth"></td>
-</tr>
-</table>
-</div>
-
-<div class="card half">
-<h2>Wizard's 5-Minute Scan</h2>
-<ol>
-<li><b>Money:</b> Which sector raised guidance, backlog or capex?</li>
-<li><b>Scarcity:</b> Where can supply not meet AI demand?</li>
-<li><b>Price:</b> Extended, or at a real technical decision zone?</li>
-<li><b>Proof:</b> Revenue, ARR or orders confirm the story.</li>
-<li><b>Trigger:</b> Earnings, product launch, customer win, regulation or capacity expansion.</li>
-</ol>
-</div>
-
-<div class="card half">
-<h2>Research Notes</h2>
-<textarea id="notes" placeholder="Add next company, catalyst or thesis..."></textarea>
+<div class="heatbox" data-sector="Robotics">
+  <b>Physical AI</b>
+  <div class="score">72</div>
+  <div class="bar">
+    <div class="fill" style="width:72%"></div>
+  </div>
+  <small>NVDA • ABB • TER • SYM</small>
 </div>
 
 </div>
 
 <p class="muted">
-Research framework only. Theme scores are prioritization tools, not guarantees of returns.
+  Heat scores are the 1440TIME research-priority framework.
+  Live chart, technical-analysis and news panels below provide current market confirmation.
+  A later API upgrade can calculate heat automatically from price momentum,
+  relative volume, moving averages, RSI/MACD and sector-relative strength.
 </p>
+
+</section>
+
+<section class="card full">
+
+<h2>📡 Live AI Stock Radar</h2>
+
+<select id="sectorSelect"></select>
+
+<div class="stockbar" id="stockbar" style="margin-top:10px"></div>
+
+<div class="kpis">
+
+<div class="kpi">
+  <small>Selected</small>
+  <b id="selTicker">ANET</b>
+</div>
+
+<div class="kpi">
+  <small>Theme</small>
+  <b id="selTheme">Networking</b>
+</div>
+
+<div class="kpi">
+  <small>Signal #1</small>
+  <b>Relative Volume</b>
+</div>
+
+<div class="kpi">
+  <small>Signal #2</small>
+  <b>20/50/200 DMA</b>
+</div>
+
+<div class="kpi">
+  <small>Signal #3</small>
+  <b>RSI + MACD</b>
+</div>
+
+<div class="kpi">
+  <small>Confirmation</small>
+  <b>Price + Volume</b>
+</div>
+
+</div>
+
+</section>
+
+<section class="card half">
+
+<h2 id="chartTitle">
+  ANET — Live Chart
+</h2>
+
+<div class="tvwrap" id="chartWidget"></div>
+
+</section>
+
+<section class="card half">
+
+<h2 id="techTitle">
+  ANET — Technical Analysis
+</h2>
+
+<div class="tvwrap" id="techWidget"></div>
+
+</section>
+
+<section class="card full">
+
+<h2 id="newsTitle">
+  ANET — Live News & Catalysts
+</h2>
+
+<div class="tvsmall" id="newsWidget"></div>
+
+</section>
+
+<section class="card full" style="overflow:auto">
+
+<h2>🧭 Technical Decision Matrix</h2>
+
+<table>
+
+<tr>
+  <th>Signal</th>
+  <th>What we want to see</th>
+  <th>Why it matters</th>
+  <th>Future heat weight</th>
+</tr>
+
+<tr>
+  <td><b>Relative Volume</b></td>
+  <td>&gt;1.5× normal</td>
+  <td>Unusual attention / institutional activity</td>
+  <td>25%</td>
+</tr>
+
+<tr>
+  <td><b>Price Momentum</b></td>
+  <td>Strong 1D + 5D + 1M</td>
+  <td>Confirms money flow</td>
+  <td>20%</td>
+</tr>
+
+<tr>
+  <td><b>20 / 50 / 200 DMA</b></td>
+  <td>Price above all three</td>
+  <td>Defines trend structure</td>
+  <td>20%</td>
+</tr>
+
+<tr>
+  <td><b>RSI</b></td>
+  <td>50–70 and rising</td>
+  <td>Healthy momentum</td>
+  <td>10%</td>
+</tr>
+
+<tr>
+  <td><b>MACD</b></td>
+  <td>Bullish cross + expanding histogram</td>
+  <td>Shows acceleration</td>
+  <td>10%</td>
+</tr>
+
+<tr>
+  <td><b>Sector Relative Strength</b></td>
+  <td>Sector beats QQQ / SPY</td>
+  <td>Confirms theme-wide money flow</td>
+  <td>10%</td>
+</tr>
+
+<tr>
+  <td><b>News / Catalyst</b></td>
+  <td>Orders, backlog, guidance, wins</td>
+  <td>Explains persistence</td>
+  <td>5%</td>
+</tr>
+
+</table>
+
+</section>
+
+<section class="card third">
+
+<h2>🔥 Hot Setup</h2>
+
+<p>
+Trend + volume + momentum + sector strength all confirm.
+</p>
+
+</section>
+
+<section class="card third">
+
+<h2>⚡ Heating Up</h2>
+
+<p>
+Leading indicators improve, but confirmation is incomplete.
+</p>
+
+</section>
+
+<section class="card third">
+
+<h2>🧊 Cooling Off</h2>
+
+<p>
+Relative volume fades, trend support breaks, or sector strength weakens.
+</p>
+
+</section>
+
+</div>
 </div>
 
 <script>
-document.querySelectorAll('[data-k]').forEach(e=>{
- const k='aiRadar_'+e.dataset.k;
- const v=localStorage.getItem(k);
- if(v!==null)e.value=v;
- e.addEventListener('input',()=>localStorage.setItem(k,e.value));
+
+const sectors = {
+
+  Networking:[
+    "AVGO",
+    "ANET",
+    "MRVL"
+  ],
+
+  Power:[
+    "GEV",
+    "ETN",
+    "CEG",
+    "VST",
+    "BE"
+  ],
+
+  Cyber:[
+    "PANW",
+    "CRWD",
+    "VRNS",
+    "TENB",
+    "QLYS",
+    "RDWR"
+  ],
+
+  Memory:[
+    "MU"
+  ],
+
+  Cooling:[
+    "VRT",
+    "ETN"
+  ],
+
+  Agents:[
+    "MSFT",
+    "NOW",
+    "CRM"
+  ],
+
+  Robotics:[
+    "NVDA",
+    "ABB",
+    "TER",
+    "SYM"
+  ]
+
+};
+
+const exchange = {
+
+  AVGO:"NASDAQ",
+  ANET:"NYSE",
+  MRVL:"NASDAQ",
+
+  GEV:"NYSE",
+  ETN:"NYSE",
+  CEG:"NASDAQ",
+  VST:"NYSE",
+  BE:"NYSE",
+
+  PANW:"NASDAQ",
+  CRWD:"NASDAQ",
+  VRNS:"NASDAQ",
+  TENB:"NASDAQ",
+  QLYS:"NASDAQ",
+  RDWR:"NASDAQ",
+
+  MU:"NASDAQ",
+
+  VRT:"NYSE",
+
+  MSFT:"NASDAQ",
+  NOW:"NYSE",
+  CRM:"NYSE",
+
+  NVDA:"NASDAQ",
+  ABB:"NYSE",
+  TER:"NASDAQ",
+  SYM:"NASDAQ"
+
+};
+
+let selected = "ANET";
+
+let currentSector = "Networking";
+
+const sectorSelect =
+document.getElementById("sectorSelect");
+
+Object.keys(sectors).forEach(section => {
+
+  let option =
+  document.createElement("option");
+
+  option.value = section;
+
+  option.textContent = section;
+
+  sectorSelect.appendChild(option);
+
 });
 
-const n=document.getElementById('notes');
-n.value=localStorage.getItem('aiRadar_notes')||'';
-n.addEventListener('input',()=>localStorage.setItem('aiRadar_notes',n.value));
+sectorSelect.value =
+currentSector;
+
+function tvSymbol(ticker){
+
+  return
+  (exchange[ticker] || "NASDAQ")
+  + ":" + ticker;
+
+}
+
+function addTV(
+  container,
+  source,
+  config
+){
+
+  container.innerHTML = "";
+
+  let outer =
+  document.createElement("div");
+
+  outer.className =
+  "tradingview-widget-container";
+
+  outer.style.height = "100%";
+
+  outer.style.width = "100%";
+
+  let inner =
+  document.createElement("div");
+
+  inner.className =
+  "tradingview-widget-container__widget";
+
+  inner.style.height = "100%";
+
+  inner.style.width = "100%";
+
+  let script =
+  document.createElement("script");
+
+  script.type =
+  "text/javascript";
+
+  script.src =
+  source;
+
+  script.async =
+  true;
+
+  script.text =
+  JSON.stringify(config);
+
+  outer.appendChild(inner);
+
+  outer.appendChild(script);
+
+  container.appendChild(outer);
+
+}
+
+function renderWidgets(){
+
+  let symbol =
+  tvSymbol(selected);
+
+  document.getElementById(
+  "selTicker"
+  ).textContent =
+  selected;
+
+  document.getElementById(
+  "selTheme"
+  ).textContent =
+  currentSector;
+
+  document.getElementById(
+  "chartTitle"
+  ).textContent =
+  selected + " — Live Chart";
+
+  document.getElementById(
+  "techTitle"
+  ).textContent =
+  selected + " — Technical Analysis";
+
+  document.getElementById(
+  "newsTitle"
+  ).textContent =
+  selected + " — Live News & Catalysts";
+
+  addTV(
+
+    document.getElementById(
+    "chartWidget"
+    ),
+
+    "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js",
+
+    {
+
+      autosize:true,
+
+      symbol:symbol,
+
+      interval:"D",
+
+      timezone:"America/New_York",
+
+      theme:"dark",
+
+      style:"1",
+
+      locale:"en",
+
+      withdateranges:true,
+
+      allow_symbol_change:true,
+
+      support_host:
+      "https://www.tradingview.com"
+
+    }
+
+  );
+
+  addTV(
+
+    document.getElementById(
+    "techWidget"
+    ),
+
+    "https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js",
+
+    {
+
+      interval:"1D",
+
+      width:"100%",
+
+      isTransparent:true,
+
+      height:"100%",
+
+      symbol:symbol,
+
+      showIntervalTabs:true,
+
+      displayMode:"multiple",
+
+      locale:"en",
+
+      colorTheme:"dark"
+
+    }
+
+  );
+
+  addTV(
+
+    document.getElementById(
+    "newsWidget"
+    ),
+
+    "https://s3.tradingview.com/external-embedding/embed-widget-timeline.js",
+
+    {
+
+      feedMode:"symbol",
+
+      symbol:symbol,
+
+      isTransparent:true,
+
+      displayMode:"regular",
+
+      width:"100%",
+
+      height:"100%",
+
+      colorTheme:"dark",
+
+      locale:"en"
+
+    }
+
+  );
+
+}
+
+function renderStocks(){
+
+  let bar =
+  document.getElementById(
+  "stockbar"
+  );
+
+  bar.innerHTML = "";
+
+  sectors[currentSector]
+  .forEach(ticker => {
+
+    let button =
+    document.createElement(
+    "button"
+    );
+
+    button.className =
+    "stockbtn"
+    +
+    (
+    ticker === selected
+    ?
+    " active"
+    :
+    ""
+    );
+
+    button.textContent =
+    ticker;
+
+    button.onclick =
+    () => {
+
+      selected =
+      ticker;
+
+      renderStocks();
+
+      renderWidgets();
+
+    };
+
+    bar.appendChild(
+    button
+    );
+
+  });
+
+}
+
+sectorSelect.onchange =
+() => {
+
+  currentSector =
+  sectorSelect.value;
+
+  selected =
+  sectors[currentSector][0];
+
+  renderStocks();
+
+  renderWidgets();
+
+};
+
+document
+.querySelectorAll(
+".heatbox"
+)
+.forEach(box => {
+
+  box.onclick =
+  () => {
+
+    document
+    .querySelectorAll(
+    ".heatbox"
+    )
+    .forEach(x =>
+    x.classList.remove(
+    "active"
+    ));
+
+    box.classList.add(
+    "active"
+    );
+
+    currentSector =
+    box.dataset.sector;
+
+    sectorSelect.value =
+    currentSector;
+
+    selected =
+    sectors[currentSector][0];
+
+    renderStocks();
+
+    renderWidgets();
+
+  };
+
+});
+
+renderStocks();
+
+renderWidgets();
+
 </script>
 
 </body>
