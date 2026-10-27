@@ -1,8 +1,8 @@
 {
- "generated_at": "2026-10-27T16:18:31+00:00",
+ "generated_at": "2026-10-27T16:35:20+00:00",
  "as_of": "2026-10-27",
  "benchmark": "QQQ",
- "benchmark_1m": -1.97,
+ "benchmark_1m": -2.01,
  "weights": {
   "relvol": 0.25,
   "momentum": 0.2,
@@ -17,15 +17,15 @@
    "heat": 37,
    "ext": 12,
    "status": "cooling",
-   "rs_vs_bench": -6.5,
+   "rs_vs_bench": -6.3,
    "stocks": {
     "AVGO": {
-     "price": 341.61,
-     "chg1d": 3.78,
-     "chg5d": 2.17,
-     "chg1m": -2.28,
+     "price": 342.7,
+     "chg1d": 4.11,
+     "chg5d": 2.49,
+     "chg1m": -1.97,
      "relvol": 0.77,
-     "rsi": 47.4,
+     "rsi": 48.0,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -33,13 +33,13 @@
       "50": false,
       "200": false
      },
-     "pct200": -6.8,
+     "pct200": -6.6,
      "extension": 0,
      "heat": 32,
      "status": "cooling",
      "breakdown": {
       "relvol": 27,
-      "momentum": 61,
+      "momentum": 62,
       "trend": 0,
       "rsi": 50,
       "macd": 35,
@@ -48,12 +48,12 @@
      }
     },
     "ANET": {
-     "price": 188.74,
-     "chg1d": 6.49,
-     "chg5d": 4.16,
-     "chg1m": -7.9,
-     "relvol": 0.96,
-     "rsi": 47.7,
+     "price": 188.43,
+     "chg1d": 6.31,
+     "chg5d": 3.99,
+     "chg1m": -8.05,
+     "relvol": 0.97,
+     "rsi": 47.5,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -61,13 +61,13 @@
       "50": false,
       "200": true
      },
-     "pct200": 14.8,
-     "extension": 21,
+     "pct200": 14.6,
+     "extension": 20,
      "heat": 44,
      "status": "watch",
      "breakdown": {
-      "relvol": 46,
-      "momentum": 58,
+      "relvol": 47,
+      "momentum": 57,
       "trend": 40,
       "rsi": 50,
       "macd": 35,
@@ -76,12 +76,12 @@
      }
     },
     "LITE": {
-     "price": 876.5,
-     "chg1d": 7.14,
-     "chg5d": 6.56,
-     "chg1m": -4.86,
-     "relvol": 0.98,
-     "rsi": 47.6,
+     "price": 873.37,
+     "chg1d": 6.76,
+     "chg5d": 6.18,
+     "chg1m": -5.2,
+     "relvol": 0.99,
+     "rsi": 47.3,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -89,13 +89,13 @@
       "50": false,
       "200": true
      },
-     "pct200": 10.5,
-     "extension": 15,
+     "pct200": 10.1,
+     "extension": 14,
      "heat": 46,
      "status": "watch",
      "breakdown": {
-      "relvol": 48,
-      "momentum": 66,
+      "relvol": 49,
+      "momentum": 65,
       "trend": 40,
       "rsi": 50,
       "macd": 35,
@@ -104,12 +104,12 @@
      }
     },
     "COHR": {
-     "price": 236.28,
-     "chg1d": 6.67,
-     "chg5d": 1.93,
-     "chg1m": -16.34,
-     "relvol": 1.0,
-     "rsi": 40.8,
+     "price": 235.82,
+     "chg1d": 6.46,
+     "chg5d": 1.73,
+     "chg1m": -16.51,
+     "relvol": 1.01,
+     "rsi": 40.7,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -117,12 +117,12 @@
       "50": false,
       "200": false
      },
-     "pct200": -20.1,
+     "pct200": -20.3,
      "extension": 0,
      "heat": 34,
      "status": "cooling",
      "breakdown": {
-      "relvol": 50,
+      "relvol": 51,
       "momentum": 43,
       "trend": 0,
       "rsi": 50,
@@ -132,12 +132,12 @@
      }
     },
     "CIEN": {
-     "price": 350.83,
-     "chg1d": 4.44,
-     "chg5d": 2.6,
-     "chg1m": 1.93,
-     "relvol": 0.92,
-     "rsi": 47.1,
+     "price": 349.52,
+     "chg1d": 4.05,
+     "chg5d": 2.21,
+     "chg1m": 1.55,
+     "relvol": 0.93,
+     "rsi": 46.7,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -145,13 +145,13 @@
       "50": false,
       "200": false
      },
-     "pct200": -13.0,
+     "pct200": -13.4,
      "extension": 0,
      "heat": 37,
      "status": "cooling",
      "breakdown": {
-      "relvol": 42,
-      "momentum": 67,
+      "relvol": 43,
+      "momentum": 66,
       "trend": 0,
       "rsi": 50,
       "macd": 35,
@@ -160,12 +160,12 @@
      }
     },
     "CRDO": {
-     "price": 164.82,
-     "chg1d": 9.04,
-     "chg5d": -3.9,
-     "chg1m": -14.45,
-     "relvol": 1.01,
-     "rsi": 42.0,
+     "price": 165.63,
+     "chg1d": 9.58,
+     "chg5d": -3.43,
+     "chg1m": -14.03,
+     "relvol": 1.02,
+     "rsi": 42.4,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -173,13 +173,13 @@
       "50": false,
       "200": false
      },
-     "pct200": -8.9,
+     "pct200": -8.5,
      "extension": 0,
      "heat": 33,
      "status": "cooling",
      "breakdown": {
-      "relvol": 51,
-      "momentum": 35,
+      "relvol": 52,
+      "momentum": 36,
       "trend": 0,
       "rsi": 50,
       "macd": 35,
@@ -188,12 +188,12 @@
      }
     },
     "ALAB": {
-     "price": 281.77,
-     "chg1d": 8.58,
-     "chg5d": -1.07,
-     "chg1m": -19.8,
-     "relvol": 0.79,
-     "rsi": 42.1,
+     "price": 284.25,
+     "chg1d": 9.53,
+     "chg5d": -0.19,
+     "chg1m": -19.09,
+     "relvol": 0.8,
+     "rsi": 43.0,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -201,13 +201,13 @@
       "50": false,
       "200": true
      },
-     "pct200": 11.1,
-     "extension": 16,
-     "heat": 35,
+     "pct200": 12.1,
+     "extension": 17,
+     "heat": 36,
      "status": "cooling",
      "breakdown": {
-      "relvol": 29,
-      "momentum": 33,
+      "relvol": 30,
+      "momentum": 36,
       "trend": 40,
       "rsi": 50,
       "macd": 35,
@@ -216,12 +216,12 @@
      }
     },
     "MRVL": {
-     "price": 242.24,
-     "chg1d": 3.62,
-     "chg5d": 0.76,
-     "chg1m": -3.81,
-     "relvol": 0.68,
-     "rsi": 48.1,
+     "price": 243.24,
+     "chg1d": 4.05,
+     "chg5d": 1.18,
+     "chg1m": -3.41,
+     "relvol": 0.69,
+     "rsi": 48.6,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -229,13 +229,13 @@
       "50": false,
       "200": true
      },
-     "pct200": 33.8,
-     "extension": 47,
+     "pct200": 34.4,
+     "extension": 48,
      "heat": 37,
      "status": "cooling",
      "breakdown": {
-      "relvol": 18,
-      "momentum": 57,
+      "relvol": 19,
+      "momentum": 58,
       "trend": 40,
       "rsi": 50,
       "macd": 35,
@@ -246,18 +246,18 @@
    }
   },
   "Power": {
-   "heat": 49,
+   "heat": 48,
    "ext": 0,
    "status": "watch",
-   "rs_vs_bench": 1.1,
+   "rs_vs_bench": 0.8,
    "stocks": {
     "GEV": {
-     "price": 878.79,
-     "chg1d": 2.77,
-     "chg5d": -1.3,
-     "chg1m": -7.47,
-     "relvol": 1.54,
-     "rsi": 42.5,
+     "price": 877.43,
+     "chg1d": 2.61,
+     "chg5d": -1.45,
+     "chg1m": -7.62,
+     "relvol": 1.55,
+     "rsi": 42.2,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -265,27 +265,27 @@
       "50": false,
       "200": false
      },
-     "pct200": -6.6,
+     "pct200": -6.7,
      "extension": 0,
      "heat": 51,
      "status": "heating",
      "breakdown": {
       "relvol": 100,
-      "momentum": 47,
+      "momentum": 46,
       "trend": 0,
       "rsi": 50,
       "macd": 35,
-      "sector_rs": 55,
+      "sector_rs": 54,
       "catalyst": 50
      }
     },
     "CEG": {
-     "price": 259.8,
-     "chg1d": 2.9,
-     "chg5d": 0.37,
-     "chg1m": -0.24,
+     "price": 258.32,
+     "chg1d": 2.31,
+     "chg5d": -0.2,
+     "chg1m": -0.81,
      "relvol": 0.85,
-     "rsi": 44.7,
+     "rsi": 43.9,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -293,27 +293,27 @@
       "50": false,
       "200": false
      },
-     "pct200": -7.4,
+     "pct200": -7.9,
      "extension": 0,
      "heat": 37,
      "status": "cooling",
      "breakdown": {
       "relvol": 35,
-      "momentum": 60,
+      "momentum": 56,
       "trend": 0,
       "rsi": 50,
       "macd": 35,
-      "sector_rs": 55,
+      "sector_rs": 54,
       "catalyst": 50
      }
     },
     "VST": {
-     "price": 145.96,
-     "chg1d": 2.99,
-     "chg5d": -2.9,
-     "chg1m": 5.76,
+     "price": 145.37,
+     "chg1d": 2.57,
+     "chg5d": -3.29,
+     "chg1m": 5.33,
      "relvol": 1.11,
-     "rsi": 48.1,
+     "rsi": 47.6,
      "rsi_rising": false,
      "macd": "Bearish, improving",
      "above": {
@@ -321,27 +321,27 @@
       "50": true,
       "200": false
      },
-     "pct200": -5.0,
+     "pct200": -5.4,
      "extension": 0,
-     "heat": 50,
-     "status": "heating",
+     "heat": 49,
+     "status": "watch",
      "breakdown": {
       "relvol": 61,
-      "momentum": 62,
+      "momentum": 59,
       "trend": 35,
       "rsi": 35,
       "macd": 35,
-      "sector_rs": 55,
+      "sector_rs": 54,
       "catalyst": 50
      }
     },
     "BE": {
-     "price": 220.29,
-     "chg1d": 8.03,
-     "chg5d": -1.06,
-     "chg1m": -16.2,
+     "price": 220.78,
+     "chg1d": 8.27,
+     "chg5d": -0.84,
+     "chg1m": -16.01,
      "relvol": 1.44,
-     "rsi": 43.0,
+     "rsi": 43.2,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -349,7 +349,7 @@
       "50": false,
       "200": true
      },
-     "pct200": 0.1,
+     "pct200": 0.3,
      "extension": 0,
      "heat": 56,
      "status": "heating",
@@ -359,17 +359,17 @@
       "trend": 40,
       "rsi": 50,
       "macd": 35,
-      "sector_rs": 55,
+      "sector_rs": 54,
       "catalyst": 50
      }
     },
     "TLN": {
-     "price": 344.99,
-     "chg1d": 2.14,
-     "chg5d": -1.27,
-     "chg1m": 13.67,
-     "relvol": 0.88,
-     "rsi": 51.9,
+     "price": 343.28,
+     "chg1d": 1.63,
+     "chg5d": -1.76,
+     "chg1m": 13.11,
+     "relvol": 0.89,
+     "rsi": 51.3,
      "rsi_rising": false,
      "macd": "Bearish, improving",
      "above": {
@@ -377,35 +377,35 @@
       "50": true,
       "200": false
      },
-     "pct200": -1.4,
-     "extension": 2,
-     "heat": 50,
-     "status": "heating",
+     "pct200": -1.9,
+     "extension": 1,
+     "heat": 49,
+     "status": "watch",
      "breakdown": {
-      "relvol": 38,
-      "momentum": 72,
+      "relvol": 39,
+      "momentum": 69,
       "trend": 35,
       "rsi": 75,
       "macd": 35,
-      "sector_rs": 55,
+      "sector_rs": 54,
       "catalyst": 50
      }
     }
    }
   },
   "Cyber": {
-   "heat": 73,
+   "heat": 74,
    "ext": 76,
    "status": "extended",
-   "rs_vs_bench": 9.6,
+   "rs_vs_bench": 9.7,
    "stocks": {
     "CRWD": {
-     "price": 268.4,
-     "chg1d": 2.51,
-     "chg5d": 18.05,
-     "chg1m": 3.53,
+     "price": 267.81,
+     "chg1d": 2.28,
+     "chg5d": 17.79,
+     "chg1m": 3.3,
      "relvol": 0.89,
-     "rsi": 60.5,
+     "rsi": 60.3,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -413,13 +413,13 @@
       "50": true,
       "200": true
      },
-     "pct200": 62.6,
+     "pct200": 62.2,
      "extension": 80,
      "heat": 71,
      "status": "extended",
      "breakdown": {
       "relvol": 39,
-      "momentum": 78,
+      "momentum": 77,
       "trend": 100,
       "rsi": 100,
       "macd": 35,
@@ -428,12 +428,12 @@
      }
     },
     "PANW": {
-     "price": 403.0,
-     "chg1d": 3.21,
-     "chg5d": 18.43,
-     "chg1m": 2.78,
-     "relvol": 0.87,
-     "rsi": 58.7,
+     "price": 403.26,
+     "chg1d": 3.28,
+     "chg5d": 18.51,
+     "chg1m": 2.85,
+     "relvol": 0.88,
+     "rsi": 58.8,
      "rsi_rising": true,
      "macd": "Fresh bullish cross",
      "above": {
@@ -441,13 +441,13 @@
       "50": true,
       "200": true
      },
-     "pct200": 51.0,
+     "pct200": 51.1,
      "extension": 79,
-     "heat": 77,
+     "heat": 78,
      "status": "extended",
      "breakdown": {
-      "relvol": 37,
-      "momentum": 78,
+      "relvol": 38,
+      "momentum": 79,
       "trend": 100,
       "rsi": 100,
       "macd": 100,
@@ -456,10 +456,10 @@
      }
     },
     "ZS": {
-     "price": 260.51,
-     "chg1d": 0.02,
-     "chg5d": 21.44,
-     "chg1m": 30.65,
+     "price": 260.76,
+     "chg1d": 0.12,
+     "chg5d": 21.56,
+     "chg1m": 30.78,
      "relvol": 0.96,
      "rsi": 73.5,
      "rsi_rising": true,
@@ -469,8 +469,8 @@
       "50": true,
       "200": true
      },
-     "pct200": 56.6,
-     "extension": 93,
+     "pct200": 56.7,
+     "extension": 94,
      "heat": 77,
      "status": "extended",
      "breakdown": {
@@ -484,27 +484,27 @@
      }
     },
     "NET": {
-     "price": 331.44,
-     "chg1d": -0.13,
-     "chg5d": 13.63,
-     "chg1m": -6.37,
+     "price": 331.77,
+     "chg1d": -0.03,
+     "chg5d": 13.74,
+     "chg1m": -6.28,
      "relvol": 1.04,
-     "rsi": 52.6,
+     "rsi": 52.8,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
-      "20": false,
+      "20": true,
       "50": true,
       "200": true
      },
-     "pct200": 34.5,
+     "pct200": 34.7,
      "extension": 51,
-     "heat": 66,
-     "status": "watch",
+     "heat": 71,
+     "status": "hot",
      "breakdown": {
       "relvol": 54,
       "momentum": 57,
-      "trend": 75,
+      "trend": 100,
       "rsi": 100,
       "macd": 35,
       "sector_rs": 98,
@@ -514,18 +514,18 @@
    }
   },
   "Memory": {
-   "heat": 31,
+   "heat": 32,
    "ext": 22,
    "status": "cooling",
-   "rs_vs_bench": -15.6,
+   "rs_vs_bench": -15.5,
    "stocks": {
     "MU": {
-     "price": 931.4,
-     "chg1d": 3.07,
-     "chg5d": 3.94,
-     "chg1m": -11.62,
+     "price": 930.48,
+     "chg1d": 2.96,
+     "chg5d": 3.84,
+     "chg1m": -11.7,
      "relvol": 0.81,
-     "rsi": 46.4,
+     "rsi": 46.3,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -533,13 +533,13 @@
       "50": false,
       "200": true
      },
-     "pct200": 26.3,
+     "pct200": 26.1,
      "extension": 37,
      "heat": 37,
      "status": "cooling",
      "breakdown": {
       "relvol": 31,
-      "momentum": 53,
+      "momentum": 52,
       "trend": 40,
       "rsi": 50,
       "macd": 35,
@@ -548,12 +548,12 @@
      }
     },
     "SNDK": {
-     "price": 1309.77,
-     "chg1d": 4.32,
-     "chg5d": -4.07,
-     "chg1m": -23.53,
-     "relvol": 0.68,
-     "rsi": 37.4,
+     "price": 1312.47,
+     "chg1d": 4.53,
+     "chg5d": -3.87,
+     "chg1m": -23.38,
+     "relvol": 0.69,
+     "rsi": 37.6,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -561,13 +561,13 @@
       "50": false,
       "200": true
      },
-     "pct200": 5.2,
-     "extension": 7,
-     "heat": 25,
+     "pct200": 5.4,
+     "extension": 8,
+     "heat": 26,
      "status": "cooling",
      "breakdown": {
-      "relvol": 18,
-      "momentum": 27,
+      "relvol": 19,
+      "momentum": 28,
       "trend": 40,
       "rsi": 15,
       "macd": 35,
@@ -581,15 +581,15 @@
    "heat": 31,
    "ext": 0,
    "status": "cooling",
-   "rs_vs_bench": -15.0,
+   "rs_vs_bench": -13.7,
    "stocks": {
     "VRT": {
-     "price": 210.4,
-     "chg1d": 5.32,
-     "chg5d": 3.36,
-     "chg1m": -13.78,
-     "relvol": 1.24,
-     "rsi": 40.2,
+     "price": 209.54,
+     "chg1d": 4.89,
+     "chg5d": 2.94,
+     "chg1m": -14.14,
+     "relvol": 1.25,
+     "rsi": 39.6,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -597,13 +597,41 @@
       "50": false,
       "200": false
      },
-     "pct200": -21.9,
+     "pct200": -22.2,
      "extension": 0,
-     "heat": 39,
+     "heat": 36,
      "status": "cooling",
      "breakdown": {
-      "relvol": 74,
-      "momentum": 49,
+      "relvol": 75,
+      "momentum": 48,
+      "trend": 0,
+      "rsi": 15,
+      "macd": 35,
+      "sector_rs": 0,
+      "catalyst": 50
+     }
+    },
+    "ETN": {
+     "price": 383.66,
+     "chg1d": 3.16,
+     "chg5d": 0.44,
+     "chg1m": -11.07,
+     "relvol": 1.1,
+     "rsi": 40.6,
+     "rsi_rising": true,
+     "macd": "Bearish, improving",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": false
+     },
+     "pct200": -2.8,
+     "extension": 0,
+     "heat": 35,
+     "status": "cooling",
+     "breakdown": {
+      "relvol": 60,
+      "momentum": 47,
       "trend": 0,
       "rsi": 50,
       "macd": 35,
@@ -612,12 +640,12 @@
      }
     },
     "NVT": {
-     "price": 134.58,
-     "chg1d": 4.18,
-     "chg5d": -3.56,
-     "chg1m": -16.01,
-     "relvol": 1.18,
-     "rsi": 38.4,
+     "price": 134.64,
+     "chg1d": 4.23,
+     "chg5d": -3.52,
+     "chg1m": -15.97,
+     "relvol": 1.19,
+     "rsi": 38.5,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -625,12 +653,12 @@
       "50": false,
       "200": false
      },
-     "pct200": -6.6,
+     "pct200": -6.5,
      "extension": 0,
      "heat": 31,
      "status": "cooling",
      "breakdown": {
-      "relvol": 68,
+      "relvol": 69,
       "momentum": 33,
       "trend": 0,
       "rsi": 15,
@@ -640,12 +668,12 @@
      }
     },
     "MOD": {
-     "price": 138.05,
-     "chg1d": 5.97,
-     "chg5d": -5.9,
-     "chg1m": -21.13,
+     "price": 137.12,
+     "chg1d": 5.26,
+     "chg5d": -6.54,
+     "chg1m": -21.66,
      "relvol": 0.93,
-     "rsi": 32.3,
+     "rsi": 31.4,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -653,13 +681,13 @@
       "50": false,
       "200": false
      },
-     "pct200": -36.1,
+     "pct200": -36.5,
      "extension": 0,
      "heat": 23,
      "status": "cooling",
      "breakdown": {
       "relvol": 43,
-      "momentum": 24,
+      "momentum": 23,
       "trend": 0,
       "rsi": 15,
       "macd": 35,
@@ -670,18 +698,18 @@
    }
   },
   "Agents": {
-   "heat": 64,
+   "heat": 63,
    "ext": 48,
    "status": "heating",
-   "rs_vs_bench": 11.4,
+   "rs_vs_bench": 11.3,
    "stocks": {
     "PLTR": {
-     "price": 200.97,
-     "chg1d": 1.07,
-     "chg5d": 4.35,
-     "chg1m": 7.2,
+     "price": 200.27,
+     "chg1d": 0.72,
+     "chg5d": 3.98,
+     "chg1m": 6.82,
      "relvol": 0.65,
-     "rsi": 57.8,
+     "rsi": 57.2,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -689,13 +717,13 @@
       "50": true,
       "200": true
      },
-     "pct200": 31.0,
-     "extension": 51,
-     "heat": 64,
+     "pct200": 30.6,
+     "extension": 50,
+     "heat": 63,
      "status": "watch",
      "breakdown": {
       "relvol": 15,
-      "momentum": 71,
+      "momentum": 68,
       "trend": 100,
       "rsi": 100,
       "macd": 35,
@@ -704,12 +732,12 @@
      }
     },
     "NOW": {
-     "price": 155.96,
-     "chg1d": -1.4,
-     "chg5d": 4.3,
-     "chg1m": 18.65,
+     "price": 156.05,
+     "chg1d": -1.35,
+     "chg5d": 4.35,
+     "chg1m": 18.71,
      "relvol": 0.9,
-     "rsi": 65.0,
+     "rsi": 65.1,
      "rsi_rising": true,
      "macd": "Bullish, fading",
      "above": {
@@ -717,8 +745,8 @@
       "50": true,
       "200": true
      },
-     "pct200": 35.3,
-     "extension": 64,
+     "pct200": 35.4,
+     "extension": 65,
      "heat": 74,
      "status": "hot",
      "breakdown": {
@@ -732,12 +760,12 @@
      }
     },
     "MSFT": {
-     "price": 533.83,
-     "chg1d": 0.23,
-     "chg5d": 0.37,
-     "chg1m": 4.83,
+     "price": 533.1,
+     "chg1d": 0.09,
+     "chg5d": 0.23,
+     "chg1m": 4.69,
      "relvol": 0.68,
-     "rsi": 57.9,
+     "rsi": 57.5,
      "rsi_rising": false,
      "macd": "Bearish, improving",
      "above": {
@@ -745,13 +773,13 @@
       "50": true,
       "200": true
      },
-     "pct200": 22.5,
+     "pct200": 22.3,
      "extension": 39,
      "heat": 59,
      "status": "heating",
      "breakdown": {
       "relvol": 18,
-      "momentum": 58,
+      "momentum": 57,
       "trend": 100,
       "rsi": 75,
       "macd": 35,
@@ -796,12 +824,12 @@
    "rs_vs_bench": -2.2,
    "stocks": {
     "NVDA": {
-     "price": 218.72,
-     "chg1d": 1.26,
-     "chg5d": 1.04,
-     "chg1m": -4.43,
+     "price": 218.0,
+     "chg1d": 0.93,
+     "chg5d": 0.71,
+     "chg1m": -4.75,
      "relvol": 0.74,
-     "rsi": 47.1,
+     "rsi": 46.4,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -809,13 +837,13 @@
       "50": false,
       "200": true
      },
-     "pct200": 7.4,
+     "pct200": 7.0,
      "extension": 10,
      "heat": 39,
      "status": "cooling",
      "breakdown": {
       "relvol": 24,
-      "momentum": 51,
+      "momentum": 48,
       "trend": 40,
       "rsi": 50,
       "macd": 35,
@@ -824,12 +852,12 @@
      }
     },
     "TER": {
-     "price": 326.02,
-     "chg1d": 5.51,
-     "chg5d": -3.14,
-     "chg1m": -18.76,
+     "price": 326.69,
+     "chg1d": 5.72,
+     "chg5d": -2.94,
+     "chg1m": -18.59,
      "relvol": 1.17,
-     "rsi": 39.7,
+     "rsi": 39.9,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -837,7 +865,7 @@
       "50": false,
       "200": false
      },
-     "pct200": -6.4,
+     "pct200": -6.2,
      "extension": 0,
      "heat": 34,
      "status": "cooling",
@@ -852,12 +880,12 @@
      }
     },
     "ISRG": {
-     "price": 444.89,
-     "chg1d": -1.49,
-     "chg5d": 1.57,
-     "chg1m": 7.26,
-     "relvol": 1.24,
-     "rsi": 64.9,
+     "price": 444.41,
+     "chg1d": -1.6,
+     "chg5d": 1.46,
+     "chg1m": 7.14,
+     "relvol": 1.25,
+     "rsi": 64.5,
      "rsi_rising": false,
      "macd": "Bullish, fading",
      "above": {
@@ -865,13 +893,13 @@
       "50": true,
       "200": true
      },
-     "pct200": 2.3,
+     "pct200": 2.2,
      "extension": 18,
      "heat": 70,
      "status": "hot",
      "breakdown": {
-      "relvol": 74,
-      "momentum": 57,
+      "relvol": 75,
+      "momentum": 56,
       "trend": 100,
       "rsi": 75,
       "macd": 60,
@@ -880,12 +908,12 @@
      }
     },
     "SYM": {
-     "price": 39.4,
-     "chg1d": 3.96,
-     "chg5d": -0.73,
-     "chg1m": -6.19,
+     "price": 39.38,
+     "chg1d": 3.91,
+     "chg5d": -0.78,
+     "chg1m": -6.24,
      "relvol": 0.89,
-     "rsi": 45.3,
+     "rsi": 45.2,
      "rsi_rising": true,
      "macd": "Bearish, improving",
      "above": {
@@ -908,12 +936,12 @@
      }
     },
     "ROK": {
-     "price": 437.68,
-     "chg1d": 1.81,
-     "chg5d": 2.32,
-     "chg1m": 1.5,
+     "price": 437.57,
+     "chg1d": 1.79,
+     "chg5d": 2.29,
+     "chg1m": 1.47,
      "relvol": 1.12,
-     "rsi": 54.3,
+     "rsi": 54.2,
      "rsi_rising": true,
      "macd": "Fresh bullish cross",
      "above": {
@@ -939,8 +967,7 @@
   }
  },
  "errors": {
-  "SKHY": "only 77 bars \u2014 need ~210 for a 200-day average",
-  "ETN": "no price data returned"
+  "SKHY": "only 77 bars \u2014 need ~210 for a 200-day average"
  },
  "demo": false
 }
