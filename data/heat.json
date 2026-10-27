@@ -1,0 +1,999 @@
+{
+ "generated_at": "2026-10-08T15:16:30+00:00",
+ "as_of": "2026-10-08",
+ "benchmark": "QQQ",
+ "benchmark_1m": -19.38,
+ "weights": {
+  "relvol": 0.25,
+  "momentum": 0.2,
+  "trend": 0.2,
+  "rsi": 0.1,
+  "macd": 0.1,
+  "sector_rs": 0.1,
+  "catalyst": 0.05
+ },
+ "sectors": {
+  "Networking": {
+   "heat": 62,
+   "ext": 34,
+   "status": "heating",
+   "rs_vs_bench": 20.5,
+   "stocks": {
+    "AVGO": {
+     "price": 147.0,
+     "chg1d": 0.6,
+     "chg5d": -0.79,
+     "chg1m": -8.04,
+     "relvol": 0.81,
+     "rsi": 45.2,
+     "rsi_rising": true,
+     "macd": "Fresh bullish cross",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": true
+     },
+     "pct200": 7.4,
+     "extension": 10,
+     "heat": 51,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 31,
+      "momentum": 40,
+      "trend": 40,
+      "rsi": 50,
+      "macd": 100,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "ANET": {
+     "price": 182.27,
+     "chg1d": -0.75,
+     "chg5d": 1.49,
+     "chg1m": 2.52,
+     "relvol": 1.01,
+     "rsi": 52.9,
+     "rsi_rising": true,
+     "macd": "Bearish, improving",
+     "above": {
+      "20": false,
+      "50": true,
+      "200": true
+     },
+     "pct200": 31.7,
+     "extension": 47,
+     "heat": 64,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 51,
+      "momentum": 53,
+      "trend": 75,
+      "rsi": 100,
+      "macd": 35,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "LITE": {
+     "price": 222.9,
+     "chg1d": 1.62,
+     "chg5d": 9.71,
+     "chg1m": 23.27,
+     "relvol": 0.75,
+     "rsi": 85.5,
+     "rsi_rising": true,
+     "macd": "Bullish, expanding",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 37.5,
+     "extension": 82,
+     "heat": 69,
+     "status": "extended",
+     "breakdown": {
+      "relvol": 25,
+      "momentum": 95,
+      "trend": 100,
+      "rsi": 30,
+      "macd": 85,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "COHR": {
+     "price": 50.91,
+     "chg1d": -1.14,
+     "chg5d": -7.04,
+     "chg1m": -18.84,
+     "relvol": 0.79,
+     "rsi": 22.7,
+     "rsi_rising": false,
+     "macd": "Bearish",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": false
+     },
+     "pct200": -29.4,
+     "extension": 0,
+     "heat": 24,
+     "status": "cooling",
+     "breakdown": {
+      "relvol": 29,
+      "momentum": 9,
+      "trend": 0,
+      "rsi": 15,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "CIEN": {
+     "price": 71.25,
+     "chg1d": 2.97,
+     "chg5d": -3.11,
+     "chg1m": -7.4,
+     "relvol": 1.66,
+     "rsi": 43.8,
+     "rsi_rising": false,
+     "macd": "Bullish, expanding",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": false
+     },
+     "pct200": -19.9,
+     "extension": 0,
+     "heat": 58,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 45,
+      "trend": 0,
+      "rsi": 35,
+      "macd": 85,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "CRDO": {
+     "price": 70.43,
+     "chg1d": 3.57,
+     "chg5d": 1.11,
+     "chg1m": -3.18,
+     "relvol": 0.76,
+     "rsi": 46.8,
+     "rsi_rising": true,
+     "macd": "Fresh bullish cross",
+     "above": {
+      "20": true,
+      "50": false,
+      "200": false
+     },
+     "pct200": -0.9,
+     "extension": 0,
+     "heat": 51,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 26,
+      "momentum": 58,
+      "trend": 25,
+      "rsi": 50,
+      "macd": 100,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "ALAB": {
+     "price": 287.53,
+     "chg1d": 2.34,
+     "chg5d": 1.39,
+     "chg1m": 5.86,
+     "relvol": 1.54,
+     "rsi": 64.0,
+     "rsi_rising": true,
+     "macd": "Fresh bullish cross",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 35.5,
+     "extension": 64,
+     "heat": 91,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 68,
+      "trend": 100,
+      "rsi": 100,
+      "macd": 100,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "MRVL": {
+     "price": 144.47,
+     "chg1d": -0.02,
+     "chg5d": 3.67,
+     "chg1m": 15.0,
+     "relvol": 1.52,
+     "rsi": 64.3,
+     "rsi_rising": true,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 38.8,
+     "extension": 69,
+     "heat": 89,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 76,
+      "trend": 100,
+      "rsi": 100,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    }
+   }
+  },
+  "Power": {
+   "heat": 62,
+   "ext": 38,
+   "status": "heating",
+   "rs_vs_bench": 22.4,
+   "stocks": {
+    "GEV": {
+     "price": 250.18,
+     "chg1d": -5.82,
+     "chg5d": 4.52,
+     "chg1m": 16.24,
+     "relvol": 1.29,
+     "rsi": 56.2,
+     "rsi_rising": true,
+     "macd": "Bearish",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 45.9,
+     "extension": 71,
+     "heat": 77,
+     "status": "extended",
+     "breakdown": {
+      "relvol": 79,
+      "momentum": 69,
+      "trend": 100,
+      "rsi": 100,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "CEG": {
+     "price": 271.2,
+     "chg1d": -2.27,
+     "chg5d": -4.18,
+     "chg1m": 4.09,
+     "relvol": 1.48,
+     "rsi": 53.5,
+     "rsi_rising": false,
+     "macd": "Bearish",
+     "above": {
+      "20": false,
+      "50": true,
+      "200": true
+     },
+     "pct200": 39.7,
+     "extension": 59,
+     "heat": 68,
+     "status": "watch",
+     "breakdown": {
+      "relvol": 98,
+      "momentum": 40,
+      "trend": 75,
+      "rsi": 75,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "VST": {
+     "price": 69.86,
+     "chg1d": -1.2,
+     "chg5d": 1.04,
+     "chg1m": -4.1,
+     "relvol": 1.35,
+     "rsi": 48.7,
+     "rsi_rising": true,
+     "macd": "Bearish",
+     "above": {
+      "20": false,
+      "50": true,
+      "200": false
+     },
+     "pct200": -8.4,
+     "extension": 0,
+     "heat": 55,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 85,
+      "momentum": 43,
+      "trend": 35,
+      "rsi": 50,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "BE": {
+     "price": 311.34,
+     "chg1d": 0.35,
+     "chg5d": -1.02,
+     "chg1m": 2.52,
+     "relvol": 1.56,
+     "rsi": 51.0,
+     "rsi_rising": false,
+     "macd": "Bearish",
+     "above": {
+      "20": false,
+      "50": true,
+      "200": true
+     },
+     "pct200": 43.8,
+     "extension": 62,
+     "heat": 71,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 52,
+      "trend": 75,
+      "rsi": 75,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "TLN": {
+     "price": 136.1,
+     "chg1d": -2.92,
+     "chg5d": -3.47,
+     "chg1m": -3.65,
+     "relvol": 0.99,
+     "rsi": 43.4,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": false
+     },
+     "pct200": -4.6,
+     "extension": 0,
+     "heat": 40,
+     "status": "watch",
+     "breakdown": {
+      "relvol": 49,
+      "momentum": 29,
+      "trend": 0,
+      "rsi": 35,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    }
+   }
+  },
+  "Cyber": {
+   "heat": 54,
+   "ext": 14,
+   "status": "heating",
+   "rs_vs_bench": 18.1,
+   "stocks": {
+    "CRWD": {
+     "price": 80.74,
+     "chg1d": 0.76,
+     "chg5d": -0.49,
+     "chg1m": 7.25,
+     "relvol": 0.98,
+     "rsi": 54.0,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": true,
+      "50": false,
+      "200": false
+     },
+     "pct200": -12.0,
+     "extension": 4,
+     "heat": 55,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 48,
+      "momentum": 61,
+      "trend": 25,
+      "rsi": 75,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "PANW": {
+     "price": 88.53,
+     "chg1d": 2.62,
+     "chg5d": 3.99,
+     "chg1m": -2.61,
+     "relvol": 0.64,
+     "rsi": 47.7,
+     "rsi_rising": true,
+     "macd": "Bearish, improving",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": false
+     },
+     "pct200": -11.1,
+     "extension": 0,
+     "heat": 37,
+     "status": "cooling",
+     "breakdown": {
+      "relvol": 14,
+      "momentum": 63,
+      "trend": 0,
+      "rsi": 50,
+      "macd": 35,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "ZS": {
+     "price": 179.17,
+     "chg1d": -4.26,
+     "chg5d": 2.26,
+     "chg1m": -1.65,
+     "relvol": 1.76,
+     "rsi": 49.3,
+     "rsi_rising": true,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": true,
+      "50": false,
+      "200": true
+     },
+     "pct200": 24.0,
+     "extension": 34,
+     "heat": 70,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 42,
+      "trend": 65,
+      "rsi": 50,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "NET": {
+     "price": 258.85,
+     "chg1d": 0.85,
+     "chg5d": -5.05,
+     "chg1m": -7.98,
+     "relvol": 2.42,
+     "rsi": 37.2,
+     "rsi_rising": false,
+     "macd": "Bearish",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": true
+     },
+     "pct200": 11.3,
+     "extension": 16,
+     "heat": 55,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 33,
+      "trend": 40,
+      "rsi": 15,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    }
+   }
+  },
+  "Memory": {
+   "heat": 71,
+   "ext": 36,
+   "status": "hot",
+   "rs_vs_bench": 25.3,
+   "stocks": {
+    "SKHY": {
+     "price": 154.74,
+     "chg1d": 0.6,
+     "chg5d": -2.48,
+     "chg1m": 0.52,
+     "relvol": 0.72,
+     "rsi": 51.1,
+     "rsi_rising": false,
+     "macd": "Bearish, improving",
+     "above": {
+      "20": false,
+      "50": true,
+      "200": true
+     },
+     "pct200": 11.7,
+     "extension": 17,
+     "heat": 54,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 22,
+      "momentum": 48,
+      "trend": 75,
+      "rsi": 75,
+      "macd": 35,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "MU": {
+     "price": 87.36,
+     "chg1d": -3.1,
+     "chg5d": -0.83,
+     "chg1m": 8.0,
+     "relvol": 1.38,
+     "rsi": 60.1,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": false
+     },
+     "pct200": -6.8,
+     "extension": 10,
+     "heat": 70,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 88,
+      "momentum": 48,
+      "trend": 60,
+      "rsi": 75,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "SNDK": {
+     "price": 230.87,
+     "chg1d": 5.19,
+     "chg5d": 5.59,
+     "chg1m": 9.24,
+     "relvol": 1.64,
+     "rsi": 70.6,
+     "rsi_rising": true,
+     "macd": "Bullish, expanding",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 44.1,
+     "extension": 82,
+     "heat": 88,
+     "status": "extended",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 82,
+      "trend": 100,
+      "rsi": 55,
+      "macd": 85,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    }
+   }
+  },
+  "Cooling": {
+   "heat": 61,
+   "ext": 32,
+   "status": "heating",
+   "rs_vs_bench": 23.9,
+   "stocks": {
+    "VRT": {
+     "price": 108.9,
+     "chg1d": -2.65,
+     "chg5d": -8.73,
+     "chg1m": -10.95,
+     "relvol": 2.39,
+     "rsi": 34.2,
+     "rsi_rising": false,
+     "macd": "Bearish",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": true
+     },
+     "pct200": 8.1,
+     "extension": 11,
+     "heat": 50,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 12,
+      "trend": 40,
+      "rsi": 15,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "ETN": {
+     "price": 159.49,
+     "chg1d": 2.16,
+     "chg5d": 1.67,
+     "chg1m": 16.66,
+     "relvol": 1.06,
+     "rsi": 65.4,
+     "rsi_rising": false,
+     "macd": "Bullish, expanding",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 38.5,
+     "extension": 69,
+     "heat": 79,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 56,
+      "momentum": 81,
+      "trend": 100,
+      "rsi": 75,
+      "macd": 85,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "NVT": {
+     "price": 105.98,
+     "chg1d": 2.64,
+     "chg5d": -1.85,
+     "chg1m": 10.99,
+     "relvol": 1.09,
+     "rsi": 59.1,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 13.6,
+     "extension": 28,
+     "heat": 75,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 59,
+      "momentum": 69,
+      "trend": 100,
+      "rsi": 75,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "MOD": {
+     "price": 114.83,
+     "chg1d": -0.66,
+     "chg5d": -4.75,
+     "chg1m": 1.19,
+     "relvol": 0.55,
+     "rsi": 43.4,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": true
+     },
+     "pct200": 13.5,
+     "extension": 19,
+     "heat": 39,
+     "status": "cooling",
+     "breakdown": {
+      "relvol": 5,
+      "momentum": 40,
+      "trend": 40,
+      "rsi": 35,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    }
+   }
+  },
+  "Agents": {
+   "heat": 72,
+   "ext": 42,
+   "status": "hot",
+   "rs_vs_bench": 26.6,
+   "stocks": {
+    "PLTR": {
+     "price": 377.49,
+     "chg1d": -2.62,
+     "chg5d": 6.73,
+     "chg1m": 19.63,
+     "relvol": 1.64,
+     "rsi": 75.9,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 69.4,
+     "extension": 96,
+     "heat": 85,
+     "status": "extended",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 78,
+      "trend": 100,
+      "rsi": 55,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "NOW": {
+     "price": 117.18,
+     "chg1d": 0.89,
+     "chg5d": -3.89,
+     "chg1m": 4.02,
+     "relvol": 1.22,
+     "rsi": 49.6,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": false
+     },
+     "pct200": -12.6,
+     "extension": 0,
+     "heat": 62,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 72,
+      "momentum": 51,
+      "trend": 60,
+      "rsi": 35,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "MSFT": {
+     "price": 275.39,
+     "chg1d": -1.12,
+     "chg5d": 2.05,
+     "chg1m": -3.94,
+     "relvol": 0.84,
+     "rsi": 45.9,
+     "rsi_rising": true,
+     "macd": "Bearish, improving",
+     "above": {
+      "20": false,
+      "50": true,
+      "200": true
+     },
+     "pct200": 35.2,
+     "extension": 49,
+     "heat": 53,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 34,
+      "momentum": 45,
+      "trend": 75,
+      "rsi": 50,
+      "macd": 35,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "CRM": {
+     "price": 113.46,
+     "chg1d": 0.84,
+     "chg5d": 3.03,
+     "chg1m": 9.01,
+     "relvol": 1.48,
+     "rsi": 64.3,
+     "rsi_rising": true,
+     "macd": "Bullish, expanding",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 4.8,
+     "extension": 21,
+     "heat": 90,
+     "status": "hot",
+     "breakdown": {
+      "relvol": 98,
+      "momentum": 70,
+      "trend": 100,
+      "rsi": 100,
+      "macd": 85,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    }
+   }
+  },
+  "Robotics": {
+   "heat": 57,
+   "ext": 17,
+   "status": "heating",
+   "rs_vs_bench": 13.5,
+   "stocks": {
+    "NVDA": {
+     "price": 78.1,
+     "chg1d": 5.29,
+     "chg5d": 5.61,
+     "chg1m": -2.73,
+     "relvol": 1.18,
+     "rsi": 52.0,
+     "rsi_rising": true,
+     "macd": "Bearish, improving",
+     "above": {
+      "20": true,
+      "50": false,
+      "200": true
+     },
+     "pct200": 2.2,
+     "extension": 5,
+     "heat": 69,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 68,
+      "momentum": 67,
+      "trend": 65,
+      "rsi": 100,
+      "macd": 35,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "TER": {
+     "price": 129.87,
+     "chg1d": -1.48,
+     "chg5d": -6.29,
+     "chg1m": -9.08,
+     "relvol": 0.79,
+     "rsi": 41.1,
+     "rsi_rising": false,
+     "macd": "Bearish",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": true
+     },
+     "pct200": 4.1,
+     "extension": 6,
+     "heat": 37,
+     "status": "cooling",
+     "breakdown": {
+      "relvol": 29,
+      "momentum": 22,
+      "trend": 40,
+      "rsi": 35,
+      "macd": 10,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "ISRG": {
+     "price": 102.36,
+     "chg1d": 0.71,
+     "chg5d": -5.13,
+     "chg1m": -10.86,
+     "relvol": 1.47,
+     "rsi": 35.2,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": false
+     },
+     "pct200": -0.4,
+     "extension": 0,
+     "heat": 50,
+     "status": "heating",
+     "breakdown": {
+      "relvol": 97,
+      "momentum": 29,
+      "trend": 0,
+      "rsi": 15,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "SYM": {
+     "price": 113.39,
+     "chg1d": -3.13,
+     "chg5d": -3.71,
+     "chg1m": -8.61,
+     "relvol": 1.97,
+     "rsi": 35.1,
+     "rsi_rising": false,
+     "macd": "Bullish, fading",
+     "above": {
+      "20": false,
+      "50": false,
+      "200": false
+     },
+     "pct200": -16.9,
+     "extension": 0,
+     "heat": 49,
+     "status": "watch",
+     "breakdown": {
+      "relvol": 100,
+      "momentum": 22,
+      "trend": 0,
+      "rsi": 15,
+      "macd": 60,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    },
+    "ROK": {
+     "price": 481.26,
+     "chg1d": -2.24,
+     "chg5d": 2.86,
+     "chg1m": 1.9,
+     "relvol": 1.29,
+     "rsi": 55.2,
+     "rsi_rising": true,
+     "macd": "Fresh bullish cross",
+     "above": {
+      "20": true,
+      "50": true,
+      "200": true
+     },
+     "pct200": 52.9,
+     "extension": 75,
+     "heat": 82,
+     "status": "extended",
+     "breakdown": {
+      "relvol": 79,
+      "momentum": 50,
+      "trend": 100,
+      "rsi": 100,
+      "macd": 100,
+      "sector_rs": 100,
+      "catalyst": 50
+     }
+    }
+   }
+  }
+ },
+ "errors": {},
+ "demo": true
+}

@@ -3,909 +3,477 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>1440TIME AI Industrial Revolution Radar</title>
-
+<title>1440TIME AI Radar</title>
 <style>
 :root{
-  --bg:#070a0f;
-  --panel:#111722;
-  --panel2:#0b1119;
-  --line:#243041;
-  --text:#f5f7fb;
-  --muted:#92a0b4;
-  --red:#ff3b30;
-  --green:#34d399;
-  --yellow:#fbbf24;
-  --blue:#60a5fa;
+  --bg:#070a0f;--line:#243041;--text:#f5f7fb;--muted:#92a0b4;
+  --red:#ff3b30;--green:#34d399;--yellow:#fbbf24;--blue:#60a5fa;--purple:#a78bfa;
 }
-
 *{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 15% 0,#172033 0,#070a0f 38%);color:var(--text);font:14px/1.45 Arial,Helvetica,sans-serif}
+.wrap{max-width:1600px;margin:auto;padding:20px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+h1{margin:0;font-size:clamp(28px,4vw,50px);letter-spacing:-1.4px}
+h2{font-size:20px;margin:0}
+.red{color:var(--red)}.muted{color:var(--muted)}
+.up{color:var(--green)}.down{color:var(--red)}
+.badge{padding:9px 13px;border-radius:999px;background:#111b29;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:18px}
+.card{background:linear-gradient(180deg,#121923,#0c1119);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.full{grid-column:span 12}.half{grid-column:span 6}.third{grid-column:span 4}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.note{font-size:12px;color:var(--muted)}
 
-body{
-  margin:0;
-  background:radial-gradient(circle at 15% 0,#172033 0,#070a0f 38%);
-  color:var(--text);
-  font:14px/1.45 Arial,Helvetica,sans-serif;
-}
+/* banners */
+.banner{grid-column:span 12;border-radius:12px;padding:10px 14px;font-size:13px;display:none}
+.banner.show{display:block}
+.banner.warn{background:#2a2110;border:1px solid #6b5216;color:#fcd34d}
+.banner.info{background:#0f1d33;border:1px solid #284b7a;color:#bcd7ff}
 
-.wrap{
-  max-width:1600px;
-  margin:auto;
-  padding:20px;
-}
+/* heat map */
+.heatgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.heatbox{border:1px solid var(--line);border-radius:15px;padding:13px;background:#0b1119;cursor:pointer;transition:.15s;display:flex;flex-direction:column}
+.heatbox:hover{transform:translateY(-2px);border-color:#3b4c63}
+.heatbox.active{outline:2px solid var(--blue)}
+.score{font-size:30px;font-weight:900;margin:4px 0 2px}
+.bar{height:8px;background:#222c39;border-radius:99px;overflow:hidden;margin:3px 0 6px}
+.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#fbbf24,#ef4444);transition:width .6s}
+.fill.ext{background:linear-gradient(90deg,#34d399,#a78bfa)}
+.dial-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.rs{font-size:11px;color:var(--muted);margin-top:2px}
+.status{margin-top:auto;padding-top:8px;font-size:12px;font-weight:700}
 
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:16px;
-  flex-wrap:wrap;
-}
+/* stocks */
+.stockbar{display:flex;flex-wrap:wrap;gap:8px}
+.stockbtn{border:1px solid var(--line);background:#0b121b;color:#fff;border-radius:10px;padding:8px 11px;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:7px}
+.stockbtn:hover,.stockbtn.active{background:#1b2a3e;border-color:#4f6d91}
+.stockbtn .mini{font-size:11px;font-weight:700;padding:2px 6px;border-radius:6px;background:#1a2433}
+.tag{font-size:10px;padding:2px 6px;border-radius:6px;font-weight:700;letter-spacing:.4px}
+.tag.core{background:#123326;color:var(--green)}
+.tag.edge{background:#2a2140;color:var(--purple)}
+.star{color:var(--yellow)}
+select{background:#0b121b;color:#fff;border:1px solid var(--line);border-radius:9px;padding:8px}
+.thesis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.thesis div{background:#0b1119;border:1px solid var(--line);border-radius:12px;padding:12px}
+.thesis small,.kpi small{display:block;color:var(--muted);margin-bottom:3px;text-transform:uppercase;font-size:10.5px;letter-spacing:.6px}
+.kpis{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:10px}
+.kpi{background:#0b1119;border:1px solid var(--line);border-radius:12px;padding:10px}
+.kpi b{font-size:16px}
+.starbtn{background:none;border:1px solid var(--line);color:var(--yellow);border-radius:9px;padding:6px 10px;cursor:pointer;font-weight:700}
 
-h1{
-  margin:0;
-  font-size:clamp(28px,4vw,50px);
-  letter-spacing:-1.4px;
-}
+/* breakdown */
+.breakdown{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
+.bd{background:#0b1119;border:1px solid var(--line);border-radius:12px;padding:10px}
+.bd small{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.bd b{font-size:18px}
+.bd .bar{height:6px}
+.bd .fill{background:var(--blue)}
 
-.red{color:var(--red)}
-.muted{color:var(--muted)}
+/* leaderboard */
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#0b121b;color:#cbd5e1;border-radius:999px;padding:6px 11px;cursor:pointer;font-size:12px;font-weight:700}
+.chip.active{background:#1b2a3e;border-color:#4f6d91;color:#fff}
+.tablewrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{color:#9fb0c7;text-transform:uppercase;font-size:11px;letter-spacing:.65px;cursor:pointer;user-select:none}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:#111b29}
+.pill{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;display:inline-block}
+.dma{font-family:ui-monospace,Menlo,monospace;font-size:12px}
 
-.badge{
-  padding:9px 13px;
-  border-radius:999px;
-  background:#111b29;
-  border:1px solid var(--line);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:14px;
-  margin-top:18px;
-}
-
-.card{
-  background:linear-gradient(180deg,#121923,#0c1119);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:15px;
-  box-shadow:0 12px 35px rgba(0,0,0,.22);
-}
-
-.full{grid-column:span 12}
-.half{grid-column:span 6}
-.third{grid-column:span 4}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:12px;
-}
-
-.section-title h2{
-  margin:0;
-  font-size:20px;
-}
-
-.heatgrid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:10px;
-}
-
-.heatbox{
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:13px;
-  background:#0b1119;
-  cursor:pointer;
-  transition:.15s;
-}
-
-.heatbox:hover{
-  transform:translateY(-2px);
-  border-color:#3b4c63;
-}
-
-.heatbox.active{
-  outline:2px solid var(--blue);
-}
-
-.score{
-  font-size:28px;
-  font-weight:900;
-  margin:5px 0 3px;
-}
-
-.bar{
-  height:8px;
-  background:#222c39;
-  border-radius:99px;
-  overflow:hidden;
-  margin:5px 0 7px;
-}
-
-.fill{
-  height:100%;
-  border-radius:99px;
-  background:linear-gradient(90deg,#fbbf24,#ef4444);
-}
-
-.stockbar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:10px;
-}
-
-.stockbtn{
-  border:1px solid var(--line);
-  background:#0b121b;
-  color:white;
-  border-radius:10px;
-  padding:9px 12px;
-  cursor:pointer;
-  font-weight:700;
-}
-
-.stockbtn:hover,
-.stockbtn.active{
-  background:#1b2a3e;
-  border-color:#4f6d91;
-}
-
-select{
-  background:#0b121b;
-  color:#fff;
-  border:1px solid var(--line);
-  border-radius:9px;
-  padding:8px;
-}
-
-.kpis{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:8px;
-  margin-top:12px;
-}
-
-.kpi{
-  background:#0b1119;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:10px;
-}
-
-.kpi small{
-  display:block;
-  color:var(--muted);
-  margin-bottom:3px;
-}
-
-.kpi b{
-  font-size:15px;
-}
-
-.chartframe{
-  width:100%;
-  height:600px;
-  border:0;
-  border-radius:12px;
-  background:#0b1119;
-}
-
-.signalgrid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-
-.signal{
-  background:#0b1119;
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:12px;
-}
-
-.signal b{
-  display:block;
-  font-size:16px;
-  margin-bottom:4px;
-}
-
-.signal small{color:var(--muted)}
-
-.news-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-.newslink{
-  display:inline-block;
-  text-decoration:none;
-  color:white;
-  background:#142033;
-  border:1px solid #2d415c;
-  border-radius:10px;
-  padding:10px 14px;
-  font-weight:700;
-}
-
-.newslink:hover{
-  background:#1d304a;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:980px;
-}
-
-th,td{
-  padding:10px 8px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-}
-
-th{
-  color:#9fb0c7;
-  text-transform:uppercase;
-  font-size:11px;
-  letter-spacing:.65px;
-}
-
-.note{
-  font-size:12px;
-  color:var(--muted);
-}
+.chartframe{width:100%;height:560px;border:0;border-radius:12px;background:#0b1119}
+.news-buttons{display:flex;flex-wrap:wrap;gap:10px}
+.newslink{display:inline-block;text-decoration:none;color:#fff;background:#142033;border:1px solid #2d415c;border-radius:10px;padding:10px 14px;font-weight:700}
+.newslink:hover{background:#1d304a}
+.watch{display:flex;flex-wrap:wrap;gap:8px}
 
 @media(max-width:1150px){
   .heatgrid{grid-template-columns:repeat(3,1fr)}
   .half,.third{grid-column:span 12}
-  .kpis{grid-template-columns:repeat(3,1fr)}
-  .signalgrid{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:repeat(4,1fr)}
+  .breakdown{grid-template-columns:repeat(4,1fr)}
 }
-
 @media(max-width:650px){
   .heatgrid{grid-template-columns:repeat(2,1fr)}
-  .kpis,.signalgrid{grid-template-columns:repeat(2,1fr)}
+  .kpis,.breakdown{grid-template-columns:repeat(2,1fr)}
+  .thesis{grid-template-columns:1fr}
   .wrap{padding:12px}
-  .chartframe{height:500px}
+  .chartframe{height:440px}
+  .hide-m{display:none}
+  table{min-width:620px}
 }
 </style>
 </head>
-
 <body>
-
 <div class="wrap">
 
   <div class="top">
     <div>
-      <h1>
-        <span class="red">1440TIME™</span>
-        AI Industrial Revolution Radar
-      </h1>
-      <p class="muted">
-        Find the bottlenecks • Follow the money • Confirm with price, volume and momentum
-      </p>
+      <h1><span class="red">1440TIME™</span> AI Industrial Revolution Radar</h1>
+      <p class="muted">Find the bottlenecks • Follow the money • Confirm with price, volume and momentum</p>
     </div>
-
-    <div class="badge">
-      Think Outside the Clock™
-    </div>
+    <div class="badge">Think Outside the Clock™</div>
   </div>
 
   <div class="grid">
 
-    <section class="card full">
+    <div class="banner warn" id="bannerWarn"></div>
+    <div class="banner info" id="bannerInfo"></div>
 
+    <!-- HEAT MAP -->
+    <section class="card full">
       <div class="section-title">
         <div>
           <h2>🔥 AI Money-Flow Heat Map</h2>
-          <div class="muted">Sector research-priority framework</div>
+          <div class="muted">Calculated by the 1440TIME Heat Engine • Heat = money flow • Extension = how far price has run</div>
         </div>
+        <span class="note" id="asof"></span>
       </div>
-
-      <div class="heatgrid">
-
-        <div class="heatbox active" data-sector="Networking">
-          <b>Networking & Optics</b>
-          <div class="score">90</div>
-          <div class="bar"><div class="fill" style="width:90%"></div></div>
-          <small>AVGO • ANET • MRVL</small>
-        </div>
-
-        <div class="heatbox" data-sector="Power">
-          <b>Power & Grid</b>
-          <div class="score">88</div>
-          <div class="bar"><div class="fill" style="width:88%"></div></div>
-          <small>GEV • ETN • CEG • VST • BE</small>
-        </div>
-
-        <div class="heatbox" data-sector="Cyber">
-          <b>AI Cybersecurity</b>
-          <div class="score">86</div>
-          <div class="bar"><div class="fill" style="width:86%"></div></div>
-          <small>PANW • CRWD • VRNS • TENB • QLYS • RDWR</small>
-        </div>
-
-        <div class="heatbox" data-sector="Memory">
-          <b>HBM / Memory</b>
-          <div class="score">84</div>
-          <div class="bar"><div class="fill" style="width:84%"></div></div>
-          <small>MU</small>
-        </div>
-
-        <div class="heatbox" data-sector="Cooling">
-          <b>Cooling / Data Center</b>
-          <div class="score">79</div>
-          <div class="bar"><div class="fill" style="width:79%"></div></div>
-          <small>VRT • ETN</small>
-        </div>
-
-        <div class="heatbox" data-sector="Agents">
-          <b>Agentic AI</b>
-          <div class="score">76</div>
-          <div class="bar"><div class="fill" style="width:76%"></div></div>
-          <small>MSFT • NOW • CRM</small>
-        </div>
-
-        <div class="heatbox" data-sector="Robotics">
-          <b>Physical AI</b>
-          <div class="score">72</div>
-          <div class="bar"><div class="fill" style="width:72%"></div></div>
-          <small>NVDA • ABB • TER • SYM</small>
-        </div>
-
-      </div>
-
-      <p class="note">
-        Current heat numbers are the 1440TIME research-priority framework.
-        Future versions can calculate them automatically from price momentum,
-        relative volume, RSI, MACD, moving averages and sector strength.
-      </p>
-
+      <div class="heatgrid" id="heatgrid"></div>
     </section>
 
+    <!-- LEADERBOARD -->
     <section class="card full">
-
       <div class="section-title">
         <div>
-          <h2>📡 Live AI Stock Radar</h2>
-          <div class="muted">Pick a sector, then select a stock.</div>
+          <h2>🏆 Setup Leaderboard</h2>
+          <div class="muted">Every stock, ranked. Tap a row to load it. Tap a column to sort.</div>
         </div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr id="lbHead"></tr></thead>
+          <tbody id="lbBody"></tbody>
+        </table>
+      </div>
+    </section>
 
+    <!-- STOCK RADAR -->
+    <section class="card full" id="radar">
+      <div class="section-title">
+        <div>
+          <h2>📡 Stock Radar</h2>
+          <div class="muted">Pick a sector, then a stock.</div>
+        </div>
         <select id="sectorSelect"></select>
       </div>
 
       <div class="stockbar" id="stockbar"></div>
 
+      <div class="thesis">
+        <div><small>Why it's on the radar</small><span id="selThesis"></span></div>
+        <div><small>Kill switch — what would make us wrong</small><span id="selRisk"></span></div>
+      </div>
+
       <div class="kpis">
-
-        <div class="kpi">
-          <small>Selected</small>
-          <b id="selTicker">ANET</b>
-        </div>
-
-        <div class="kpi">
-          <small>Theme</small>
-          <b id="selTheme">Networking</b>
-        </div>
-
-        <div class="kpi">
-          <small>Signal #1</small>
-          <b>Relative Volume</b>
-        </div>
-
-        <div class="kpi">
-          <small>Signal #2</small>
-          <b>20 / 50 / 200 DMA</b>
-        </div>
-
-        <div class="kpi">
-          <small>Signal #3</small>
-          <b>RSI + MACD</b>
-        </div>
-
-        <div class="kpi">
-          <small>Confirmation</small>
-          <b>Price + Volume</b>
-        </div>
-
+        <div class="kpi"><small>Ticker</small><b id="kTicker"></b> <span id="kTier"></span></div>
+        <div class="kpi"><small>Price</small><b id="kPrice">—</b></div>
+        <div class="kpi"><small>1D / 1M</small><b id="kChg">—</b></div>
+        <div class="kpi"><small>Rel. Volume</small><b id="kRv">—</b></div>
+        <div class="kpi"><small>RSI (14)</small><b id="kRsi">—</b></div>
+        <div class="kpi"><small>vs 200-day</small><b id="kExt">—</b></div>
+        <div class="kpi"><small>MACD</small><b id="kMacd" style="font-size:13px">—</b></div>
+        <div class="kpi"><small>Watchlist</small><button class="starbtn" id="starBtn"></button></div>
       </div>
 
+      <div class="section-title" style="margin:16px 0 0">
+        <h2 style="font-size:16px">Heat Engine breakdown — <span id="kHeat">—</span> <span id="kStatus"></span></h2>
+        <span class="note">Each factor 0–100 • weight shown</span>
+      </div>
+      <div class="breakdown" id="breakdown"></div>
     </section>
 
     <section class="card half">
-
-      <div class="section-title">
-        <h2 id="chartTitle">ANET — Live Chart</h2>
-        <span class="muted">TradingView</span>
-      </div>
-
-      <iframe
-        id="mainChart"
-        class="chartframe"
-        allow="fullscreen"
-        referrerpolicy="origin">
-      </iframe>
-
+      <div class="section-title"><h2 id="chartTitle">Live Chart</h2><span class="muted">TradingView</span></div>
+      <iframe id="mainChart" class="chartframe" allow="fullscreen" referrerpolicy="origin"></iframe>
     </section>
 
     <section class="card half">
-
-      <div class="section-title">
-        <h2 id="techTitle">ANET — Technical Chart</h2>
-        <span class="muted">RSI • MACD • Moving Averages</span>
-      </div>
-
-      <iframe
-        id="technicalChart"
-        class="chartframe"
-        allow="fullscreen"
-        referrerpolicy="origin">
-      </iframe>
-
+      <div class="section-title"><h2 id="techTitle">Technical Chart</h2><span class="muted">RSI • MACD • MA</span></div>
+      <iframe id="technicalChart" class="chartframe" allow="fullscreen" referrerpolicy="origin"></iframe>
     </section>
 
     <section class="card full">
-
-      <h2>🎯 What We Are Watching</h2>
-
-      <div class="signalgrid">
-
-        <div class="signal">
-          <b>Relative Volume</b>
-          <small>
-            Above 1.5× normal volume can indicate unusual trader or institutional attention.
-          </small>
-        </div>
-
-        <div class="signal">
-          <b>Moving Averages</b>
-          <small>
-            Price above the 20, 50 and 200-day averages supports a stronger trend structure.
-          </small>
-        </div>
-
-        <div class="signal">
-          <b>RSI</b>
-          <small>
-            50–70 and rising can represent healthy momentum without extreme extension.
-          </small>
-        </div>
-
-        <div class="signal">
-          <b>MACD</b>
-          <small>
-            A bullish crossover and expanding histogram can signal accelerating momentum.
-          </small>
-        </div>
-
-      </div>
-
+      <div class="section-title"><div><h2>⭐ My Watchlist</h2><div class="muted">Star any stock. Saved in this browser.</div></div></div>
+      <div class="watch" id="watchlist"></div>
     </section>
 
     <section class="card full">
-
-      <div class="section-title">
-        <div>
-          <h2 id="newsTitle">ANET — News & Catalysts</h2>
-          <div class="muted">
-            Fast research links for the currently selected company.
-          </div>
-        </div>
-      </div>
-
+      <div class="section-title"><div><h2 id="newsTitle">News & Catalysts</h2><div class="muted">Fast research links for the selected company.</div></div></div>
       <div class="news-buttons">
-
-        <a
-          id="googleNews"
-          class="newslink"
-          target="_blank"
-          rel="noopener noreferrer">
-          📰 Google News
-        </a>
-
-        <a
-          id="yahooNews"
-          class="newslink"
-          target="_blank"
-          rel="noopener noreferrer">
-          💵 Yahoo Finance
-        </a>
-
-        <a
-          id="tradingViewLink"
-          class="newslink"
-          target="_blank"
-          rel="noopener noreferrer">
-          📈 TradingView
-        </a>
-
-        <a
-          id="secLink"
-          class="newslink"
-          target="_blank"
-          rel="noopener noreferrer">
-          📑 SEC Search
-        </a>
-
+        <a id="googleNews" class="newslink" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a id="yahooNews" class="newslink" target="_blank" rel="noopener noreferrer">💵 Yahoo Finance</a>
+        <a id="tradingViewLink" class="newslink" target="_blank" rel="noopener noreferrer">📈 TradingView</a>
+        <a id="earningsLink" class="newslink" target="_blank" rel="noopener noreferrer">📅 Earnings Date</a>
+        <a id="secLink" class="newslink" target="_blank" rel="noopener noreferrer">📑 SEC Filings</a>
       </div>
-
     </section>
 
-    <section class="card full" style="overflow:auto">
+    <section class="card third"><h2>🔥 Hot</h2><p class="muted">Heat 70+, not stretched. Money is flowing and price hasn't run away yet.</p></section>
+    <section class="card third"><h2>⚠️ Extended</h2><p class="muted">Extension 70+. The move is real but crowded. Wait for a pullback toward the 50-day.</p></section>
+    <section class="card third"><h2>⚡ Heating Up</h2><p class="muted">Heat 50+, low extension. Early — the patient CVT™ entry zone.</p></section>
 
-      <h2>🧭 1440TIME Technical Decision Matrix</h2>
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>Signal</th>
-            <th>What we want</th>
-            <th>Why it matters</th>
-            <th>Heat Engine Weight</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          <tr>
-            <td><b>Relative Volume</b></td>
-            <td>&gt;1.5× normal</td>
-            <td>Unusual activity</td>
-            <td>25%</td>
-          </tr>
-
-          <tr>
-            <td><b>Price Momentum</b></td>
-            <td>Strong 1D + 5D + 1M</td>
-            <td>Confirms money flow</td>
-            <td>20%</td>
-          </tr>
-
-          <tr>
-            <td><b>20 / 50 / 200 DMA</b></td>
-            <td>Price above all three</td>
-            <td>Confirms trend structure</td>
-            <td>20%</td>
-          </tr>
-
-          <tr>
-            <td><b>RSI</b></td>
-            <td>50–70 and rising</td>
-            <td>Healthy momentum</td>
-            <td>10%</td>
-          </tr>
-
-          <tr>
-            <td><b>MACD</b></td>
-            <td>Bullish cross</td>
-            <td>Detects acceleration</td>
-            <td>10%</td>
-          </tr>
-
-          <tr>
-            <td><b>Sector Relative Strength</b></td>
-            <td>Sector beats QQQ / SPY</td>
-            <td>Confirms theme-wide strength</td>
-            <td>10%</td>
-          </tr>
-
-          <tr>
-            <td><b>Catalyst</b></td>
-            <td>Orders / guidance / wins</td>
-            <td>Supports persistence</td>
-            <td>5%</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </section>
-
-    <section class="card third">
-      <h2>🔥 Hot Setup</h2>
-      <p>
-        Price + volume + trend + momentum + sector strength confirm together.
-      </p>
-    </section>
-
-    <section class="card third">
-      <h2>⚡ Heating Up</h2>
-      <p>
-        Leading indicators improve but confirmation is incomplete.
-      </p>
-    </section>
-
-    <section class="card third">
-      <h2>🧊 Cooling Off</h2>
-      <p>
-        Volume weakens, trend support breaks or sector strength deteriorates.
+    <section class="card full">
+      <p class="note" style="margin:0">
+        Scores are computed from end-of-day prices by the Heat Engine (scripts/heat_engine.py) and update each weekday after the close.
+        Catalyst (5%) is your manual input in data/universe.json. Research tool, not financial advice.
       </p>
     </section>
 
   </div>
-
 </div>
 
 <script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-const sectors = {
-  Networking:["AVGO","ANET","MRVL"],
-  Power:["GEV","ETN","CEG","VST","BE"],
-  Cyber:["PANW","CRWD","VRNS","TENB","QLYS","RDWR"],
-  Memory:["MU"],
-  Cooling:["VRT","ETN"],
-  Agents:["MSFT","NOW","CRM"],
-  Robotics:["NVDA","ABB","TER","SYM"]
+const STATUS = {
+  hot:      {txt:"🔥 Hot",        col:"var(--red)",    bg:"#3a1414"},
+  extended: {txt:"⚠️ Extended",   col:"var(--yellow)", bg:"#33270c"},
+  heating:  {txt:"⚡ Heating up", col:"var(--green)",  bg:"#0f2e22"},
+  watch:    {txt:"👀 Watch",      col:"var(--blue)",   bg:"#11233d"},
+  cooling:  {txt:"🧊 Cooling",    col:"#94a3b8",       bg:"#1c232e"},
+  none:     {txt:"— No data",     col:"var(--muted)",  bg:"#1c232e"}
 };
+const FACTORS = [
+  ["relvol","Rel. Volume"],["momentum","Momentum"],["trend","20/50/200 DMA"],
+  ["rsi","RSI"],["macd","MACD"],["sector_rs","Sector RS"],["catalyst","Catalyst"]
+];
 
-const exchange = {
-  AVGO:"NASDAQ",
-  ANET:"NYSE",
-  MRVL:"NASDAQ",
+let U = null, H = null;                 // universe, heat data
+let currentSector, selected;
+let lbFilter = "all", lbSort = {key:"heat", dir:-1};
 
-  GEV:"NYSE",
-  ETN:"NYSE",
-  CEG:"NASDAQ",
-  VST:"NYSE",
-  BE:"NYSE",
+/* ---------- watchlist ---------- */
+let watch = (()=>{ try{ return JSON.parse(localStorage.getItem("1440radar_watch")||"[]"); }catch(e){ return []; } })();
+const saveWatch = () => { try{ localStorage.setItem("1440radar_watch", JSON.stringify(watch)); }catch(e){} };
 
-  PANW:"NASDAQ",
-  CRWD:"NASDAQ",
-  VRNS:"NASDAQ",
-  TENB:"NASDAQ",
-  QLYS:"NASDAQ",
-  RDWR:"NASDAQ",
+/* ---------- data access ---------- */
+const secHeat = k => H && H.sectors[k];
+const stockHeat = (k,t) => H && H.sectors[k] && H.sectors[k].stocks[t];
+const stockMeta = (k,t) => U.sectors[k].stocks.find(s=>s.t===t);
+function findSector(t){ for(const k in U.sectors) if(U.sectors[k].stocks.some(s=>s.t===t)) return k; return null; }
+const pct = (v,d=1) => v==null ? "—" : `<span class="${v>=0?'up':'down'}">${v>=0?'+':''}${v.toFixed(d)}%</span>`;
+const pill = st => { const s = STATUS[st]||STATUS.none; return `<span class="pill" style="color:${s.col};background:${s.bg}">${s.txt}</span>`; };
 
-  MU:"NASDAQ",
-  VRT:"NYSE",
-
-  MSFT:"NASDAQ",
-  NOW:"NYSE",
-  CRM:"NYSE",
-
-  NVDA:"NASDAQ",
-  ABB:"NYSE",
-  TER:"NASDAQ",
-  SYM:"NASDAQ"
-};
-
-let currentSector = "Networking";
-let selected = "ANET";
-
-const sectorSelect =
-document.getElementById("sectorSelect");
-
-Object.keys(sectors).forEach(sector => {
-
-  const option =
-  document.createElement("option");
-
-  option.value = sector;
-  option.textContent = sector;
-
-  sectorSelect.appendChild(option);
-
-});
-
-sectorSelect.value = currentSector;
-
-function tvSymbol(ticker){
-  return (exchange[ticker] || "NASDAQ") + ":" + ticker;
-}
-
-function buildChartUrl(ticker, technicalMode){
-
-  const symbol =
-  encodeURIComponent(tvSymbol(ticker));
-
-  let url =
-  "https://s.tradingview.com/widgetembed/" +
-  "?symbol=" + symbol +
-  "&interval=D" +
-  "&theme=dark" +
-  "&style=1" +
-  "&timezone=America%2FNew_York" +
-  "&locale=en" +
-  "&withdateranges=1" +
-  "&allow_symbol_change=1" +
-  "&saveimage=1" +
-  "&details=1" +
-  "&calendar=0";
-
-  if(technicalMode){
-
-    const studies = [
-      "RSI@tv-basicstudies",
-      "MACD@tv-basicstudies",
-      "MASimple@tv-basicstudies"
-    ];
-
-    url +=
-    "&studies=" +
-    encodeURIComponent(
-      JSON.stringify(studies)
-    );
-
+/* ---------- load ---------- */
+async function load(){
+  try{
+    const r = await fetch("data/universe.json", {cache:"no-store"});
+    U = await r.json();
+  }catch(e){
+    $("bannerWarn").innerHTML = "Couldn't load <b>data/universe.json</b>. If you opened this file directly from your computer, browsers block local data files — run <code>python3 -m http.server</code> in this folder and open <code>http://localhost:8000</code>, or view it on GitHub Pages.";
+    $("bannerWarn").classList.add("show");
+    return;
   }
+  try{
+    const r = await fetch("data/heat.json", {cache:"no-store"});
+    if(r.ok) H = await r.json();
+  }catch(e){ H = null; }
 
-  return url;
+  showBanners();
+  currentSector = bestSector();
+  selected = U.sectors[currentSector].stocks[0].t;
+
+  Object.keys(U.sectors).forEach(k=>{
+    const o = document.createElement("option");
+    o.value = k; o.textContent = U.sectors[k].name;
+    $("sectorSelect").appendChild(o);
+  });
+  $("sectorSelect").value = currentSector;
+  $("sectorSelect").addEventListener("change", e => selectSector(e.target.value));
+  renderFilters();
+  renderAll();
 }
 
-function updateCharts(){
-
-  document
-  .getElementById("selTicker")
-  .textContent = selected;
-
-  document
-  .getElementById("selTheme")
-  .textContent = currentSector;
-
-  document
-  .getElementById("chartTitle")
-  .textContent =
-  selected + " — Live Chart";
-
-  document
-  .getElementById("techTitle")
-  .textContent =
-  selected + " — Technical Chart";
-
-  document
-  .getElementById("newsTitle")
-  .textContent =
-  selected + " — News & Catalysts";
-
-  const mainChart =
-  document.getElementById("mainChart");
-
-  const technicalChart =
-  document.getElementById("technicalChart");
-
-  mainChart.src =
-  buildChartUrl(selected,false);
-
-  technicalChart.src =
-  buildChartUrl(selected,true);
-
-  document
-  .getElementById("googleNews")
-  .href =
-  "https://www.google.com/search?q=" +
-  encodeURIComponent(
-    selected + " stock latest news"
-  ) +
-  "&tbm=nws";
-
-  document
-  .getElementById("yahooNews")
-  .href =
-  "https://finance.yahoo.com/quote/" +
-  selected +
-  "/news/";
-
-  document
-  .getElementById("tradingViewLink")
-  .href =
-  "https://www.tradingview.com/symbols/" +
-  exchange[selected] +
-  "-" +
-  selected +
-  "/";
-
-  document
-  .getElementById("secLink")
-  .href =
-  "https://www.sec.gov/edgar/search/#/q=" +
-  encodeURIComponent(selected);
+function bestSector(){
+  if(!H) return Object.keys(U.sectors)[0];
+  return Object.keys(U.sectors).sort((a,b)=>((secHeat(b)||{}).heat||0)-((secHeat(a)||{}).heat||0))[0];
 }
 
-function renderStocks(){
+function showBanners(){
+  if(!H){
+    $("bannerWarn").innerHTML = "No Heat Engine data yet. Run the <b>1440TIME Heat Engine</b> workflow once from the Actions tab on GitHub (or <code>python scripts/heat_engine.py</code>) to generate <b>data/heat.json</b>.";
+    $("bannerWarn").classList.add("show");
+    $("asof").textContent = "";
+    return;
+  }
+  const asOf = H.as_of ? new Date(H.as_of+"T16:00:00") : null;
+  $("asof").textContent = `Prices as of ${H.as_of} close • ${H.benchmark} 1M ${H.benchmark_1m>=0?'+':''}${H.benchmark_1m}%`;
+  const warns = [];
+  if(H.demo) warns.push("⚠️ <b>DEMO DATA</b> — these scores come from synthetic prices for testing. Run the live engine to replace them.");
+  if(asOf && (Date.now()-asOf)/864e5 > 4) warns.push(`Scores are ${Math.floor((Date.now()-asOf)/864e5)} days old — check that the Heat Engine workflow is still running.`);
+  if(warns.length){ $("bannerWarn").innerHTML = warns.join("<br>"); $("bannerWarn").classList.add("show"); }
+  const errs = Object.keys(H.errors||{});
+  if(errs.length){ $("bannerInfo").innerHTML = `Not scored this run: <b>${errs.map(esc).join(", ")}</b> (no data returned — check the ticker symbol).`; $("bannerInfo").classList.add("show"); }
+}
 
-  const stockbar =
-  document.getElementById("stockbar");
-
-  stockbar.innerHTML = "";
-
-  sectors[currentSector]
-  .forEach(ticker => {
-
-    const button =
-    document.createElement("button");
-
-    button.className =
-    "stockbtn" +
-    (
-      ticker === selected
-      ? " active"
-      : ""
-    );
-
-    button.textContent = ticker;
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        selected = ticker;
-
-        renderStocks();
-
-        updateCharts();
-
-      }
-    );
-
-    stockbar.appendChild(button);
-
+/* ---------- heat map ---------- */
+function renderHeat(){
+  const g = $("heatgrid"); g.innerHTML = "";
+  const keys = Object.keys(U.sectors).sort((a,b)=>((secHeat(b)||{}).heat||0)-((secHeat(a)||{}).heat||0));
+  keys.forEach(k=>{
+    const sh = secHeat(k), heat = sh ? sh.heat : null, ext = sh ? sh.ext : null;
+    const st = STATUS[sh ? sh.status : "none"];
+    const box = document.createElement("div");
+    box.className = "heatbox" + (k===currentSector ? " active" : "");
+    box.innerHTML = `
+      <b>${esc(U.sectors[k].name)}</b>
+      <div class="score">${heat ?? "—"}</div>
+      <div class="dial-label"><span>Heat</span><span>${heat ?? "—"}</span></div>
+      <div class="bar"><div class="fill" style="width:${heat||0}%"></div></div>
+      <div class="dial-label"><span>Extension</span><span>${ext ?? "—"}</span></div>
+      <div class="bar"><div class="fill ext" style="width:${ext||0}%"></div></div>
+      <div class="rs">${sh ? `vs ${H.benchmark} (1M): ${pct(sh.rs_vs_bench)}` : ""}</div>
+      <div class="status" style="color:${st.col}">${st.txt}</div>`;
+    box.addEventListener("click", ()=>selectSector(k));
+    g.appendChild(box);
   });
 }
 
-sectorSelect.addEventListener(
-  "change",
-  () => {
+/* ---------- leaderboard ---------- */
+const LB_COLS = [
+  ["t","Ticker"],["sector","Sector"],["heat","Heat"],["extension","Ext"],["status","Status"],
+  ["chg1d","1D"],["chg1m","1M"],["relvol","RelVol"],["rsi","RSI"],["pct200","vs 200D"],["dma","20/50/200"]
+];
+function renderFilters(){
+  const opts = [["all","All"],["hot","🔥 Hot"],["heating","⚡ Heating"],["extended","⚠️ Extended"],["watchlist","⭐ Watchlist"],["core","Core only"]];
+  $("filters").innerHTML = "";
+  opts.forEach(([k,label])=>{
+    const b = document.createElement("button");
+    b.className = "chip" + (lbFilter===k ? " active" : "");
+    b.textContent = label;
+    b.onclick = ()=>{ lbFilter = k; renderFilters(); renderBoard(); };
+    $("filters").appendChild(b);
+  });
+}
+function renderBoard(){
+  $("lbHead").innerHTML = LB_COLS.map(([k,l])=>`<th data-k="${k}"${k==="sector"?' class="hide-m"':""}>${l}${lbSort.key===k?(lbSort.dir<0?" ▾":" ▴"):""}</th>`).join("");
+  $("lbHead").querySelectorAll("th").forEach(th=>th.onclick=()=>{
+    const k = th.dataset.k; if(k==="dma") return;
+    lbSort = {key:k, dir: lbSort.key===k ? -lbSort.dir : -1}; renderBoard();
+  });
+  let rows = [];
+  for(const k in U.sectors) U.sectors[k].stocks.forEach(m=>{
+    const h = stockHeat(k,m.t) || {};
+    rows.push({...h, t:m.t, tier:m.tier, sectorKey:k, sector:U.sectors[k].name, status:h.status||"none"});
+  });
+  if(lbFilter==="watchlist") rows = rows.filter(r=>watch.includes(r.t));
+  else if(lbFilter==="core") rows = rows.filter(r=>r.tier==="Core");
+  else if(lbFilter!=="all") rows = rows.filter(r=>r.status===lbFilter);
+  const {key,dir} = lbSort;
+  rows.sort((a,b)=>{ const x=a[key], y=b[key]; if(x==null) return 1; if(y==null) return -1; return (x>y?1:x<y?-1:0)*dir; });
 
-    currentSector =
-    sectorSelect.value;
+  if(!rows.length){ $("lbBody").innerHTML = `<tr><td colspan="${LB_COLS.length}" class="muted">Nothing matches this filter yet.</td></tr>`; return; }
+  $("lbBody").innerHTML = rows.map(r=>{
+    const a = r.above || {};
+    const dma = ["20","50","200"].map(n=>a[n]===undefined?"·":(a[n]?"<span class='up'>▲</span>":"<span class='down'>▼</span>")).join(" ");
+    return `<tr data-t="${esc(r.t)}" data-s="${esc(r.sectorKey)}">
+      <td><b>${watch.includes(r.t)?'<span class="star">★</span> ':''}${esc(r.t)}</b> <span class="tag ${r.tier.toLowerCase()}">${r.tier.toUpperCase()}</span></td>
+      <td class="muted hide-m">${esc(r.sector)}</td>
+      <td><b>${r.heat ?? "—"}</b></td>
+      <td>${r.extension ?? "—"}</td>
+      <td>${pill(r.status)}</td>
+      <td>${pct(r.chg1d)}</td><td>${pct(r.chg1m)}</td>
+      <td>${r.relvol!=null ? r.relvol.toFixed(2)+"×" : "—"}</td>
+      <td>${r.rsi ?? "—"}</td>
+      <td>${pct(r.pct200)}</td>
+      <td class="dma">${dma}</td></tr>`;
+  }).join("");
+  $("lbBody").querySelectorAll("tr[data-t]").forEach(tr=>tr.onclick=()=>{
+    currentSector = tr.dataset.s; selected = tr.dataset.t; $("sectorSelect").value = currentSector;
+    renderAll(); $("radar").scrollIntoView({behavior:"smooth"});
+  });
+}
 
-    selected =
-    sectors[currentSector][0];
+/* ---------- radar ---------- */
+function selectSector(k){
+  currentSector = k; $("sectorSelect").value = k;
+  const stocks = U.sectors[k].stocks.slice().sort((a,b)=>((stockHeat(k,b.t)||{}).heat||0)-((stockHeat(k,a.t)||{}).heat||0));
+  selected = stocks[0].t;
+  renderAll();
+}
+function renderStocks(){
+  const bar = $("stockbar"); bar.innerHTML = "";
+  U.sectors[currentSector].stocks.forEach(m=>{
+    const h = stockHeat(currentSector,m.t);
+    const st = STATUS[h ? h.status : "none"];
+    const b = document.createElement("button");
+    b.className = "stockbtn" + (m.t===selected ? " active" : "");
+    b.innerHTML = `${watch.includes(m.t)?'<span class="star">★</span>':''}${esc(m.t)}
+      <span class="tag ${m.tier.toLowerCase()}">${m.tier.toUpperCase()}</span>
+      <span class="mini" style="color:${st.col}">${h ? h.heat : "—"}</span>`;
+    b.onclick = ()=>{ selected = m.t; renderAll(); };
+    bar.appendChild(b);
+  });
+}
+function renderDetail(){
+  const m = stockMeta(currentSector, selected), h = stockHeat(currentSector, selected);
+  $("kTicker").textContent = m.t;
+  $("kTier").innerHTML = `<span class="tag ${m.tier.toLowerCase()}">${m.tier.toUpperCase()}</span>`;
+  $("selThesis").textContent = m.why;
+  $("selRisk").textContent = m.risk;
+  $("starBtn").textContent = watch.includes(m.t) ? "★ Starred" : "☆ Star";
+  $("kPrice").textContent = h ? "$"+h.price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) : "—";
+  $("kChg").innerHTML = h ? `${pct(h.chg1d)} / ${pct(h.chg1m)}` : "—";
+  $("kRv").innerHTML = h ? `<span class="${h.relvol>=1.5?'up':''}">${h.relvol.toFixed(2)}×</span>` : "—";
+  $("kRsi").innerHTML = h ? `<span class="${h.rsi>75?'down':h.rsi>=50?'up':''}">${h.rsi}</span> ${h.rsi_rising?'↑':'↓'}` : "—";
+  $("kExt").innerHTML = h ? pct(h.pct200) : "—";
+  $("kMacd").textContent = h ? h.macd : "—";
+  $("kHeat").textContent = h ? `Heat ${h.heat} · Extension ${h.extension}` : "no data";
+  $("kStatus").innerHTML = h ? pill(h.status) : "";
 
-    renderStocks();
+  const w = (H && H.weights) || {};
+  $("breakdown").innerHTML = FACTORS.map(([k,l])=>{
+    const v = h ? h.breakdown[k] : null;
+    return `<div class="bd"><small><span>${l}</span><span>${w[k]!=null?Math.round(w[k]*100)+"%":""}</span></small>
+      <b>${v ?? "—"}</b><div class="bar"><div class="fill" style="width:${v||0}%"></div></div></div>`;
+  }).join("");
 
-    updateCharts();
-
+  ["chartTitle","techTitle","newsTitle"].forEach((id,i)=>$(id).textContent = m.t + [" — Live Chart"," — Technical Chart"," — News & Catalysts"][i]);
+  if(lastCharted !== m.t){
+    $("mainChart").src = chartUrl(m,false);
+    $("technicalChart").src = chartUrl(m,true);
+    lastCharted = m.t;
   }
-);
+  $("googleNews").href = "https://www.google.com/search?q=" + encodeURIComponent(m.t + " stock news") + "&tbm=nws";
+  $("yahooNews").href = "https://finance.yahoo.com/quote/" + m.t + "/news/";
+  $("tradingViewLink").href = "https://www.tradingview.com/symbols/" + m.x + "-" + m.t + "/";
+  $("earningsLink").href = "https://finance.yahoo.com/calendar/earnings?symbol=" + m.t;
+  $("secLink").href = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=" + m.t + "&type=10-Q&owner=include&count=40";
+}
 
-document
-.querySelectorAll(".heatbox")
-.forEach(box => {
+let lastCharted = null;
+function chartUrl(m, technical){
+  let url = "https://s.tradingview.com/widgetembed/?symbol=" + encodeURIComponent(m.x + ":" + m.t) +
+    "&interval=D&theme=dark&style=1&timezone=America%2FNew_York&locale=en&withdateranges=1&allow_symbol_change=1&saveimage=1&details=1&calendar=0";
+  if(technical) url += "&studies=" + encodeURIComponent(JSON.stringify(["RSI@tv-basicstudies","MACD@tv-basicstudies","MASimple@tv-basicstudies"]));
+  return url;
+}
 
-  box.addEventListener(
-    "click",
-    () => {
+/* ---------- watchlist ---------- */
+function renderWatch(){
+  const w = $("watchlist"); w.innerHTML = "";
+  if(!watch.length){ w.innerHTML = '<span class="muted">No stocks starred yet.</span>'; return; }
+  watch.forEach(t=>{
+    const k = findSector(t); if(!k) return;
+    const h = stockHeat(k,t);
+    const b = document.createElement("button");
+    b.className = "stockbtn";
+    b.innerHTML = `<span class="star">★</span>${esc(t)} <span class="mini">${h?h.heat:"—"}</span> ${h?pill(h.status):""}`;
+    b.onclick = ()=>{ currentSector = k; selected = t; $("sectorSelect").value = k; renderAll(); $("radar").scrollIntoView({behavior:"smooth"}); };
+    w.appendChild(b);
+  });
+}
+$("starBtn").onclick = ()=>{
+  watch = watch.includes(selected) ? watch.filter(x=>x!==selected) : [...watch, selected];
+  saveWatch(); renderAll();
+};
 
-      document
-      .querySelectorAll(".heatbox")
-      .forEach(item => {
-        item.classList.remove("active");
-      });
-
-      box.classList.add("active");
-
-      currentSector =
-      box.dataset.sector;
-
-      sectorSelect.value =
-      currentSector;
-
-      selected =
-      sectors[currentSector][0];
-
-      renderStocks();
-
-      updateCharts();
-
-    }
-  );
-
-});
-
-renderStocks();
-updateCharts();
-
+function renderAll(){ renderHeat(); renderBoard(); renderStocks(); renderDetail(); renderWatch(); }
+load();
 </script>
-
 </body>
 </html>
