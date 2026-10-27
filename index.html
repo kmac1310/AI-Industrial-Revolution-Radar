@@ -42,6 +42,11 @@ h2{font-size:20px;margin:0}
 .dial-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
 .rs{font-size:11px;color:var(--muted);margin-top:2px}
 .status{margin-top:auto;padding-top:8px;font-size:12px;font-weight:700}
+.scorerow{display:flex;align-items:flex-end;justify-content:space-between;gap:6px}
+.spark{display:block;overflow:visible}
+.delta{font-size:12px;font-weight:700;white-space:nowrap}
+.delta.flat{color:var(--muted)}
+.young{font-size:10px;color:var(--yellow);font-weight:700;margin-left:4px}
 
 /* stocks */
 .stockbar{display:flex;flex-wrap:wrap;gap:8px}
@@ -126,7 +131,7 @@ tbody tr:hover{background:#111b29}
       <div class="section-title">
         <div>
           <h2>🔥 AI Money-Flow Heat Map</h2>
-          <div class="muted">Calculated by the 1440TIME Heat Engine • Heat = money flow • Extension = how far price has run</div>
+          <div class="muted">Calculated by the 1440TIME Heat Engine • Heat = money flow • Extension = how far price has run • Line = last 30 trading days of heat</div>
         </div>
         <span class="note" id="asof"></span>
       </div>
@@ -218,6 +223,7 @@ tbody tr:hover{background:#111b29}
     <section class="card full">
       <p class="note" style="margin:0">
         Scores are computed from end-of-day prices by the Heat Engine (scripts/heat_engine.py) and update each weekday after the close.
+        5D Δ = change in heat over the last 5 trading days; 📈 Rising / 📉 Fading = a move of 5+ points.
         Catalyst (5%) is your manual input in data/universe.json. Research tool, not financial advice.
       </p>
     </section>
@@ -256,6 +262,24 @@ const stockHeat = (k,t) => H && H.sectors[k] && H.sectors[k].stocks[t];
 const stockMeta = (k,t) => U.sectors[k].stocks.find(s=>s.t===t);
 function findSector(t){ for(const k in U.sectors) if(U.sectors[k].stocks.some(s=>s.t===t)) return k; return null; }
 const pct = (v,d=1) => v==null ? "—" : `<span class="${v>=0?'up':'down'}">${v>=0?'+':''}${v.toFixed(d)}%</span>`;
+function delta(d, label=true){
+  if(d==null) return `<div class="delta flat">${label?"5D —":"—"}</div>`;
+  const cls = d>=3 ? "up" : d<=-3 ? "down" : "flat";
+  const arrow = d>=3 ? "▲" : d<=-3 ? "▼" : "▬";
+  return `<div class="delta ${cls}">${arrow} ${d>0?"+":""}${d}${label?" (5D)":""}</div>`;
+}
+function sparkSVG(pts, w=74, h=26){
+  if(!pts || pts.length<2) return "";
+  const lo = Math.min(...pts, 30), hi = Math.max(...pts, 70), n = pts.length;
+  const xy = pts.map((v,i)=>[ (i/(n-1))*w, h-2-((v-lo)/(hi-lo||1))*(h-4) ]);
+  const d = xy.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const up = pts[n-1] >= pts[0];
+  const col = up ? "#34d399" : "#f87171";
+  const [lx,ly] = xy[n-1];
+  return `<svg class="spark" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-label="Heat trend ${pts[0]} to ${pts[n-1]}">
+    <path d="${d}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="2.4" fill="${col}"/></svg>`;
+}
 const pill = st => { const s = STATUS[st]||STATUS.none; return `<span class="pill" style="color:${s.col};background:${s.bg}">${s.txt}</span>`; };
 
 /* ---------- load ---------- */
@@ -307,7 +331,7 @@ function showBanners(){
   if(asOf && (Date.now()-asOf)/864e5 > 4) warns.push(`Scores are ${Math.floor((Date.now()-asOf)/864e5)} days old — check that the Heat Engine workflow is still running.`);
   if(warns.length){ $("bannerWarn").innerHTML = warns.join("<br>"); $("bannerWarn").classList.add("show"); }
   const errs = Object.keys(H.errors||{});
-  if(errs.length){ $("bannerInfo").innerHTML = `Not scored this run: <b>${errs.map(esc).join(", ")}</b> (no data returned — check the ticker symbol).`; $("bannerInfo").classList.add("show"); }
+  if(errs.length){ $("bannerInfo").innerHTML = "Not scored this run: " + errs.map(t=>`<b>${esc(t)}</b> (${esc(H.errors[t])})`).join(" • "); $("bannerInfo").classList.add("show"); }
 }
 
 /* ---------- heat map ---------- */
@@ -321,7 +345,7 @@ function renderHeat(){
     box.className = "heatbox" + (k===currentSector ? " active" : "");
     box.innerHTML = `
       <b>${esc(U.sectors[k].name)}</b>
-      <div class="score">${heat ?? "—"}</div>
+      <div class="scorerow"><div class="score">${heat ?? "—"}</div><div style="text-align:right">${sparkSVG(sh&&sh.spark,74,26)}${delta(sh&&sh.d5)}</div></div>
       <div class="dial-label"><span>Heat</span><span>${heat ?? "—"}</span></div>
       <div class="bar"><div class="fill" style="width:${heat||0}%"></div></div>
       <div class="dial-label"><span>Extension</span><span>${ext ?? "—"}</span></div>
@@ -335,11 +359,11 @@ function renderHeat(){
 
 /* ---------- leaderboard ---------- */
 const LB_COLS = [
-  ["t","Ticker"],["sector","Sector"],["heat","Heat"],["extension","Ext"],["status","Status"],
+  ["t","Ticker"],["sector","Sector"],["heat","Heat"],["d5","5D Δ"],["trend","30D"],["extension","Ext"],["status","Status"],
   ["chg1d","1D"],["chg1m","1M"],["relvol","RelVol"],["rsi","RSI"],["pct200","vs 200D"],["dma","20/50/200"]
 ];
 function renderFilters(){
-  const opts = [["all","All"],["hot","🔥 Hot"],["heating","⚡ Heating"],["extended","⚠️ Extended"],["watchlist","⭐ Watchlist"],["core","Core only"]];
+  const opts = [["all","All"],["hot","🔥 Hot"],["heating","⚡ Heating"],["extended","⚠️ Extended"],["rising","📈 Rising"],["fading","📉 Fading"],["watchlist","⭐ Watchlist"],["core","Core only"]];
   $("filters").innerHTML = "";
   opts.forEach(([k,label])=>{
     const b = document.createElement("button");
@@ -350,9 +374,9 @@ function renderFilters(){
   });
 }
 function renderBoard(){
-  $("lbHead").innerHTML = LB_COLS.map(([k,l])=>`<th data-k="${k}"${k==="sector"?' class="hide-m"':""}>${l}${lbSort.key===k?(lbSort.dir<0?" ▾":" ▴"):""}</th>`).join("");
+  $("lbHead").innerHTML = LB_COLS.map(([k,l])=>`<th data-k="${k}"${(k==="sector"||k==="trend")?' class="hide-m"':""}>${l}${lbSort.key===k?(lbSort.dir<0?" ▾":" ▴"):""}</th>`).join("");
   $("lbHead").querySelectorAll("th").forEach(th=>th.onclick=()=>{
-    const k = th.dataset.k; if(k==="dma") return;
+    const k = th.dataset.k; if(k==="dma"||k==="trend") return;
     lbSort = {key:k, dir: lbSort.key===k ? -lbSort.dir : -1}; renderBoard();
   });
   let rows = [];
@@ -362,6 +386,8 @@ function renderBoard(){
   });
   if(lbFilter==="watchlist") rows = rows.filter(r=>watch.includes(r.t));
   else if(lbFilter==="core") rows = rows.filter(r=>r.tier==="Core");
+  else if(lbFilter==="rising") rows = rows.filter(r=>r.d5!=null && r.d5>=5);
+  else if(lbFilter==="fading") rows = rows.filter(r=>r.d5!=null && r.d5<=-5);
   else if(lbFilter!=="all") rows = rows.filter(r=>r.status===lbFilter);
   const {key,dir} = lbSort;
   rows.sort((a,b)=>{ const x=a[key], y=b[key]; if(x==null) return 1; if(y==null) return -1; return (x>y?1:x<y?-1:0)*dir; });
@@ -374,12 +400,14 @@ function renderBoard(){
       <td><b>${watch.includes(r.t)?'<span class="star">★</span> ':''}${esc(r.t)}</b> <span class="tag ${r.tier.toLowerCase()}">${r.tier.toUpperCase()}</span></td>
       <td class="muted hide-m">${esc(r.sector)}</td>
       <td><b>${r.heat ?? "—"}</b></td>
+      <td>${delta(r.d5,false)}</td>
+      <td class="hide-m">${sparkSVG(r.spark,60,18)}</td>
       <td>${r.extension ?? "—"}</td>
       <td>${pill(r.status)}</td>
       <td>${pct(r.chg1d)}</td><td>${pct(r.chg1m)}</td>
       <td>${r.relvol!=null ? r.relvol.toFixed(2)+"×" : "—"}</td>
       <td>${r.rsi ?? "—"}</td>
-      <td>${pct(r.pct200)}</td>
+      <td>${pct(r.pct200)}${r.young?'<span class="young" title="Newer listing: average uses '+r.history_days+' days">*</span>':""}</td>
       <td class="dma">${dma}</td></tr>`;
   }).join("");
   $("lbBody").querySelectorAll("tr[data-t]").forEach(tr=>tr.onclick=()=>{
@@ -420,10 +448,10 @@ function renderDetail(){
   $("kChg").innerHTML = h ? `${pct(h.chg1d)} / ${pct(h.chg1m)}` : "—";
   $("kRv").innerHTML = h ? `<span class="${h.relvol>=1.5?'up':''}">${h.relvol.toFixed(2)}×</span>` : "—";
   $("kRsi").innerHTML = h ? `<span class="${h.rsi>75?'down':h.rsi>=50?'up':''}">${h.rsi}</span> ${h.rsi_rising?'↑':'↓'}` : "—";
-  $("kExt").innerHTML = h ? pct(h.pct200) : "—";
+  $("kExt").innerHTML = h ? pct(h.pct200) + (h.young ? `<div class="note">Newer listing — uses ${h.history_days}-day avg</div>` : "") : "—";
   $("kMacd").textContent = h ? h.macd : "—";
   $("kHeat").textContent = h ? `Heat ${h.heat} · Extension ${h.extension}` : "no data";
-  $("kStatus").innerHTML = h ? pill(h.status) : "";
+  $("kStatus").innerHTML = h ? `${pill(h.status)} <span style="display:inline-flex;align-items:center;gap:8px;vertical-align:middle;margin-left:6px">${sparkSVG(h.spark,110,26)}${delta(h.d5)}</span>` : "";
 
   const w = (H && H.weights) || {};
   $("breakdown").innerHTML = FACTORS.map(([k,l])=>{

@@ -31,6 +31,12 @@ ROOT = Path(__file__).resolve().parent.parent
 UNIVERSE = ROOT / "data" / "universe.json"
 OUTPUT = ROOT / "data" / "heat.json"
 
+MIN_BARS = 60          # minimum trading days needed to score a stock
+HISTORY_KEEP = 180     # trading days of heat history to keep
+BACKFILL_DAYS = 60     # days rebuilt from past prices when history is empty
+SPARK_DAYS = 30        # points shown in each sparkline
+TREND_DAYS = 5         # "5D change" lookback
+
 WEIGHTS = {
     "relvol": 0.25, "momentum": 0.20, "trend": 0.20,
     "rsi": 0.10, "macd": 0.10, "sector_rs": 0.10, "catalyst": 0.05,
@@ -71,9 +77,13 @@ def ret(close, days):
 def score_stock(df):
     """df: DataFrame with Close and Volume columns, oldest first. Returns metrics + sub-scores."""
     df = df.dropna(subset=["Close"])
-    if len(df) < 210:
-        raise ValueError(f"only {len(df)} bars — need ~210 for a 200-day average")
+    if len(df) < MIN_BARS:
+        raise ValueError(f"only {len(df)} trading days of history — need at least {MIN_BARS}")
     close, vol = df["Close"], df["Volume"].fillna(0)
+    # Newer listings (e.g. SKHY, US-listed July 2026) don't have 200 days yet:
+    # use every day available as the "long" average and flag it.
+    long_n = min(200, len(close))
+    young = long_n < 200
     price = float(close.iloc[-1])
 
     # Relative volume: last 5 sessions vs the 50 before them (smooths one-day spikes)
@@ -86,7 +96,7 @@ def score_stock(df):
     s_mom = 0.2 * scale(r1, -0.03, 0.03) + 0.3 * scale(r5, -0.08, 0.08) + 0.5 * scale(r21, -0.20, 0.20)
 
     # Trend structure: above 20 / 50 / 200 DMA
-    d20, d50, d200 = (float(close.rolling(n).mean().iloc[-1]) for n in (20, 50, 200))
+    d20, d50, d200 = (float(close.rolling(n).mean().iloc[-1]) for n in (20, 50, long_n))
     above = {"20": price > d20, "50": price > d50, "200": price > d200}
     s_trend = 25 * above["20"] + 35 * above["50"] + 40 * above["200"]
 
@@ -129,6 +139,7 @@ def score_stock(df):
         "chg1d": round(r1 * 100, 2), "chg5d": round(r5 * 100, 2), "chg1m": round(r21 * 100, 2),
         "relvol": round(relvol, 2), "rsi": round(rsi_now, 1), "rsi_rising": bool(rising),
         "macd": macd_state, "above": above, "pct200": round(pct200 * 100, 1),
+        "young": young, "history_days": len(close),
         "r21": r21,
         "sub": {"relvol": s_relvol, "momentum": s_mom, "trend": s_trend, "rsi": s_rsi, "macd": s_macd},
         "extension": round(extension),
@@ -183,7 +194,8 @@ def build(universe, prices):
             heat = round(sum(WEIGHTS[k] * sub[k] for k in WEIGHTS))
             stocks_out[r["t"]] = {
                 k: r[k] for k in ("price", "chg1d", "chg5d", "chg1m", "relvol", "rsi",
-                                  "rsi_rising", "macd", "above", "pct200", "extension")
+                                  "rsi_rising", "macd", "above", "pct200", "extension",
+                                  "young", "history_days")
             }
             stocks_out[r["t"]].update(
                 heat=heat,
@@ -213,6 +225,7 @@ def build(universe, prices):
 
 # ---------------------------------------------------------------- data
 def fetch_live(tickers):
+    import time
     import yfinance as yf
     raw = yf.download(tickers, period="14mo", interval="1d", group_by="ticker",
                       auto_adjust=True, threads=True, progress=False)
@@ -224,7 +237,80 @@ def fetch_live(tickers):
                 prices[t] = df
         except KeyError:
             pass
+
+    # The bulk download occasionally drops a ticker (ETN on Oct 27). Retry each miss alone.
+    for t in [t for t in tickers if t not in prices]:
+        for attempt in range(3):
+            try:
+                df = yf.Ticker(t).history(period="14mo", interval="1d", auto_adjust=True)
+                df = df[["Close", "Volume"]].dropna(subset=["Close"])
+                if len(df):
+                    prices[t] = df
+                    print(f"  recovered {t} on retry {attempt + 1}")
+                    break
+            except Exception as e:
+                print(f"  retry {attempt + 1} for {t} failed: {e}")
+            time.sleep(2)
     return prices
+
+
+# ---------------------------------------------------------------- history
+def snapshot(payload):
+    """Compact record of one day's scores."""
+    return {
+        "d": payload["as_of"],
+        "s": {k: [v["heat"], v["ext"]] for k, v in payload["sectors"].items()},
+        "t": {t: st["heat"] for v in payload["sectors"].values() for t, st in v["stocks"].items()},
+    }
+
+
+def backfill(universe, prices, days):
+    """Rebuild past daily scores from price history so sparklines work on day one."""
+    bench = universe.get("benchmark", "QQQ")
+    ref = prices.get(bench)
+    if ref is None:
+        ref = max(prices.values(), key=len)
+    dates = ref.dropna(subset=["Close"]).index[-days - 1:-1]  # exclude today (scored live)
+    snaps = []
+    for d in dates:
+        cut = {t: df[df.index <= d] for t, df in prices.items()}
+        p = build(universe, cut)
+        if p["as_of"]:
+            snaps.append(snapshot(p))
+    return snaps
+
+
+def load_history(demo):
+    """History lives inside heat.json, so the workflow only ever commits one file."""
+    try:
+        prev = json.loads(OUTPUT.read_text())
+    except Exception:
+        return []
+    if bool(prev.get("demo")) != demo:  # never mix demo and live history
+        return []
+    return prev.get("history", [])
+
+
+def merge_history(history, snap):
+    """Add today's snapshot; a re-run on the same date replaces that date."""
+    history = [h for h in history if h["d"] != snap["d"]] + [snap]
+    history.sort(key=lambda h: h["d"])
+    return history[-HISTORY_KEEP:]
+
+
+def add_trends(payload, history):
+    """Attach a sparkline and N-day heat change to every sector and stock."""
+    def trend(series):
+        spark = series[-SPARK_DAYS:]
+        d = series[-1] - series[-1 - TREND_DAYS] if len(series) > TREND_DAYS else None
+        return spark, d
+
+    for k, sec in payload["sectors"].items():
+        series = [h["s"][k][0] for h in history if k in h.get("s", {})]
+        sec["spark"], sec["d5"] = trend(series)
+        for t, st in sec["stocks"].items():
+            s2 = [h["t"][t] for h in history if t in h.get("t", {})]
+            st["spark"], st["d5"] = trend(s2)
 
 
 def fetch_demo(tickers, seed=1440):
@@ -254,11 +340,23 @@ def main():
     n = sum(len(s["stocks"]) for s in payload["sectors"].values())
     if not demo and n == 0:
         sys.exit(f"No stocks scored — data source failed. Keeping previous heat.json. {payload['errors']}")
-    OUTPUT.write_text(json.dumps(payload, indent=1))
+
+    history = load_history(demo)
+    if len(history) < 20:
+        print(f"History has {len(history)} days — rebuilding the last {BACKFILL_DAYS} from price data...")
+        for snap in backfill(universe, prices, BACKFILL_DAYS):
+            history = merge_history(history, snap)
+    history = merge_history(history, snapshot(payload))
+    add_trends(payload, history)
+    payload["history"] = history
+
+    OUTPUT.write_text(json.dumps(payload, separators=(",", ":")))
 
     print(f"Scored {n} stocks across {len(payload['sectors'])} sectors (as of {payload['as_of']}).")
+    print(f"History: {len(history)} trading days ({history[0]['d']} → {history[-1]['d']}).")
     for k, s in sorted(payload["sectors"].items(), key=lambda kv: -kv[1]["heat"]):
-        print(f"  {k:<11} heat {s['heat']:>3}  ext {s['ext']:>3}  {s['status']}")
+        d5 = "  n/a" if s["d5"] is None else f"{s['d5']:+4d}"
+        print(f"  {k:<11} heat {s['heat']:>3}  ext {s['ext']:>3}  5D {d5}  {s['status']}")
     if payload["errors"]:
         print("Skipped:", payload["errors"])
 
