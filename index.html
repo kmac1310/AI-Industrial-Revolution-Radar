@@ -46,6 +46,10 @@ h2{font-size:20px;margin:0}
 .spark{display:block;overflow:visible}
 .delta{font-size:12px;font-weight:700;white-space:nowrap}
 .delta.flat{color:var(--muted)}
+.live{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--green)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(52,211,153,.7);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.7)}70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+@media(prefers-reduced-motion:reduce){.live i{animation:none}}
 .young{font-size:10px;color:var(--yellow);font-weight:700;margin-left:4px}
 
 /* stocks */
@@ -176,7 +180,7 @@ tbody tr:hover{background:#111b29}
         <div class="kpi"><small>Ticker</small><b id="kTicker"></b> <span id="kTier"></span></div>
         <div class="kpi"><small>Price</small><b id="kPrice">—</b></div>
         <div class="kpi"><small>1D / 1M</small><b id="kChg">—</b></div>
-        <div class="kpi"><small>Rel. Volume</small><b id="kRv">—</b></div>
+        <div class="kpi"><small>Volume</small><b id="kRv">—</b></div>
         <div class="kpi"><small>RSI (14)</small><b id="kRsi">—</b></div>
         <div class="kpi"><small>vs 200-day</small><b id="kExt">—</b></div>
         <div class="kpi"><small>MACD</small><b id="kMacd" style="font-size:13px">—</b></div>
@@ -222,7 +226,8 @@ tbody tr:hover{background:#111b29}
 
     <section class="card full">
       <p class="note" style="margin:0">
-        Scores are computed from end-of-day prices by the Heat Engine (scripts/heat_engine.py) and update each weekday after the close.
+        Scores refresh about every 30 minutes while the market is open (prices ~15 min delayed) and once more after the close.
+        This page checks for new scores every 5 minutes on its own. Today's point on each sparkline moves during the day and locks in at the close.
         5D Δ = change in heat over the last 5 trading days; 📈 Rising / 📉 Fading = a move of 5+ points.
         Catalyst (5%) is your manual input in data/universe.json. Research tool, not financial advice.
       </p>
@@ -244,7 +249,7 @@ const STATUS = {
   none:     {txt:"— No data",     col:"var(--muted)",  bg:"#1c232e"}
 };
 const FACTORS = [
-  ["relvol","Rel. Volume"],["momentum","Momentum"],["trend","20/50/200 DMA"],
+  ["relvol","Volume Flow"],["momentum","Momentum"],["trend","20/50/200 DMA"],
   ["rsi","RSI"],["macd","MACD"],["sector_rs","Sector RS"],["catalyst","Catalyst"]
 ];
 
@@ -283,9 +288,24 @@ function sparkSVG(pts, w=74, h=26){
 const pill = st => { const s = STATUS[st]||STATUS.none; return `<span class="pill" style="color:${s.col};background:${s.bg}">${s.txt}</span>`; };
 
 /* ---------- load ---------- */
+// GitHub Pages caches files for ~10 min; the ?t= stamp forces the newest copy.
+const fresh = url => fetch(url + "?t=" + Date.now(), {cache:"no-store"});
+
+async function refreshHeat(){
+  try{
+    const r = await fresh("data/heat.json");
+    if(!r.ok) return;
+    const next = await r.json();
+    if(H && next.generated_at === H.generated_at) return;   // nothing new
+    H = next; showBanners(); renderAll();
+  }catch(e){ /* keep showing the last good data */ }
+}
+setInterval(refreshHeat, 5*60*1000);                        // check every 5 minutes
+document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) refreshHeat(); });
+
 async function load(){
   try{
-    const r = await fetch("data/universe.json", {cache:"no-store"});
+    const r = await fresh("data/universe.json");
     U = await r.json();
   }catch(e){
     $("bannerWarn").innerHTML = "Couldn't load <b>data/universe.json</b>. If you opened this file directly from your computer, browsers block local data files — run <code>python3 -m http.server</code> in this folder and open <code>http://localhost:8000</code>, or view it on GitHub Pages.";
@@ -293,7 +313,7 @@ async function load(){
     return;
   }
   try{
-    const r = await fetch("data/heat.json", {cache:"no-store"});
+    const r = await fresh("data/heat.json");
     if(r.ok) H = await r.json();
   }catch(e){ H = null; }
 
@@ -318,6 +338,7 @@ function bestSector(){
 }
 
 function showBanners(){
+  ["bannerWarn","bannerInfo"].forEach(id=>{ $(id).classList.remove("show"); $(id).innerHTML=""; });
   if(!H){
     $("bannerWarn").innerHTML = "No Heat Engine data yet. Run the <b>1440TIME Heat Engine</b> workflow once from the Actions tab on GitHub (or <code>python scripts/heat_engine.py</code>) to generate <b>data/heat.json</b>.";
     $("bannerWarn").classList.add("show");
@@ -325,8 +346,14 @@ function showBanners(){
     return;
   }
   const asOf = H.as_of ? new Date(H.as_of+"T16:00:00") : null;
-  $("asof").textContent = `Prices as of ${H.as_of} close • ${H.benchmark} 1M ${H.benchmark_1m>=0?'+':''}${H.benchmark_1m}%`;
+  const bm = `${H.benchmark} 1M ${H.benchmark_1m>=0?'+':''}${H.benchmark_1m}%`;
+  const upd = H.updated_et ? H.updated_et.replace(/^\d{4}-\d{2}-\d{2} /,"") : "";
+  $("asof").innerHTML = H.session === "open"
+    ? `<span class="live"><i></i>LIVE</span> · updated ${esc(upd)} · prices ~15 min delayed · ${bm}`
+    : `Close of ${esc(H.as_of)}${upd ? " · updated "+esc(upd) : ""} · ${bm}`;
   const warns = [];
+  const ageMin = H.generated_at ? (Date.now() - new Date(H.generated_at)) / 60000 : 0;
+  if(H.session === "open" && ageMin > 90) warns.push(`Live scores haven't refreshed in ${Math.round(ageMin)} minutes — GitHub's scheduler may be running behind.`);
   if(H.demo) warns.push("⚠️ <b>DEMO DATA</b> — these scores come from synthetic prices for testing. Run the live engine to replace them.");
   if(asOf && (Date.now()-asOf)/864e5 > 4) warns.push(`Scores are ${Math.floor((Date.now()-asOf)/864e5)} days old — check that the Heat Engine workflow is still running.`);
   if(warns.length){ $("bannerWarn").innerHTML = warns.join("<br>"); $("bannerWarn").classList.add("show"); }
@@ -405,7 +432,7 @@ function renderBoard(){
       <td>${r.extension ?? "—"}</td>
       <td>${pill(r.status)}</td>
       <td>${pct(r.chg1d)}</td><td>${pct(r.chg1m)}</td>
-      <td>${r.relvol!=null ? r.relvol.toFixed(2)+"×" : "—"}</td>
+      <td>${r.relvol!=null ? `<span class="${r.flow>0.2?'up':r.flow<-0.2?'down':''}" title="Volume flow ${r.flow??'—'} (up-day minus down-day volume)">${r.flow>0.2?'▲':r.flow<-0.2?'▼':''} ${r.relvol.toFixed(2)}×</span>` : "—"}</td>
       <td>${r.rsi ?? "—"}</td>
       <td>${pct(r.pct200)}${r.young?'<span class="young" title="Newer listing: average uses '+r.history_days+' days">*</span>':""}</td>
       <td class="dma">${dma}</td></tr>`;
@@ -446,7 +473,7 @@ function renderDetail(){
   $("starBtn").textContent = watch.includes(m.t) ? "★ Starred" : "☆ Star";
   $("kPrice").textContent = h ? "$"+h.price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) : "—";
   $("kChg").innerHTML = h ? `${pct(h.chg1d)} / ${pct(h.chg1m)}` : "—";
-  $("kRv").innerHTML = h ? `<span class="${h.relvol>=1.5?'up':''}">${h.relvol.toFixed(2)}×</span>` : "—";
+  $("kRv").innerHTML = h ? `<span class="${h.flow>0.2?'up':h.flow<-0.2?'down':''}">${h.flow>0.2?'▲ buying':h.flow<-0.2?'▼ selling':'balanced'} ${h.relvol.toFixed(2)}×</span>` : "—";
   $("kRsi").innerHTML = h ? `<span class="${h.rsi>75?'down':h.rsi>=50?'up':''}">${h.rsi}</span> ${h.rsi_rising?'↑':'↓'}` : "—";
   $("kExt").innerHTML = h ? pct(h.pct200) + (h.young ? `<div class="note">Newer listing — uses ${h.history_days}-day avg</div>` : "") : "—";
   $("kMacd").textContent = h ? h.macd : "—";
