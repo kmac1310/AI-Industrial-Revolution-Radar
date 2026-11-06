@@ -86,6 +86,7 @@ def prorate_today(prices, frac, today):
     for t, df in prices.items():
         if len(df) and df.index[-1].date() == today:
             df = df.copy()
+            df["Volume"] = df["Volume"].astype(float)
             df.iloc[-1, df.columns.get_loc("Volume")] = df["Volume"].iloc[-1] / frac
         out[t] = df
     return out
@@ -275,6 +276,7 @@ def clean(df):
     """One date format for every ticker: plain calendar dates, no timezone.
     (Yahoo's bulk download and single-ticker retry return different formats.)"""
     df = df[["Close", "Volume"]].dropna(subset=["Close"]).copy()
+    df["Volume"] = df["Volume"].astype(float)  # Yahoo sends whole numbers; we scale volume mid-day
     idx = pd.DatetimeIndex(df.index)
     if idx.tz is not None:
         idx = idx.tz_localize(None)
