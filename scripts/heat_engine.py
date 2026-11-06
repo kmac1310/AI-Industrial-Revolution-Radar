@@ -5,7 +5,7 @@
 Reads data/universe.json, pulls 1 year of daily prices, scores every stock
 with the 1440TIME Decision Matrix, and writes data/heat.json for the dashboard.
 
-  Relative Volume ........ 25%
+  Volume Flow ............ 25%  (volume on up days in, down days out)
   Price Momentum ......... 20%
   20 / 50 / 200 DMA ...... 20%
   RSI .................... 10%
@@ -15,14 +15,23 @@ with the 1440TIME Decision Matrix, and writes data/heat.json for the dashboard.
 
 Extension is a separate timing dial (how far price has already run).
 
+Runs every 30 minutes on weekdays (see .github/workflows/heat-engine.yml).
+  Before 9:30 AM ET  -> skips (nothing new to score)
+  9:30 AM - 4:00 PM  -> intraday score from ~15-min-delayed prices
+  After 4:00 PM      -> closing score (this is what history keeps)
+
 Usage:
   python scripts/heat_engine.py          # live data (Yahoo Finance via yfinance)
+  python scripts/heat_engine.py --force  # run even before the open (manual runs)
   python scripts/heat_engine.py --demo   # synthetic data, for testing the page
 """
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
+
+ET = ZoneInfo("America/New_York")
 
 import numpy as np
 import pandas as pd
@@ -31,6 +40,7 @@ ROOT = Path(__file__).resolve().parent.parent
 UNIVERSE = ROOT / "data" / "universe.json"
 OUTPUT = ROOT / "data" / "heat.json"
 
+ENGINE_VERSION = 2     # bump when scoring changes; old history is then rebuilt
 MIN_BARS = 60          # minimum trading days needed to score a stock
 HISTORY_KEEP = 180     # trading days of heat history to keep
 BACKFILL_DAYS = 60     # days rebuilt from past prices when history is empty
@@ -50,6 +60,35 @@ def clip01(x):
 def scale(x, lo, hi):
     """Map x from [lo, hi] to 0-100, clipped."""
     return 100.0 * clip01((x - lo) / (hi - lo))
+
+
+# ---------------------------------------------------------------- market clock
+def market_session(now=None):
+    """Return ('pre'|'open'|'closed'|'weekend', fraction of the 390-minute session elapsed)."""
+    now = now or datetime.now(ET)
+    if now.weekday() >= 5:
+        return "weekend", 1.0
+    mins = now.hour * 60 + now.minute
+    open_m, close_m = 9 * 60 + 30, 16 * 60
+    if mins < open_m:
+        return "pre", 0.0
+    if mins >= close_m:
+        return "closed", 1.0
+    return "open", (mins - open_m) / 390.0
+
+
+def prorate_today(prices, frac, today):
+    """Mid-session, today's volume is only partly in. Scale it to a full-day pace so
+    relative volume isn't falsely low in the morning. Linear pacing is approximate:
+    volume is heavier at the open and close, so early readings run a little hot."""
+    frac = max(frac, 0.10)
+    out = {}
+    for t, df in prices.items():
+        if len(df) and df.index[-1].date() == today:
+            df = df.copy()
+            df.iloc[-1, df.columns.get_loc("Volume")] = df["Volume"].iloc[-1] / frac
+        out[t] = df
+    return out
 
 
 # ---------------------------------------------------------------- indicators
@@ -89,7 +128,15 @@ def score_stock(df):
     # Relative volume: last 5 sessions vs the 50 before them (smooths one-day spikes)
     recent, base = vol.iloc[-5:].mean(), vol.iloc[-55:-5].mean()
     relvol = float(recent / base) if base > 0 else 1.0
-    s_relvol = scale(relvol, 0.5, 1.5)  # 0.5x→0, 1.0x→50, 1.5x+→100
+    # Volume FLOW: heavy volume only counts as heat when buyers are driving it.
+    # Up-day volume is inflow, down-day volume is outflow, measured against normal volume.
+    #   +1.5 = five days of 1.5x volume, all up (strong accumulation)  -> 100
+    #    0   = balanced or quiet                                        -> 50
+    #   -1.5 = five days of 1.5x volume, all down (distribution)       -> 0
+    chg = close.diff().iloc[-5:]
+    v5 = vol.iloc[-5:]
+    flow = float((v5[chg > 0].sum() - v5[chg < 0].sum()) / (5 * base)) if base > 0 else 0.0
+    s_relvol = scale(flow, -1.5, 1.5)
 
     # Momentum: 1D / 5D / 1M blend
     r1, r5, r21 = ret(close, 1), ret(close, 5), ret(close, 21)
@@ -137,7 +184,7 @@ def score_stock(df):
     return {
         "price": round(price, 2),
         "chg1d": round(r1 * 100, 2), "chg5d": round(r5 * 100, 2), "chg1m": round(r21 * 100, 2),
-        "relvol": round(relvol, 2), "rsi": round(rsi_now, 1), "rsi_rising": bool(rising),
+        "relvol": round(relvol, 2), "flow": round(flow, 2), "rsi": round(rsi_now, 1), "rsi_rising": bool(rising),
         "macd": macd_state, "above": above, "pct200": round(pct200 * 100, 1),
         "young": young, "history_days": len(close),
         "r21": r21,
@@ -193,7 +240,7 @@ def build(universe, prices):
             sub = dict(r["sub"], sector_rs=s_rs, catalyst=float(r["catalyst"]))
             heat = round(sum(WEIGHTS[k] * sub[k] for k in WEIGHTS))
             stocks_out[r["t"]] = {
-                k: r[k] for k in ("price", "chg1d", "chg5d", "chg1m", "relvol", "rsi",
+                k: r[k] for k in ("price", "chg1d", "chg5d", "chg1m", "relvol", "flow", "rsi",
                                   "rsi_rising", "macd", "above", "pct200", "extension",
                                   "young", "history_days")
             }
@@ -288,6 +335,9 @@ def load_history(demo):
         return []
     if bool(prev.get("demo")) != demo:  # never mix demo and live history
         return []
+    if prev.get("engine") != ENGINE_VERSION:  # scoring changed: rebuild history with the new formula
+        print("Scoring formula changed — rebuilding history.")
+        return []
     return prev.get("history", [])
 
 
@@ -330,13 +380,23 @@ def fetch_demo(tickers, seed=1440):
 
 def main():
     demo = "--demo" in sys.argv
+    session, frac = market_session()
+    if session == "pre" and not demo and "--force" not in sys.argv:
+        print("Before the 9:30 AM ET open — nothing new to score. Skipping.")
+        return
     universe = json.loads(UNIVERSE.read_text())
     tickers = sorted({s["t"] for sec in universe["sectors"].values() for s in sec["stocks"]})
     tickers.append(universe.get("benchmark", "QQQ"))
 
     prices = fetch_demo(tickers) if demo else fetch_live(tickers)
+    if session == "open" and not demo:
+        prices = prorate_today(prices, frac, datetime.now(ET).date())
     payload = build(universe, prices)
     payload["demo"] = demo
+    payload["engine"] = ENGINE_VERSION
+    # "open" = intraday score; anything else = a completed session's close
+    payload["session"] = "open" if session == "open" else "closed"
+    payload["updated_et"] = datetime.now(ET).strftime("%Y-%m-%d %I:%M %p ET")
     n = sum(len(s["stocks"]) for s in payload["sectors"].values())
     if not demo and n == 0:
         sys.exit(f"No stocks scored — data source failed. Keeping previous heat.json. {payload['errors']}")
@@ -346,13 +406,15 @@ def main():
         print(f"History has {len(history)} days — rebuilding the last {BACKFILL_DAYS} from price data...")
         for snap in backfill(universe, prices, BACKFILL_DAYS):
             history = merge_history(history, snap)
+    # Intraday runs overwrite today's entry; the after-close run replaces it with the final close.
     history = merge_history(history, snapshot(payload))
     add_trends(payload, history)
     payload["history"] = history
 
     OUTPUT.write_text(json.dumps(payload, separators=(",", ":")))
 
-    print(f"Scored {n} stocks across {len(payload['sectors'])} sectors (as of {payload['as_of']}).")
+    print(f"[{payload['updated_et']} · session {payload['session']}] "
+          f"Scored {n} stocks across {len(payload['sectors'])} sectors (prices as of {payload['as_of']}).")
     print(f"History: {len(history)} trading days ({history[0]['d']} → {history[-1]['d']}).")
     for k, s in sorted(payload["sectors"].items(), key=lambda kv: -kv[1]["heat"]):
         d5 = "  n/a" if s["d5"] is None else f"{s['d5']:+4d}"
