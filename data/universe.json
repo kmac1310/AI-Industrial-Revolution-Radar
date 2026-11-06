@@ -111,8 +111,10 @@
     }
    ],
    "etf": {
-    "t": "IGN",
-    "name": "iShares Expanded Tech-Multimedia Networking"
+    "t": "LYTE",
+    "name": "Roundhill Photonics & Optics",
+    "fallback": "SOXX",
+    "fallback_name": "iShares Semiconductor"
    }
   },
   "Power": {

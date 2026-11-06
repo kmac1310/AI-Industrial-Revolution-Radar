@@ -267,7 +267,11 @@ def build(universe, prices):
         etf_out = None
         etf = sec.get("etf")
         if etf:
+            # Use the ETF; if it has no data (new or delisted), fall back to its backup
             et = etf["t"]
+            ename = etf.get("name", et)
+            if et not in prices and etf.get("fallback") in prices:
+                et, ename = etf["fallback"], etf.get("fallback_name", etf["fallback"])
             try:
                 if et not in prices:
                     raise ValueError("no price data returned")
@@ -275,7 +279,7 @@ def build(universe, prices):
                 e_rs = scale(m["r21"] - bench_r21, -0.10, 0.10)
                 sub = dict(m["sub"], sector_rs=e_rs, catalyst=50.0)
                 eh = round(sum(WEIGHTS[k] * sub[k] for k in WEIGHTS))
-                etf_out = {"t": et, "name": etf.get("name", et), "heat": eh,
+                etf_out = {"t": et, "name": ename, "heat": eh,
                            "extension": m["extension"], "status": status(eh, m["extension"]),
                            "price": m["price"], "chg1d": m["chg1d"], "chg1m": m["chg1m"],
                            "flow": m["flow"], "relvol": m["relvol"]}
@@ -437,7 +441,13 @@ def main():
         return
     universe = json.loads(UNIVERSE.read_text())
     tickers = sorted({s["t"] for sec in universe["sectors"].values() for s in sec["stocks"]})
-    tickers += sorted({sec["etf"]["t"] for sec in universe["sectors"].values() if sec.get("etf")})
+    etfs = set()
+    for sec in universe["sectors"].values():
+        if sec.get("etf"):
+            etfs.add(sec["etf"]["t"])
+            if sec["etf"].get("fallback"):
+                etfs.add(sec["etf"]["fallback"])
+    tickers += sorted(etfs)
     tickers.append(universe.get("benchmark", "QQQ"))
 
     prices = fetch_demo(tickers) if demo else fetch_live(tickers)
