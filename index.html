@@ -41,6 +41,11 @@ h2{font-size:20px;margin:0}
 .fill.ext{background:linear-gradient(90deg,#34d399,#a78bfa)}
 .dial-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
 .rs{font-size:11px;color:var(--muted);margin-top:2px}
+.sub{display:flex;justify-content:space-between;gap:6px;font-size:11px;color:var(--muted);margin-top:4px}
+.sub b{color:var(--text);font-weight:700}
+.bmeter{display:flex;gap:2px;margin:3px 0 2px}
+.bmeter i{flex:1;height:5px;border-radius:2px;background:#222c39}
+.bmeter i.on{background:var(--green)}
 .status{margin-top:auto;padding-top:8px;font-size:12px;font-weight:700}
 .scorerow{display:flex;align-items:flex-end;justify-content:space-between;gap:6px}
 .spark{display:block;overflow:visible}
@@ -135,7 +140,7 @@ tbody tr:hover{background:#111b29}
       <div class="section-title">
         <div>
           <h2>🔥 AI Money-Flow Heat Map</h2>
-          <div class="muted">Calculated by the 1440TIME Heat Engine • Heat = money flow • Extension = how far price has run • Line = last 30 trading days of heat</div>
+          <div class="muted">Heat = money flow (half the sector ETF, half our picks) • Breadth = picks above their 50-day average • Line = last 30 trading days of heat</div>
         </div>
         <span class="note" id="asof"></span>
       </div>
@@ -229,6 +234,8 @@ tbody tr:hover{background:#111b29}
         Scores refresh about every 30 minutes while the market is open (prices ~15 min delayed) and once more after the close.
         This page checks for new scores every 5 minutes on its own. Today's point on each sparkline moves during the day and locks in at the close.
         5D Δ = change in heat over the last 5 trading days; 📈 Rising / 📉 Fading = a move of 5+ points.
+        Sector heat blends the sector ETF (broad money flow) with the average of our picks. Breadth counts picks above their 50-day average;
+        breadth climbing from a low level is often the first sign a sector is turning.
         Catalyst (5%) is your manual input in data/universe.json. Research tool, not financial advice.
       </p>
     </section>
@@ -377,6 +384,9 @@ function renderHeat(){
       <div class="bar"><div class="fill" style="width:${heat||0}%"></div></div>
       <div class="dial-label"><span>Extension</span><span>${ext ?? "—"}</span></div>
       <div class="bar"><div class="fill ext" style="width:${ext||0}%"></div></div>
+      ${sh ? `<div class="sub"><span>${sh.etf ? `ETF ${esc(sh.etf.t)} <b>${sh.etf.heat}</b>` : "ETF —"}</span><span>Picks <b>${sh.picks_heat ?? "—"}</b></span></div>` : ""}
+      ${sh && sh.breadth_of ? `<div class="sub" title="Picks trading above their 50-day average"><span>Breadth <b>${sh.breadth_n}/${sh.breadth_of}</b></span>${delta(sh.breadth_d5 ?? null, false)}</div>
+      <div class="bmeter">${Array.from({length:sh.breadth_of},(_,i)=>`<i class="${i<sh.breadth_n?'on':''}"></i>`).join("")}</div>` : ""}
       <div class="rs">${sh ? `vs ${H.benchmark} (1M): ${pct(sh.rs_vs_bench)}` : ""}</div>
       <div class="status" style="color:${st.col}">${st.txt}</div>`;
     box.addEventListener("click", ()=>selectSector(k));
@@ -390,7 +400,7 @@ const LB_COLS = [
   ["chg1d","1D"],["chg1m","1M"],["relvol","RelVol"],["rsi","RSI"],["pct200","vs 200D"],["dma","20/50/200"]
 ];
 function renderFilters(){
-  const opts = [["all","All"],["hot","🔥 Hot"],["heating","⚡ Heating"],["extended","⚠️ Extended"],["rising","📈 Rising"],["fading","📉 Fading"],["watchlist","⭐ Watchlist"],["core","Core only"]];
+  const opts = [["all","All"],["hot","🔥 Hot"],["heating","⚡ Heating"],["extended","⚠️ Extended"],["rising","📈 Rising"],["fading","📉 Fading"],["watchlist","⭐ Watchlist"],["core","Core only"],["sector","Selected sector"]];
   $("filters").innerHTML = "";
   opts.forEach(([k,label])=>{
     const b = document.createElement("button");
@@ -413,6 +423,7 @@ function renderBoard(){
   });
   if(lbFilter==="watchlist") rows = rows.filter(r=>watch.includes(r.t));
   else if(lbFilter==="core") rows = rows.filter(r=>r.tier==="Core");
+  else if(lbFilter==="sector") rows = rows.filter(r=>r.sectorKey===currentSector);
   else if(lbFilter==="rising") rows = rows.filter(r=>r.d5!=null && r.d5>=5);
   else if(lbFilter==="fading") rows = rows.filter(r=>r.d5!=null && r.d5<=-5);
   else if(lbFilter!=="all") rows = rows.filter(r=>r.status===lbFilter);

@@ -1,53 +1,725 @@
 {
-  "_readme": "SINGLE SOURCE OF TRUTH. Add/remove stocks here. 'catalyst' (0-100) is your manual 5% input: 50 = neutral, 80+ = fresh orders/guidance raise, 20 = negative news. The Heat Engine computes everything else.",
-  "benchmark": "QQQ",
-  "sectors": {
-    "Networking": { "name": "Networking & Optics", "stocks": [
-      {"t":"AVGO","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Custom AI accelerators for hyperscalers plus Ethernet switch silicon.","risk":"Hyperscalers bring more chip design in-house."},
-      {"t":"ANET","x":"NYSE","tier":"Core","catalyst":50,"why":"Leader in Ethernet switching for AI clusters.","risk":"Nvidia's own networking takes share."},
-      {"t":"LITE","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Lasers for 800G/1.6T optics and co-packaged optics; multiyear Nvidia supply deal.","risk":"Substrate supply limits capacity; huge run-up already."},
-      {"t":"COHR","x":"NYSE","tier":"Core","catalyst":50,"why":"Exposure to both 1.6T pluggables and co-packaged optics; Nvidia supply deal.","risk":"CPO ramp slips to 2028."},
-      {"t":"CIEN","x":"NYSE","tier":"Edge","catalyst":50,"why":"Long-distance optics linking data centers together ('scale-across').","risk":"Telecom spending weakness offsets AI demand."},
-      {"t":"CRDO","x":"NASDAQ","tier":"Edge","catalyst":50,"why":"Active electrical cables connecting GPUs inside racks.","risk":"Heavy customer concentration; optics could replace copper."},
-      {"t":"ALAB","x":"NASDAQ","tier":"Edge","catalyst":50,"why":"PCIe/CXL connectivity chips for AI servers.","risk":"Very high valuation; customer concentration."},
-      {"t":"MRVL","x":"NASDAQ","tier":"Edge","catalyst":50,"why":"Custom ASICs and optical DSPs.","risk":"Losing custom-chip sockets to rivals."}
-    ]},
-    "Power": { "name": "Power & Grid", "stocks": [
-      {"t":"GEV","x":"NYSE","tier":"Core","catalyst":50,"why":"Gas turbines and grid equipment; data center orders surging.","risk":"Order cancellations if AI capex pauses."},
-      {"t":"CEG","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Largest US nuclear fleet; behind-the-meter deals with hyperscalers.","risk":"Regulators block co-located data center deals."},
-      {"t":"VST","x":"NYSE","tier":"Core","catalyst":50,"why":"Merchant power in competitive markets; long-term Meta nuclear deal.","risk":"Power prices fall or politics caps them."},
-      {"t":"BE","x":"NYSE","tier":"Edge","catalyst":50,"why":"On-site fuel cells skip multi-year grid wait times.","risk":"Execution and margin risk at high valuation."},
-      {"t":"TLN","x":"NASDAQ","tier":"Edge","catalyst":50,"why":"Susquehanna nuclear plant contracted to a co-located data center campus.","risk":"Single-asset concentration."}
-    ]},
-    "Cyber": { "name": "AI Cybersecurity", "stocks": [
-      {"t":"CRWD","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Endpoint + identity platform; launched agentic identity products.","risk":"Premium valuation; another outage event."},
-      {"t":"PANW","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Broadest security platform; consolidation winner.","risk":"Platform discounting squeezes margins."},
-      {"t":"ZS","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Zero-trust for AI agents; lagged peers in 2026 — contrarian slot.","risk":"Lag reflects real share loss, not just sentiment."},
-      {"t":"NET","x":"NYSE","tier":"Edge","catalyst":50,"why":"Network layer AI agents pass through; rebuilding as agent-first.","risk":"Restructuring disrupts growth."}
-    ]},
-    "Memory": { "name": "HBM / Memory", "stocks": [
-      {"t":"SKHY","x":"NASDAQ","tier":"Core","catalyst":50,"why":"HBM market leader; majority of Nvidia Rubin HBM4 volume. US ADS since July 2026.","risk":"Memory is cyclical — supply catches up."},
-      {"t":"MU","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Only US-based DRAM/HBM maker; HBM sold out through 2027.","risk":"Reports of exclusion from Nvidia Rubin HBM4."},
-      {"t":"SNDK","x":"NASDAQ","tier":"Edge","catalyst":50,"why":"NAND flash for AI storage and edge devices.","risk":"Parabolic run; NAND oversupply returns."}
-    ]},
-    "Cooling": { "name": "Cooling / Data Center", "stocks": [
-      {"t":"VRT","x":"NYSE","tier":"Core","catalyst":50,"why":"Pure-play leader in data center power and liquid cooling.","risk":"Data center construction delays slow orders."},
-      {"t":"ETN","x":"NYSE","tier":"Core","catalyst":50,"why":"Electrical gear plus liquid cooling via Boyd Thermal deal.","risk":"Non-data-center segments drag."},
-      {"t":"NVT","x":"NYSE","tier":"Edge","catalyst":50,"why":"Early liquid cooling pioneer; enclosures and power.","risk":"Industrial mix; commoditizing cooling parts."},
-      {"t":"MOD","x":"NYSE","tier":"Edge","catalyst":50,"why":"Smaller thermal pure-play; data center sales growing fast.","risk":"Execution on capacity expansion."}
-    ]},
-    "Agents": { "name": "Agentic AI", "stocks": [
-      {"t":"PLTR","x":"NASDAQ","tier":"Core","catalyst":50,"why":"AIP deploys agents in government and enterprise production.","risk":"Valuation; agents commoditize its software layer."},
-      {"t":"NOW","x":"NYSE","tier":"Core","catalyst":50,"why":"AI Control Tower orchestrates agents across the enterprise.","risk":"Seat-based pricing erodes as agents replace users."},
-      {"t":"MSFT","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Azure + Copilot distribution to every enterprise.","risk":"Capex returns disappoint."},
-      {"t":"CRM","x":"NYSE","tier":"Edge","catalyst":50,"why":"Agentforce push into sales and service.","risk":"Most exposed to the 'agents replace SaaS' thesis."}
-    ]},
-    "Robotics": { "name": "Physical AI", "stocks": [
-      {"t":"NVDA","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Platform for robot training, simulation and onboard compute.","risk":"Robotics stays a small slice of revenue for years."},
-      {"t":"TER","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Collaborative robots plus AI chip testing.","risk":"Robotics segment still small."},
-      {"t":"ISRG","x":"NASDAQ","tier":"Core","catalyst":50,"why":"Dominant surgical robotics with recurring revenue.","risk":"New surgical robot competitors."},
-      {"t":"SYM","x":"NASDAQ","tier":"Edge","catalyst":50,"why":"AI warehouse automation.","risk":"Heavy dependence on one major customer."},
-      {"t":"ROK","x":"NYSE","tier":"Edge","catalyst":50,"why":"Factory automation backbone for reshoring.","risk":"Cyclical industrial demand."}
-    ]}
+ "_readme": "SINGLE SOURCE OF TRUTH. Add/remove stocks here. 'etf' is each sector's broad-market anchor. 'catalyst' (0-100) is your manual 5% input: 50 = neutral, 80+ = fresh orders/guidance raise, 20 = negative news. The Heat Engine computes everything else.",
+ "benchmark": "QQQ",
+ "sectors": {
+  "Networking": {
+   "name": "Networking & Optics",
+   "stocks": [
+    {
+     "t": "AVGO",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Custom AI accelerators for hyperscalers plus Ethernet switch silicon.",
+     "risk": "Hyperscalers bring more chip design in-house."
+    },
+    {
+     "t": "ANET",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Leader in Ethernet switching for AI clusters.",
+     "risk": "Nvidia's own networking takes share."
+    },
+    {
+     "t": "LITE",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Lasers for 800G/1.6T optics and co-packaged optics; multiyear Nvidia supply deal.",
+     "risk": "Substrate supply limits capacity; huge run-up already."
+    },
+    {
+     "t": "COHR",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Exposure to both 1.6T pluggables and co-packaged optics; Nvidia supply deal.",
+     "risk": "CPO ramp slips to 2028."
+    },
+    {
+     "t": "CIEN",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Long-distance optics linking data centers together ('scale-across').",
+     "risk": "Telecom spending weakness offsets AI demand."
+    },
+    {
+     "t": "CRDO",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Active electrical cables connecting GPUs inside racks.",
+     "risk": "Heavy customer concentration; optics could replace copper."
+    },
+    {
+     "t": "ALAB",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "PCIe/CXL connectivity chips for AI servers.",
+     "risk": "Very high valuation; customer concentration."
+    },
+    {
+     "t": "MRVL",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Custom ASICs and optical DSPs.",
+     "risk": "Losing custom-chip sockets to rivals."
+    },
+    {
+     "t": "CSCO",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Largest networking vendor; AI Ethernet and long-haul optics orders growing.",
+     "risk": "Legacy enterprise business dilutes AI growth."
+    },
+    {
+     "t": "FN",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Contract manufacturer building optical transceivers for Nvidia and hyperscalers.",
+     "risk": "Customer concentration; loses share if suppliers insource."
+    },
+    {
+     "t": "AAOI",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "High-speed optical modules with heavy hyperscaler exposure.",
+     "risk": "Very volatile; few customers; thin margins."
+    },
+    {
+     "t": "GLW",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Fiber and connectivity for data center buildouts.",
+     "risk": "Display and consumer glass segments are cyclical."
+    },
+    {
+     "t": "APH",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Connectors and cables inside every AI rack.",
+     "risk": "Broad industrial exposure dilutes the AI story."
+    }
+   ],
+   "etf": {
+    "t": "IGN",
+    "name": "iShares Expanded Tech-Multimedia Networking"
+   }
+  },
+  "Power": {
+   "name": "Power & Grid",
+   "stocks": [
+    {
+     "t": "GEV",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Gas turbines and grid equipment; data center orders surging.",
+     "risk": "Order cancellations if AI capex pauses."
+    },
+    {
+     "t": "CEG",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Largest US nuclear fleet; behind-the-meter deals with hyperscalers.",
+     "risk": "Regulators block co-located data center deals."
+    },
+    {
+     "t": "VST",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Merchant power in competitive markets; long-term Meta nuclear deal.",
+     "risk": "Power prices fall or politics caps them."
+    },
+    {
+     "t": "BE",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "On-site fuel cells skip multi-year grid wait times.",
+     "risk": "Execution and margin risk at high valuation."
+    },
+    {
+     "t": "TLN",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Susquehanna nuclear plant contracted to a co-located data center campus.",
+     "risk": "Single-asset concentration."
+    },
+    {
+     "t": "NRG",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Power producer adding data center supply deals.",
+     "risk": "Retail electricity margins squeezed."
+    },
+    {
+     "t": "OKLO",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Small modular reactor developer targeting data centers.",
+     "risk": "Pre-revenue; licensing and timeline risk."
+    },
+    {
+     "t": "SMR",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "NuScale small modular reactor technology.",
+     "risk": "Pre-revenue; project cancellations."
+    },
+    {
+     "t": "CCJ",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Uranium supplier for the nuclear restart wave.",
+     "risk": "Uranium price swings."
+    },
+    {
+     "t": "PWR",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Builds transmission lines and grid connections for data centers.",
+     "risk": "Labor shortages slow projects."
+    },
+    {
+     "t": "HUBB",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Utility and grid electrical equipment.",
+     "risk": "Utility capex cycles."
+    },
+    {
+     "t": "NEE",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Largest US renewable developer; big data center power pipeline.",
+     "risk": "Interest rates and policy changes."
+    }
+   ],
+   "etf": {
+    "t": "GRID",
+    "name": "First Trust Smart Grid Infrastructure"
+   }
+  },
+  "Cyber": {
+   "name": "AI Cybersecurity",
+   "stocks": [
+    {
+     "t": "CRWD",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Endpoint + identity platform; launched agentic identity products.",
+     "risk": "Premium valuation; another outage event."
+    },
+    {
+     "t": "PANW",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Broadest security platform; consolidation winner.",
+     "risk": "Platform discounting squeezes margins."
+    },
+    {
+     "t": "ZS",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Zero-trust for AI agents; lagged peers in 2026 \u2014 contrarian slot.",
+     "risk": "Lag reflects real share loss, not just sentiment."
+    },
+    {
+     "t": "NET",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Network layer AI agents pass through; rebuilding as agent-first.",
+     "risk": "Restructuring disrupts growth."
+    },
+    {
+     "t": "FTNT",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Firewalls and secure networking with high margins.",
+     "risk": "Hardware refresh cycles slow."
+    },
+    {
+     "t": "OKTA",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Identity management: every AI agent needs an identity.",
+     "risk": "Competition from Microsoft."
+    },
+    {
+     "t": "S",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "SentinelOne AI-native endpoint security.",
+     "risk": "Unprofitable; competes head-on with CrowdStrike."
+    },
+    {
+     "t": "RBRK",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Rubrik data security and cyber recovery.",
+     "risk": "Recent IPO; still losing money."
+    },
+    {
+     "t": "CHKP",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Check Point: steady, profitable firewall leader.",
+     "risk": "Slow growth."
+    },
+    {
+     "t": "TENB",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Vulnerability management.",
+     "risk": "Share loss to platforms."
+    },
+    {
+     "t": "QLYS",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Cloud vulnerability scanning.",
+     "risk": "Slowing growth."
+    },
+    {
+     "t": "VRNS",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Data security for AI access to company files.",
+     "risk": "Transition to SaaS hurts near-term numbers."
+    }
+   ],
+   "etf": {
+    "t": "CIBR",
+    "name": "First Trust Cybersecurity"
+   }
+  },
+  "Memory": {
+   "name": "HBM / Memory",
+   "stocks": [
+    {
+     "t": "SKHY",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "HBM market leader; majority of Nvidia Rubin HBM4 volume. US ADS since July 2026.",
+     "risk": "Memory is cyclical \u2014 supply catches up."
+    },
+    {
+     "t": "MU",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Only US-based DRAM/HBM maker; HBM sold out through 2027.",
+     "risk": "Reports of exclusion from Nvidia Rubin HBM4."
+    },
+    {
+     "t": "SNDK",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "NAND flash for AI storage and edge devices.",
+     "risk": "Parabolic run; NAND oversupply returns."
+    },
+    {
+     "t": "WDC",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Hard drives for AI data storage at cloud scale.",
+     "risk": "Drive demand cycles."
+    },
+    {
+     "t": "STX",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Seagate high-capacity drives for AI data lakes.",
+     "risk": "Pricing cycles."
+    },
+    {
+     "t": "LRCX",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Etch and deposition tools critical to HBM stacking.",
+     "risk": "China export restrictions."
+    },
+    {
+     "t": "AMAT",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Largest chip equipment maker; HBM and advanced packaging.",
+     "risk": "China exposure."
+    },
+    {
+     "t": "KLAC",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Inspection tools; HBM yields depend on them.",
+     "risk": "Semi equipment cycle."
+    },
+    {
+     "t": "AMKR",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Advanced packaging for AI chips and memory.",
+     "risk": "Low margins."
+    },
+    {
+     "t": "ONTO",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Inspection for advanced packaging and HBM.",
+     "risk": "Lumpy orders."
+    },
+    {
+     "t": "FORM",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Probe cards used to test HBM.",
+     "risk": "Small cap; cyclical."
+    }
+   ],
+   "etf": {
+    "t": "SMH",
+    "name": "VanEck Semiconductor"
+   }
+  },
+  "Cooling": {
+   "name": "Cooling / Data Center",
+   "stocks": [
+    {
+     "t": "VRT",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Pure-play leader in data center power and liquid cooling.",
+     "risk": "Data center construction delays slow orders."
+    },
+    {
+     "t": "ETN",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Electrical gear plus liquid cooling via Boyd Thermal deal.",
+     "risk": "Non-data-center segments drag."
+    },
+    {
+     "t": "NVT",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Early liquid cooling pioneer; enclosures and power.",
+     "risk": "Industrial mix; commoditizing cooling parts."
+    },
+    {
+     "t": "MOD",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Smaller thermal pure-play; data center sales growing fast.",
+     "risk": "Execution on capacity expansion."
+    },
+    {
+     "t": "TT",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Trane chillers and thermal systems for data centers.",
+     "risk": "Commercial building slowdown."
+    },
+    {
+     "t": "JCI",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Johnson Controls data center cooling.",
+     "risk": "Execution on restructuring."
+    },
+    {
+     "t": "SMCI",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Liquid-cooled AI server racks.",
+     "risk": "Accounting and governance history; thin margins."
+    },
+    {
+     "t": "DELL",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Largest AI server seller to enterprises.",
+     "risk": "Low server margins."
+    },
+    {
+     "t": "EQIX",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Largest data center landlord.",
+     "risk": "Rate sensitivity; power constraints."
+    },
+    {
+     "t": "DLR",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Digital Realty data center REIT.",
+     "risk": "Rate sensitivity."
+    },
+    {
+     "t": "CRWV",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "CoreWeave GPU cloud for AI labs.",
+     "risk": "Heavy debt; customer concentration."
+    },
+    {
+     "t": "NBIS",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Nebius AI cloud infrastructure.",
+     "risk": "Capital intensive; early stage."
+    }
+   ],
+   "etf": {
+    "t": "DTCR",
+    "name": "Global X Data Center & Digital Infrastructure"
+   }
+  },
+  "Agents": {
+   "name": "Agentic AI",
+   "stocks": [
+    {
+     "t": "PLTR",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "AIP deploys agents in government and enterprise production.",
+     "risk": "Valuation; agents commoditize its software layer."
+    },
+    {
+     "t": "NOW",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "AI Control Tower orchestrates agents across the enterprise.",
+     "risk": "Seat-based pricing erodes as agents replace users."
+    },
+    {
+     "t": "MSFT",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Azure + Copilot distribution to every enterprise.",
+     "risk": "Capex returns disappoint."
+    },
+    {
+     "t": "CRM",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Agentforce push into sales and service.",
+     "risk": "Most exposed to the 'agents replace SaaS' thesis."
+    },
+    {
+     "t": "GOOGL",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Gemini models, TPUs and Google Cloud.",
+     "risk": "Search disruption by AI answers."
+    },
+    {
+     "t": "AMZN",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "AWS and Bedrock: where enterprises run agents.",
+     "risk": "Capex intensity."
+    },
+    {
+     "t": "ORCL",
+     "x": "NYSE",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Cloud backlog from AI labs.",
+     "risk": "Heavy debt to fund data centers."
+    },
+    {
+     "t": "SNOW",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Data platform that agents query.",
+     "risk": "Usage-based revenue swings."
+    },
+    {
+     "t": "DDOG",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Monitoring for AI apps and agents.",
+     "risk": "Cloud cost optimization."
+    },
+    {
+     "t": "MDB",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Database for AI applications.",
+     "risk": "Competition from cloud databases."
+    },
+    {
+     "t": "AI",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "C3.ai enterprise AI apps.",
+     "risk": "Unprofitable; leadership changes."
+    }
+   ],
+   "etf": {
+    "t": "IGV",
+    "name": "iShares Expanded Tech-Software"
+   }
+  },
+  "Robotics": {
+   "name": "Physical AI",
+   "stocks": [
+    {
+     "t": "NVDA",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Platform for robot training, simulation and onboard compute.",
+     "risk": "Robotics stays a small slice of revenue for years."
+    },
+    {
+     "t": "TER",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Collaborative robots plus AI chip testing.",
+     "risk": "Robotics segment still small."
+    },
+    {
+     "t": "ISRG",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Dominant surgical robotics with recurring revenue.",
+     "risk": "New surgical robot competitors."
+    },
+    {
+     "t": "SYM",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "AI warehouse automation.",
+     "risk": "Heavy dependence on one major customer."
+    },
+    {
+     "t": "ROK",
+     "x": "NYSE",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Factory automation backbone for reshoring.",
+     "risk": "Cyclical industrial demand."
+    },
+    {
+     "t": "TSLA",
+     "x": "NASDAQ",
+     "tier": "Core",
+     "catalyst": 50,
+     "why": "Optimus humanoid and self-driving.",
+     "risk": "Valuation rests on unproven robotics."
+    },
+    {
+     "t": "ZBRA",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Warehouse scanning and automation.",
+     "risk": "Retail capex cycles."
+    },
+    {
+     "t": "CGNX",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Machine vision for factories.",
+     "risk": "Industrial slowdown."
+    },
+    {
+     "t": "MBLY",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Mobileye driver-assist and autonomy chips.",
+     "risk": "Losing share to in-house chips."
+    },
+    {
+     "t": "AUR",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Aurora driverless trucking.",
+     "risk": "Pre-profit; regulatory risk."
+    },
+    {
+     "t": "SERV",
+     "x": "NASDAQ",
+     "tier": "Edge",
+     "catalyst": 50,
+     "why": "Serve Robotics sidewalk delivery robots.",
+     "risk": "Tiny revenue; heavy losses."
+    }
+   ],
+   "etf": {
+    "t": "BOTZ",
+    "name": "Global X Robotics & Artificial Intelligence"
+   }
   }
+ }
 }

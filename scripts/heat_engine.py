@@ -15,6 +15,10 @@ with the 1440TIME Decision Matrix, and writes data/heat.json for the dashboard.
 
 Extension is a separate timing dial (how far price has already run).
 
+Sector heat = 50% the sector ETF's heat (broad money flow across dozens of companies)
+            + 50% the average heat of our picks (where the AI leaders specifically stand).
+Breadth = share of a sector's picks trading above their 50-day average.
+
 Runs every 30 minutes on weekdays (see .github/workflows/heat-engine.yml).
   Before 9:30 AM ET  -> skips (nothing new to score)
   9:30 AM - 4:00 PM  -> intraday score from ~15-min-delayed prices
@@ -40,7 +44,7 @@ ROOT = Path(__file__).resolve().parent.parent
 UNIVERSE = ROOT / "data" / "universe.json"
 OUTPUT = ROOT / "data" / "heat.json"
 
-ENGINE_VERSION = 2     # bump when scoring changes; old history is then rebuilt
+ENGINE_VERSION = 3     # bump when scoring changes; old history is then rebuilt
 MIN_BARS = 60          # minimum trading days needed to score a stock
 HISTORY_KEEP = 180     # trading days of heat history to keep
 BACKFILL_DAYS = 60     # days rebuilt from past prices when history is empty
@@ -253,9 +257,41 @@ def build(universe, prices):
 
         heats = [v["heat"] for v in stocks_out.values()]
         exts = [v["extension"] for v in stocks_out.values()]
-        sh, se = round(float(np.mean(heats))), round(float(np.mean(exts)))
+        ph, pe = float(np.mean(heats)), float(np.mean(exts))
+
+        # Breadth: how many picks are above their 50-day average
+        n_up = sum(1 for v in stocks_out.values() if v["above"]["50"])
+        breadth = round(100 * n_up / len(stocks_out))
+
+        # Sector ETF: the broad-market anchor for the tile
+        etf_out = None
+        etf = sec.get("etf")
+        if etf:
+            et = etf["t"]
+            try:
+                if et not in prices:
+                    raise ValueError("no price data returned")
+                m = score_stock(prices[et])
+                e_rs = scale(m["r21"] - bench_r21, -0.10, 0.10)
+                sub = dict(m["sub"], sector_rs=e_rs, catalyst=50.0)
+                eh = round(sum(WEIGHTS[k] * sub[k] for k in WEIGHTS))
+                etf_out = {"t": et, "name": etf.get("name", et), "heat": eh,
+                           "extension": m["extension"], "status": status(eh, m["extension"]),
+                           "price": m["price"], "chg1d": m["chg1d"], "chg1m": m["chg1m"],
+                           "flow": m["flow"], "relvol": m["relvol"]}
+            except Exception as e:
+                errors[et] = str(e)
+
+        if etf_out:
+            sh = round(0.5 * etf_out["heat"] + 0.5 * ph)
+            se = round(0.5 * etf_out["extension"] + 0.5 * pe)
+        else:
+            sh, se = round(ph), round(pe)
         out_sectors[key] = {
             "heat": sh, "ext": se, "status": status(sh, se),
+            "picks_heat": round(ph), "picks_ext": round(pe),
+            "breadth": breadth, "breadth_n": n_up, "breadth_of": len(stocks_out),
+            "etf": etf_out,
             "rs_vs_bench": round(rs_excess * 100, 1),
             "stocks": stocks_out,
         }
@@ -318,7 +354,7 @@ def snapshot(payload):
     """Compact record of one day's scores."""
     return {
         "d": payload["as_of"],
-        "s": {k: [v["heat"], v["ext"]] for k, v in payload["sectors"].items()},
+        "s": {k: [v["heat"], v["ext"], v.get("breadth")] for k, v in payload["sectors"].items()},
         "t": {t: st["heat"] for v in payload["sectors"].values() for t, st in v["stocks"].items()},
     }
 
@@ -370,6 +406,9 @@ def add_trends(payload, history):
     for k, sec in payload["sectors"].items():
         series = [h["s"][k][0] for h in history if k in h.get("s", {})]
         sec["spark"], sec["d5"] = trend(series)
+        b = [h["s"][k][2] for h in history
+             if k in h.get("s", {}) and len(h["s"][k]) > 2 and h["s"][k][2] is not None]
+        sec["breadth_spark"], sec["breadth_d5"] = trend(b) if b else ([], None)
         for t, st in sec["stocks"].items():
             s2 = [h["t"][t] for h in history if t in h.get("t", {})]
             st["spark"], st["d5"] = trend(s2)
@@ -398,6 +437,7 @@ def main():
         return
     universe = json.loads(UNIVERSE.read_text())
     tickers = sorted({s["t"] for sec in universe["sectors"].values() for s in sec["stocks"]})
+    tickers += sorted({sec["etf"]["t"] for sec in universe["sectors"].values() if sec.get("etf")})
     tickers.append(universe.get("benchmark", "QQQ"))
 
     prices = fetch_demo(tickers) if demo else fetch_live(tickers)
