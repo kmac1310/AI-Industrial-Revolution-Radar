@@ -2,11 +2,15 @@ name: 1440TIME Heat Engine
 
 on:
   schedule:
-    - cron: "30 21 * * 1-5"
+    - cron: "*/30 13-21 * * 1-5"
   workflow_dispatch: {}
 
 permissions:
   contents: write
+
+concurrency:
+  group: heat-engine
+  cancel-in-progress: false
 
 jobs:
   score:
@@ -19,11 +23,21 @@ jobs:
       - name: Install dependencies
         run: pip install pandas numpy yfinance
       - name: Run Heat Engine
-        run: python scripts/heat_engine.py
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python scripts/heat_engine.py --force
+          else
+            python scripts/heat_engine.py
+          fi
       - name: Commit updated scores
         run: |
           git config user.name "1440TIME Heat Engine"
           git config user.email "actions@users.noreply.github.com"
           git add data/heat.json
-          git diff --cached --quiet || git commit -m "Heat Engine update $(date -u +%Y-%m-%d)"
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Heat Engine update $(TZ=America/New_York date '+%Y-%m-%d %H:%M ET')"
+          git pull --rebase origin main
           git push
