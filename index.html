@@ -385,7 +385,7 @@ function renderHeat(){
       <div class="dial-label"><span>Extension</span><span>${ext ?? "—"}</span></div>
       <div class="bar"><div class="fill ext" style="width:${ext||0}%"></div></div>
       ${sh ? `<div class="sub"><span>${sh.etf ? `ETF ${esc(sh.etf.t)} <b>${sh.etf.heat}</b>` : "ETF —"}</span><span>Picks <b>${sh.picks_heat ?? "—"}</b></span></div>` : ""}
-      ${sh && sh.breadth_of ? `<div class="sub" title="Picks trading above their 50-day average"><span>Breadth <b>${sh.breadth_n}/${sh.breadth_of}</b></span>${delta(sh.breadth_d5 ?? null, false)}</div>
+      ${sh && sh.breadth_of ? `<div class="sub" title="Picks trading above their 50-day average"><span>Breadth <b>${sh.breadth_n}/${sh.breadth_of}</b></span>${sh.breadth_d5==null ? "" : (()=>{const n=Math.round(sh.breadth_d5*sh.breadth_of/100); const c=n>0?"up":n<0?"down":"flat"; return `<span class="delta ${c}" title="Change in stocks above their 50-day over 5 days">${n>0?"▲ +"+n:n<0?"▼ "+n:"▬ 0"} in 5D</span>`;})()}</div>
       <div class="bmeter">${Array.from({length:sh.breadth_of},(_,i)=>`<i class="${i<sh.breadth_n?'on':''}"></i>`).join("")}</div>` : ""}
       <div class="rs">${sh ? `vs ${H.benchmark} (1M): ${pct(sh.rs_vs_bench)}` : ""}</div>
       <div class="status" style="color:${st.col}">${st.txt}</div>`;
